@@ -116,6 +116,20 @@ struct FSpawnEntry
     /** Marker providing spawn transforms when bUseMarker is enabled.  The actor spawns at the marker's root while the mesh uses the marker's secondary SpawnPoint if available. */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Marker", meta = (EditCondition = "bUseMarker"))
     AActor* MarkerActor = nullptr;
+
+    /** Cached world transform of the marker's root, captured in the editor so
+     *  shipping builds can spawn without the marker actor present. */
+    UPROPERTY()
+    FTransform CachedMarkerTransform;
+
+    /** Cached world transform of the marker's spawn point component (or root if
+     *  no spawn point exists). */
+    UPROPERTY()
+    FTransform CachedSpawnPointTransform;
+
+    /** True if the cached transforms above are valid. */
+    UPROPERTY()
+    bool bCachedTransformsValid = false;
 };
 
 /**

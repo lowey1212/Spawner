@@ -10,7 +10,10 @@
 ADAISpawnMarker::ADAISpawnMarker()
 {
     PrimaryActorTick.bCanEverTick = false;
-    bIsEditorOnlyActor = true; // prevent this marker from appearing in game builds
+
+    // Mark as editor-only; the spawn manager caches transforms so runtime builds
+    // can still spawn at these locations without the marker actor.
+    bIsEditorOnlyActor = true;
 
     // Create scene root
     SceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("SceneRoot"));
