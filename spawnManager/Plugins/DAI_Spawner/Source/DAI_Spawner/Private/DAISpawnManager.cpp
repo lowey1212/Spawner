@@ -52,6 +52,72 @@ void ADAISpawnManager::OnConstruction(const FTransform& Transform)
     {
         DrawDebugArea();
     }
+
+    // Spawn preview actors and meshes for marker-based entries so designers can
+    // visualise placement in the editor.
+    for (AActor* Prev : EditorPreviewActors)
+    {
+        if (Prev)
+        {
+            Prev->Destroy();
+        }
+    }
+    EditorPreviewActors.Empty();
+    for (UStaticMeshComponent* Comp : EditorPreviewMeshes)
+    {
+        if (Comp)
+        {
+            Comp->DestroyComponent();
+        }
+    }
+    EditorPreviewMeshes.Empty();
+
+    if (UWorld* W2 = GetWorld())
+    {
+        for (const FSpawnEntry& Entry : SpawnEntries)
+        {
+            if (!Entry.bUseMarker || !IsValid(Entry.MarkerActor))
+            {
+                continue;
+            }
+
+            FVector ActorLoc = Entry.MarkerActor->GetActorLocation() + Entry.ActorOffset;
+            FVector MeshLoc = ActorLoc + Entry.MeshOffset;
+            if (const ADAISpawnMarker* Marker = Cast<ADAISpawnMarker>(Entry.MarkerActor))
+            {
+                if (Marker->SpawnPoint)
+                {
+                    MeshLoc = Marker->SpawnPoint->GetComponentLocation() + Entry.MeshOffset;
+                }
+            }
+
+            if (Entry.ActorClass)
+            {
+                FActorSpawnParameters Params;
+                Params.Owner = this;
+                Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+                Params.ObjectFlags |= RF_Transient;
+                Params.bNoFail = true;
+                if (AActor* Preview = W2->SpawnActor<AActor>(Entry.ActorClass, ActorLoc, FRotator::ZeroRotator, Params))
+                {
+                    Preview->SetActorHiddenInGame(true);
+                    Preview->bIsEditorOnlyActor = true;
+                    EditorPreviewActors.Add(Preview);
+                }
+            }
+
+            if (Entry.StaticMesh)
+            {
+                UStaticMeshComponent* SM = NewObject<UStaticMeshComponent>(this);
+                SM->SetStaticMesh(Entry.StaticMesh);
+                SM->SetWorldLocation(MeshLoc);
+                SM->SetMobility(EComponentMobility::Movable);
+                SM->SetFlags(RF_Transient);
+                SM->RegisterComponent();
+                EditorPreviewMeshes.Add(SM);
+            }
+        }
+    }
 #endif
 }
 
@@ -488,11 +554,16 @@ void ADAISpawnManager::Tick(float DeltaSeconds)
             {
                 if (const ADAISpawnMarker* Marker = Cast<ADAISpawnMarker>(Entry.MarkerActor))
                 {
-                    const FVector MarkerLoc = Marker->SpawnPoint
-                        ? Marker->SpawnPoint->GetComponentLocation()
-                        : Entry.MarkerActor->GetActorLocation();
-                    ActorLocation = MarkerLoc + Entry.ActorOffset;
-                    MeshLocation  = MarkerLoc + Entry.MeshOffset;
+                    // Actor spawns at the marker's root while the static mesh uses the optional SpawnPoint.
+                    ActorLocation = Entry.MarkerActor->GetActorLocation() + Entry.ActorOffset;
+                    if (Marker->SpawnPoint)
+                    {
+                        MeshLocation = Marker->SpawnPoint->GetComponentLocation() + Entry.MeshOffset;
+                    }
+                    else
+                    {
+                        MeshLocation = Entry.MarkerActor->GetActorLocation() + Entry.MeshOffset;
+                    }
                 }
                 else
                 {

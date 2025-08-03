@@ -13,6 +13,7 @@ class UMaterialInterface;
 class UPrimitiveComponent;
 class AVolume;
 class UPhysicalMaterial;
+class UStaticMeshComponent;
 
 /**
  * Enum describing the shape of the spawn area.  Circle and Square are
@@ -101,7 +102,7 @@ struct FSpawnEntry
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn", meta = (ClampMin = "0"))
     int32 MaxActive = 0;
 
-    /** Optional offset applied to the actor spawn location relative to the chosen spawn point. */
+    /** Optional offset applied to the actor spawn location.  When using a marker this is relative to the marker's root. */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement")
     FVector ActorOffset = FVector::ZeroVector;
 
@@ -113,8 +114,8 @@ struct FSpawnEntry
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Marker")
     bool bUseMarker = false;
 
-    /** Marker providing spawn transforms when bUseMarker is enabled.  The actor and static mesh use the
-     *  marker's SpawnPoint if available; otherwise the marker's root is used.
+    /** Marker providing spawn transforms when bUseMarker is enabled.  The actor spawns at the marker's root while the
+     *  static mesh uses the marker's SpawnPoint if available.  If the marker lacks a SpawnPoint the root is used for both.
      */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Marker", meta = (EditCondition = "bUseMarker"))
     AActor* MarkerActor = nullptr;
@@ -315,6 +316,14 @@ private:
 
     /** Clears non-persistent editor debug previews. */
     void ClearNonPersistentDebug();
+
+    /** Actors spawned in the editor to preview marker placements. */
+    UPROPERTY(Transient)
+    TArray<TObjectPtr<AActor>> EditorPreviewActors;
+
+    /** Mesh components spawned in the editor for previewing marker placements. */
+    UPROPERTY(Transient)
+    TArray<TObjectPtr<UStaticMeshComponent>> EditorPreviewMeshes;
 #endif
 
 private:
