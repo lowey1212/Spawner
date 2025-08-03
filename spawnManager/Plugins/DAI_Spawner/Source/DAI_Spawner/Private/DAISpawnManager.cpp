@@ -20,7 +20,7 @@
 #include "DAISpawnMarker.h"
 #include "NavigationSystem.h"
 #include "Engine/LevelStreaming.h"
-#include "Engine/Volume.h"
+#include "GameFramework/Volume.h"
 #include "PhysicalMaterials/PhysicalMaterial.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/KismetMathLibrary.h"
