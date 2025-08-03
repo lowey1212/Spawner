@@ -326,6 +326,29 @@ void USpawnManagerComponent::SpawnCycle(const FSpawnContext& Context)
             }
 
             FTransform SpawnTransform = GetOwner() ? GetOwner()->GetActorTransform() : FTransform::Identity;
+
+            // Apply random rotation
+            const FRotator RandRot(
+                FMath::FRandRange(Entry.RandomRotationMin.Pitch, Entry.RandomRotationMax.Pitch),
+                FMath::FRandRange(Entry.RandomRotationMin.Yaw, Entry.RandomRotationMax.Yaw),
+                FMath::FRandRange(Entry.RandomRotationMin.Roll, Entry.RandomRotationMax.Roll));
+            SpawnTransform.ConcatenateRotation(RandRot.Quaternion());
+
+            // Apply random scale
+            if (Entry.bUniformScale)
+            {
+                const float Scale = FMath::FRandRange(Entry.RandomScaleMin.X, Entry.RandomScaleMax.X);
+                SpawnTransform.SetScale3D(FVector(Scale));
+            }
+            else
+            {
+                const FVector Scale(
+                    FMath::FRandRange(Entry.RandomScaleMin.X, Entry.RandomScaleMax.X),
+                    FMath::FRandRange(Entry.RandomScaleMin.Y, Entry.RandomScaleMax.Y),
+                    FMath::FRandRange(Entry.RandomScaleMin.Z, Entry.RandomScaleMax.Z));
+                SpawnTransform.SetScale3D(Scale);
+            }
+
             FSpawnPool& Pool = Pools.FindOrAdd(Entry.ActorClass);
             AActor* Actor = Pool.Acquire(World, Entry.ActorClass, SpawnTransform);
             if (!Actor)

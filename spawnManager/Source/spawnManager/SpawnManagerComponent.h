@@ -179,6 +179,26 @@ struct FManagedSpawnEntry
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Spawn")
     UCurveFloat* DifficultyWeight = nullptr;
 
+    /** Minimum random rotation applied on spawn */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Spawn|Transform")
+    FRotator RandomRotationMin = FRotator::ZeroRotator;
+
+    /** Maximum random rotation applied on spawn */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Spawn|Transform")
+    FRotator RandomRotationMax = FRotator::ZeroRotator;
+
+    /** Minimum random scale applied on spawn */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Spawn|Transform")
+    FVector RandomScaleMin = FVector(1.f, 1.f, 1.f);
+
+    /** Maximum random scale applied on spawn */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Spawn|Transform")
+    FVector RandomScaleMax = FVector(1.f, 1.f, 1.f);
+
+    /** If true uses uniform scaling based on X of scale range */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Spawn|Transform")
+    bool bUniformScale = true;
+
     /** Cooldown settings */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Spawn")
     FSpawnCooldown Cooldown;
