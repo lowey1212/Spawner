@@ -1,0 +1,22 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "f:\\plugintest\\spawnmanager\\plugins\\dai_spawner\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\dai_spawner\\module.dai_spawner.cpp",
+        "ProvidedModule": "",
+        "PCH": "f:\\plugintest\\spawnmanager\\intermediate\\build\\win64\\x64\\spawnmanagereditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.inclorderunreal5_3.h.pch",
+        "Includes": [
+            "f:\\plugintest\\spawnmanager\\plugins\\dai_spawner\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\dai_spawner\\definitions.dai_spawner.h",
+            "f:\\plugintest\\spawnmanager\\plugins\\dai_spawner\\intermediate\\build\\win64\\unrealeditor\\inc\\dai_spawner\\uht\\daispawnmanager.gen.cpp",
+            "f:\\plugintest\\spawnmanager\\plugins\\dai_spawner\\source\\dai_spawner\\public\\daispawnmanager.h",
+            "f:\\plugintest\\spawnmanager\\plugins\\dai_spawner\\intermediate\\build\\win64\\unrealeditor\\inc\\dai_spawner\\uht\\daispawnmanager.generated.h",
+            "f:\\plugintest\\spawnmanager\\plugins\\dai_spawner\\intermediate\\build\\win64\\unrealeditor\\inc\\dai_spawner\\uht\\daispawnmarker.gen.cpp",
+            "f:\\plugintest\\spawnmanager\\plugins\\dai_spawner\\source\\dai_spawner\\public\\daispawnmarker.h",
+            "f:\\plugintest\\spawnmanager\\plugins\\dai_spawner\\intermediate\\build\\win64\\unrealeditor\\inc\\dai_spawner\\uht\\daispawnmarker.generated.h",
+            "f:\\plugintest\\spawnmanager\\plugins\\dai_spawner\\intermediate\\build\\win64\\unrealeditor\\inc\\dai_spawner\\uht\\dai_spawner.init.gen.cpp",
+            "f:\\plugintest\\spawnmanager\\plugins\\dai_spawner\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\dai_spawner\\permoduleinline.gen.cpp",
+            "f:\\ue_5_versions\\ue_5.5\\engine\\source\\runtime\\core\\public\\hal\\permoduleinline.inl"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
