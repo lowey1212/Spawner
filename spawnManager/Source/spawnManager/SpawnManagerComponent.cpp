@@ -12,7 +12,7 @@ USpawnManagerComponent::USpawnManagerComponent()
     PrimaryComponentTick.bCanEverTick = false;
 }
 
-bool USpawnManagerComponent::CanSpawnEntry(const FSpawnEntry& Entry) const
+bool USpawnManagerComponent::CanSpawnEntry(const FManagedSpawnEntry& Entry) const
 {
     if (Entry.GlobalCap >= 0)
     {
@@ -28,7 +28,7 @@ bool USpawnManagerComponent::CanSpawnEntry(const FSpawnEntry& Entry) const
     return true;
 }
 
-float USpawnManagerComponent::GetEntryWeight(const FSpawnEntry& Entry, const FSpawnContext& Context) const
+float USpawnManagerComponent::GetEntryWeight(const FManagedSpawnEntry& Entry, const FSpawnContext& Context) const
 {
     float Result = Entry.Weight;
 
@@ -56,7 +56,7 @@ float USpawnManagerComponent::GetEntryWeight(const FSpawnEntry& Entry, const FSp
     return Result;
 }
 
-bool USpawnManagerComponent::RespectCooldown(const FSpawnEntry& Entry) const
+bool USpawnManagerComponent::RespectCooldown(const FManagedSpawnEntry& Entry) const
 {
     const double Now = FPlatformTime::Seconds();
     const double* LastTime = nullptr;
@@ -97,7 +97,7 @@ bool USpawnManagerComponent::RespectCooldown(const FSpawnEntry& Entry) const
     return true;
 }
 
-void USpawnManagerComponent::UpdateCooldown(const FSpawnEntry& Entry)
+void USpawnManagerComponent::UpdateCooldown(const FManagedSpawnEntry& Entry)
 {
     const double Now = FPlatformTime::Seconds();
     switch (Entry.Cooldown.Scope)
@@ -122,7 +122,7 @@ void USpawnManagerComponent::UpdateCooldown(const FSpawnEntry& Entry)
 
 void USpawnManagerComponent::SpawnCycle(const FSpawnContext& Context)
 {
-    for (FSpawnEntry& Entry : Entries)
+    for (FManagedSpawnEntry& Entry : Entries)
     {
         if (!CanSpawnEntry(Entry) || !RespectCooldown(Entry))
         {
