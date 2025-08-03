@@ -1,6 +1,7 @@
 #include "SpawnManagerComponent.h"
 #include "GameFramework/Actor.h"
 #include "Engine/World.h"
+#include "TimerManager.h"
 
 TMap<FName, int32> USpawnManagerComponent::GlobalTagCounts;
 TMap<FName, double> USpawnManagerComponent::ClassCooldowns;
@@ -9,7 +10,181 @@ double USpawnManagerComponent::GlobalCooldownTime = 0.0;
 
 USpawnManagerComponent::USpawnManagerComponent()
 {
-    PrimaryComponentTick.bCanEverTick = false;
+    PrimaryComponentTick.bCanEverTick = true;
+}
+
+void USpawnManagerComponent::BeginPlay()
+{
+    Super::BeginPlay();
+    PrewarmPools();
+}
+
+void USpawnManagerComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+    Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+    const double Now = FPlatformTime::Seconds();
+
+    for (int32 Index = ActiveSpawns.Num() - 1; Index >= 0; --Index)
+    {
+        FActiveSpawn& Info = ActiveSpawns[Index];
+        if (!Info.Actor)
+        {
+            ActiveSpawns.RemoveAt(Index);
+            continue;
+        }
+
+        bool bDespawn = false;
+        if (Info.DespawnPolicy.TimeToLive >= 0.f && (Now - Info.SpawnTime) > Info.DespawnPolicy.TimeToLive)
+        {
+            bDespawn = true;
+        }
+        else if (Info.DespawnPolicy.MaxDistance >= 0.f)
+        {
+            const float DistSq = FVector::DistSquared(Info.SpawnTransform.GetLocation(), Info.Actor->GetActorLocation());
+            if (DistSq > FMath::Square(Info.DespawnPolicy.MaxDistance))
+            {
+                if (Info.DespawnPolicy.LeashRadius >= 0.f && DistSq > FMath::Square(Info.DespawnPolicy.LeashRadius))
+                {
+                    Info.Actor->SetActorLocation(Info.SpawnTransform.GetLocation());
+                }
+                else
+                {
+                    bDespawn = true;
+                }
+            }
+        }
+        else if (Info.DespawnPolicy.bDespawnOutOfView && !Info.Actor->WasRecentlyRendered(0.1f))
+        {
+            bDespawn = true;
+        }
+
+        if (bDespawn)
+        {
+            HandleDespawn(Index);
+        }
+    }
+}
+
+AActor* FSpawnPool::Acquire(UWorld* World, TSubclassOf<AActor> Class, const FTransform& Transform)
+{
+    if (!World)
+    {
+        return nullptr;
+    }
+    for (int32 i = 0; i < Inactive.Num(); ++i)
+    {
+        AActor* Actor = Inactive[i];
+        if (Actor && Actor->GetClass() == Class)
+        {
+            Inactive.RemoveAtSwap(i);
+            Actor->SetActorTransform(Transform);
+            Actor->SetActorHiddenInGame(false);
+            Actor->SetActorEnableCollision(true);
+            return Actor;
+        }
+    }
+    return World->SpawnActor<AActor>(Class, Transform);
+}
+
+void FSpawnPool::Release(AActor* Actor)
+{
+    if (!Actor)
+    {
+        return;
+    }
+    Actor->SetActorHiddenInGame(true);
+    Actor->SetActorEnableCollision(false);
+    Inactive.Add(Actor);
+}
+
+void USpawnManagerComponent::PrewarmPools()
+{
+    UWorld* World = GetWorld();
+    if (!World)
+    {
+        return;
+    }
+
+    for (const FManagedSpawnEntry& Entry : Entries)
+    {
+        if (!Entry.ActorClass || Entry.PrewarmCount <= 0)
+        {
+            continue;
+        }
+        FSpawnPool& Pool = Pools.FindOrAdd(Entry.ActorClass);
+        for (int32 i = 0; i < Entry.PrewarmCount; ++i)
+        {
+            AActor* Actor = Pool.Acquire(World, Entry.ActorClass, FTransform::Identity);
+            Pool.Release(Actor);
+        }
+    }
+}
+
+void USpawnManagerComponent::HandleDespawn(int32 Index)
+{
+    if (!ActiveSpawns.IsValidIndex(Index))
+    {
+        return;
+    }
+    FActiveSpawn Info = ActiveSpawns[Index];
+    ActiveSpawns.RemoveAt(Index);
+
+    if (Info.Actor)
+    {
+        FSpawnPool& Pool = Pools.FindOrAdd(Info.Actor->GetClass());
+        Pool.Release(Info.Actor);
+
+        if (Info.Respawn.bRespawnOnDeath)
+        {
+            FTimerHandle Handle;
+            GetWorld()->GetTimerManager().SetTimer(Handle, [this, Info]()
+            {
+                FSpawnContext Context;
+                SpawnCycle(Context);
+            }, Info.Respawn.RespawnDelay, false);
+        }
+    }
+}
+
+TArray<FPersistentSpawnData> USpawnManagerComponent::SaveActiveSpawns() const
+{
+    TArray<FPersistentSpawnData> Result;
+    for (const FActiveSpawn& Spawn : ActiveSpawns)
+    {
+        if (Spawn.Actor)
+        {
+            FPersistentSpawnData Data;
+            Data.ActorClass = Spawn.Actor->GetClass();
+            Data.Transform = Spawn.Actor->GetActorTransform();
+            Result.Add(Data);
+        }
+    }
+    return Result;
+}
+
+void USpawnManagerComponent::LoadActiveSpawns(const TArray<FPersistentSpawnData>& Data)
+{
+    UWorld* World = GetWorld();
+    if (!World)
+    {
+        return;
+    }
+    for (const FPersistentSpawnData& Entry : Data)
+    {
+        if (!Entry.ActorClass)
+        {
+            continue;
+        }
+        FSpawnPool& Pool = Pools.FindOrAdd(Entry.ActorClass);
+        AActor* Actor = Pool.Acquire(World, Entry.ActorClass, Entry.Transform);
+
+        FActiveSpawn SpawnInfo;
+        SpawnInfo.Actor = Actor;
+        SpawnInfo.SpawnTransform = Entry.Transform;
+        SpawnInfo.SpawnTime = FPlatformTime::Seconds();
+        ActiveSpawns.Add(SpawnInfo);
+    }
 }
 
 bool USpawnManagerComponent::CanSpawnEntry(const FManagedSpawnEntry& Entry) const
@@ -122,6 +297,15 @@ void USpawnManagerComponent::UpdateCooldown(const FManagedSpawnEntry& Entry)
 
 void USpawnManagerComponent::SpawnCycle(const FSpawnContext& Context)
 {
+    UWorld* World = GetWorld();
+    if (!World)
+    {
+        return;
+    }
+
+    const double StartTime = FPlatformTime::Seconds();
+    int32 SpawnedThisFrame = 0;
+
     for (FManagedSpawnEntry& Entry : Entries)
     {
         if (!CanSpawnEntry(Entry) || !RespectCooldown(Entry))
@@ -132,12 +316,37 @@ void USpawnManagerComponent::SpawnCycle(const FSpawnContext& Context)
         int32 DesiredCount = FMath::RandRange(Entry.MinPerCycle, Entry.MaxPerCycle);
         for (int32 i = 0; i < DesiredCount; ++i)
         {
-            // Actual spawning would occur here. Implementation is project specific.
+            if (SpawnedThisFrame >= SpawnCountBudget)
+            {
+                return;
+            }
+            if ((FPlatformTime::Seconds() - StartTime) * 1000.0 >= SpawnTimeBudgetMs)
+            {
+                return;
+            }
+
+            FTransform SpawnTransform = GetOwner() ? GetOwner()->GetActorTransform() : FTransform::Identity;
+            FSpawnPool& Pool = Pools.FindOrAdd(Entry.ActorClass);
+            AActor* Actor = Pool.Acquire(World, Entry.ActorClass, SpawnTransform);
+            if (!Actor)
+            {
+                continue;
+            }
+
+            FActiveSpawn Info;
+            Info.Actor = Actor;
+            Info.SpawnTransform = SpawnTransform;
+            Info.SpawnTime = FPlatformTime::Seconds();
+            Info.DespawnPolicy = Entry.DespawnPolicy;
+            Info.Respawn = Entry.RespawnSettings;
+            ActiveSpawns.Add(Info);
+
             for (const FGameplayTag& Tag : Entry.Tags)
             {
                 GlobalTagCounts.FindOrAdd(Tag.GetTagName())++;
             }
             UpdateCooldown(Entry);
+            SpawnedThisFrame++;
         }
     }
 }
