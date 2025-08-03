@@ -278,8 +278,8 @@ protected:
 
 
 public:
-#if WITH_EDITORONLY_DATA
     virtual void Tick(float DeltaSeconds) override;
+#if WITH_EDITOR
     virtual bool ShouldTickIfViewportsOnly() const override { return bDebug; }
 #endif
 
