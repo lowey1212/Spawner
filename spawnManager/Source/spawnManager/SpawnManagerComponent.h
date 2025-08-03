@@ -34,9 +34,11 @@ struct FSpawnCooldown
     ECooldownScope Scope = ECooldownScope::PerClass;
 };
 
-/** Entry describing what and how to spawn */
+/** Entry describing what and how to spawn.
+ *  Renamed to avoid clashing with similarly named structs in other modules.
+ */
 USTRUCT(BlueprintType)
-struct FSpawnEntry
+struct FManagedSpawnEntry
 {
     GENERATED_BODY()
 
@@ -115,17 +117,17 @@ public:
 
     /** Entries available for spawning */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Spawn")
-    TArray<FSpawnEntry> Entries;
+    TArray<FManagedSpawnEntry> Entries;
 
     /** Perform a spawn cycle based on context */
     UFUNCTION(BlueprintCallable, Category="Spawn")
     void SpawnCycle(const FSpawnContext& Context);
 
 protected:
-    bool CanSpawnEntry(const FSpawnEntry& Entry) const;
-    float GetEntryWeight(const FSpawnEntry& Entry, const FSpawnContext& Context) const;
-    bool RespectCooldown(const FSpawnEntry& Entry) const;
-    void UpdateCooldown(const FSpawnEntry& Entry);
+    bool CanSpawnEntry(const FManagedSpawnEntry& Entry) const;
+    float GetEntryWeight(const FManagedSpawnEntry& Entry, const FSpawnContext& Context) const;
+    bool RespectCooldown(const FManagedSpawnEntry& Entry) const;
+    void UpdateCooldown(const FManagedSpawnEntry& Entry);
 
     static TMap<FName, int32> GlobalTagCounts;
     static TMap<FName, double> ClassCooldowns;
