@@ -18,6 +18,13 @@
 #include "DrawDebugHelpers.h"
 #include "Components/StaticMeshComponent.h"
 #include "DAISpawnMarker.h"
+#include "NavigationSystem.h"
+#include "Engine/LevelStreaming.h"
+#include "GameFramework/Volume.h"
+#include "PhysicalMaterials/PhysicalMaterial.h"
+#include "Kismet/KismetSystemLibrary.h"
+#include "Kismet/KismetMathLibrary.h"
+#include "CollisionShape.h"
 
  // Sets default values
 ADAISpawnManager::ADAISpawnManager()
@@ -65,6 +72,14 @@ void ADAISpawnManager::SpawnActors()
 
 void ADAISpawnManager::SpawnActorsInternal()
 {
+    if (bWaitForLevelToLoad && RequiredLevelName != NAME_None)
+    {
+        ULevelStreaming* Streamed = UGameplayStatics::GetStreamingLevel(this, RequiredLevelName);
+        if (!Streamed || !Streamed->IsLevelLoaded())
+        {
+            return;
+        }
+    }
     // If there are no entries there is nothing to spawn
     if (SpawnEntries.Num() == 0)
     {
@@ -466,15 +481,135 @@ void ADAISpawnManager::Tick(float DeltaSeconds)
             continue;
         }
         FSpawnEntry& Entry = SpawnEntries[Item.PerEntryIndex];
-        // Determine spawn locations. Actor spawns at GetSpawnLocation; mesh spawns at marker when using marker
-        const FVector ActorLocation = GetSpawnLocation();
-        FVector MeshLocation = ActorLocation;
-        if (bUseMarker && IsValid(MarkerActor))
+        FVector ActorLocation = FVector::ZeroVector;
+        FVector MeshLocation = FVector::ZeroVector;
+        FRotator SpawnRot = FRotator::ZeroRotator;
+        bool bLocationValid = false;
+        constexpr int32 MaxAttempts = 5;
+        for (int32 Attempt = 0; Attempt < MaxAttempts && !bLocationValid; ++Attempt)
         {
-            MeshLocation = MarkerActor->GetActorLocation();
+            ActorLocation = GetSpawnLocation() + Entry.ActorOffset;
+            MeshLocation = (bUseMarker && IsValid(MarkerActor))
+                ? MarkerActor->GetActorLocation() + Entry.MeshOffset
+                : ActorLocation + Entry.MeshOffset;
+
+            if (bProjectToNavMesh)
+            {
+                FNavLocation NavLoc;
+                if (UNavigationSystemV1* NavSys = FNavigationSystem::GetCurrent<UNavigationSystemV1>(World))
+                {
+                    if (NavSys->ProjectPointToNavigation(ActorLocation, NavLoc))
+                    {
+                        ActorLocation = NavLoc.Location;
+                    }
+                }
+            }
+
+            FHitResult GroundHit;
+            const FVector TraceStart = ActorLocation + FVector(0.f, 0.f, 500.f);
+            const FVector TraceEnd = ActorLocation - FVector(0.f, 0.f, 500.f);
+            World->LineTraceSingleByChannel(GroundHit, TraceStart, TraceEnd, ECC_Visibility);
+            if (GroundHit.bBlockingHit)
+            {
+                // Forbidden material or tags
+                if (GroundHit.PhysMaterial.IsValid() && ForbiddenPhysMaterials.Contains(GroundHit.PhysMaterial.Get()))
+                {
+                    continue;
+                }
+                if (AActor* HitActor = GroundHit.GetActor())
+                {
+                    bool bHasForbidden = false;
+                    for (const FName& Tag : ForbiddenActorTags)
+                    {
+                        if (HitActor->ActorHasTag(Tag))
+                        {
+                            bHasForbidden = true;
+                            break;
+                        }
+                    }
+                    if (bHasForbidden)
+                    {
+                        continue;
+                    }
+                }
+                if (bAlignToGround)
+                {
+                    if (bFaceMarkerForward && bUseMarker && IsValid(MarkerActor))
+                    {
+                        SpawnRot = UKismetMathLibrary::MakeRotFromXZ(MarkerActor->GetActorForwardVector(), GroundHit.ImpactNormal);
+                    }
+                    else
+                    {
+                        SpawnRot = UKismetMathLibrary::MakeRotFromZ(GroundHit.ImpactNormal);
+                    }
+                }
+            }
+
+            bool bInsideInclusion = InclusionVolumes.Num() == 0;
+            for (AVolume* Vol : InclusionVolumes)
+            {
+                if (Vol && Vol->EncompassesPoint(ActorLocation))
+                {
+                    bInsideInclusion = true;
+                    break;
+                }
+            }
+            if (!bInsideInclusion)
+            {
+                continue;
+            }
+            bool bHitExclusion = false;
+            for (AVolume* Vol : ExclusionVolumes)
+            {
+                if (Vol && Vol->EncompassesPoint(ActorLocation))
+                {
+                    bHitExclusion = true;
+                    break;
+                }
+            }
+            if (bHitExclusion)
+            {
+                continue;
+            }
+
+            if (SafePlacementRadius > 0.f)
+            {
+                const FCollisionShape Sphere = FCollisionShape::MakeSphere(SafePlacementRadius);
+                if (World->OverlapBlockingTestByChannel(ActorLocation, FQuat::Identity, ECC_WorldStatic, Sphere) ||
+                    World->OverlapBlockingTestByChannel(ActorLocation, FQuat::Identity, ECC_WorldDynamic, Sphere))
+                {
+                    continue;
+                }
+            }
+
+            if (MinDistanceBetweenSpawns > 0.f)
+            {
+                bool bTooClose = false;
+                const float MinDistSq = FMath::Square(MinDistanceBetweenSpawns);
+                for (const FVector& Prev : RecentSpawnLocations)
+                {
+                    if (FVector::DistSquared(Prev, ActorLocation) < MinDistSq)
+                    {
+                        bTooClose = true;
+                        break;
+                    }
+                }
+                if (bTooClose)
+                {
+                    continue;
+                }
+            }
+
+            bLocationValid = true;
         }
+
+        if (!bLocationValid)
+        {
+            PendingSpawns.RemoveAt(0);
+            continue;
+        }
+
         // Spawn the actor
-        const FRotator SpawnRot = FRotator::ZeroRotator;
         FActorSpawnParameters Params;
         Params.Owner = this;
         Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
@@ -503,6 +638,7 @@ void ADAISpawnManager::Tick(float DeltaSeconds)
                 HISM->AddInstance(InstT);
             }
         }
+        RecentSpawnLocations.Add(ActorLocation);
         SpawnedThisTick++;
         Item.Count--;
         if (Item.Count <= 0)
