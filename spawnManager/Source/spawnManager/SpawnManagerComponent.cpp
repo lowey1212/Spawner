@@ -348,6 +348,7 @@ void USpawnManagerComponent::SpawnCycle(const FSpawnContext& Context)
             }
 
             FTransform SpawnTransform = GetOwner() ? GetOwner()->GetActorTransform() : FTransform::Identity;
+            SpawnTransform.SetLocation(SpawnTransform.GetLocation() + SpawnTransform.GetRotation().RotateVector(Entry.LocationOffset));
 
             // Apply random rotation
             const FRotator RandRot(

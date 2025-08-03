@@ -262,6 +262,10 @@ struct FManagedSpawnEntry
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Spawn")
     UCurveFloat* DifficultyWeight = nullptr;
 
+    /** Location offset applied on spawn */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Spawn|Transform")
+    FVector LocationOffset = FVector::ZeroVector;
+
     /** Minimum random rotation applied on spawn */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Spawn|Transform")
     FRotator RandomRotationMin = FRotator::ZeroRotator;
