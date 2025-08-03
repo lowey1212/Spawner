@@ -276,22 +276,6 @@ bool ADAISpawnManager::CanSpawnForEntry_Implementation(const FSpawnEntry& Entry)
 
 FVector ADAISpawnManager::GetSpawnLocation() const
 {
-    // If a marker actor is provided and enabled we attempt to use its spawn point.  If the
-    // marker actor derives from ADAISpawnMarker and has a SpawnPoint component we
-    // return that component's world location for the NPC spawn.  Otherwise we fall
-    // back to the marker actor's location.
-    if (bUseMarker && IsValid(MarkerActor))
-    {
-        if (const ADAISpawnMarker* Marker = Cast<ADAISpawnMarker>(MarkerActor))
-        {
-            if (Marker->SpawnPoint)
-            {
-                return Marker->SpawnPoint->GetComponentLocation();
-            }
-        }
-        return MarkerActor->GetActorLocation();
-    }
-
     // Spawn relative to the manager's location.
     const FVector Origin = GetActorLocation();
 
@@ -488,10 +472,30 @@ void ADAISpawnManager::Tick(float DeltaSeconds)
         constexpr int32 MaxAttempts = 5;
         for (int32 Attempt = 0; Attempt < MaxAttempts && !bLocationValid; ++Attempt)
         {
-            ActorLocation = GetSpawnLocation() + Entry.ActorOffset;
-            MeshLocation = (bUseMarker && IsValid(MarkerActor))
-                ? MarkerActor->GetActorLocation() + Entry.MeshOffset
-                : ActorLocation + Entry.MeshOffset;
+            if (Entry.bUseMarker && IsValid(Entry.MarkerActor))
+            {
+                ActorLocation = Entry.MarkerActor->GetActorLocation() + Entry.ActorOffset;
+                if (const ADAISpawnMarker* Marker = Cast<ADAISpawnMarker>(Entry.MarkerActor))
+                {
+                    if (Marker->SpawnPoint)
+                    {
+                        MeshLocation = Marker->SpawnPoint->GetComponentLocation() + Entry.MeshOffset;
+                    }
+                    else
+                    {
+                        MeshLocation = Entry.MarkerActor->GetActorLocation() + Entry.MeshOffset;
+                    }
+                }
+                else
+                {
+                    MeshLocation = Entry.MarkerActor->GetActorLocation() + Entry.MeshOffset;
+                }
+            }
+            else
+            {
+                ActorLocation = GetSpawnLocation() + Entry.ActorOffset;
+                MeshLocation = ActorLocation + Entry.MeshOffset;
+            }
 
             if (bProjectToNavMesh)
             {
@@ -534,9 +538,9 @@ void ADAISpawnManager::Tick(float DeltaSeconds)
                 }
                 if (bAlignToGround)
                 {
-                    if (bFaceMarkerForward && bUseMarker && IsValid(MarkerActor))
+                    if (bFaceMarkerForward && Entry.bUseMarker && IsValid(Entry.MarkerActor))
                     {
-                        SpawnRot = UKismetMathLibrary::MakeRotFromXZ(MarkerActor->GetActorForwardVector(), GroundHit.ImpactNormal);
+                        SpawnRot = UKismetMathLibrary::MakeRotFromXZ(Entry.MarkerActor->GetActorForwardVector(), GroundHit.ImpactNormal);
                     }
                     else
                     {
