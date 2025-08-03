@@ -310,7 +310,7 @@ private:
     /** Get or create the HISM for a given mesh. */
     UHierarchicalInstancedStaticMeshComponent* GetOrCreateHISM(UStaticMesh* Mesh);
 
-#if WITH_EDITOR
+#if WITH_EDITORONLY_DATA
     /** Redraws non-persistent debug shapes. */
     void DrawDebugArea() const;
 

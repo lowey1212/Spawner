@@ -1,0 +1,14 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "f:\\githubdesktop\\spawner\\spawnmanager\\source\\spawnmanager\\myclass.cpp",
+        "ProvidedModule": "",
+        "PCH": "f:\\githubdesktop\\spawner\\spawnmanager\\intermediate\\build\\win64\\x64\\spawnmanagereditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.inclorderunreal5_3.h.pch",
+        "Includes": [
+            "f:\\githubdesktop\\spawner\\spawnmanager\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\spawnmanager\\definitions.spawnmanager.h",
+            "f:\\githubdesktop\\spawner\\spawnmanager\\source\\spawnmanager\\myclass.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

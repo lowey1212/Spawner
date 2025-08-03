@@ -6,10 +6,7 @@
 /NAME:"UnrealEditor-DAI_Spawner.dll"
 /IGNORE:4221
 /NODEFAULTLIB
-"F:\PluginTest\spawnManager\Intermediate\Build\Win64\x64\spawnManagerEditor\Development\UnrealEd\SharedPCH.UnrealEd.Project.ValApi.Cpp20.InclOrderUnreal5_3.h.obj"
-"F:\PluginTest\spawnManager\Plugins\DAI_Spawner\Intermediate\Build\Win64\x64\UnrealEditor\Development\DAI_Spawner\Module.DAI_Spawner.cpp.obj"
-"F:\PluginTest\spawnManager\Plugins\DAI_Spawner\Intermediate\Build\Win64\x64\UnrealEditor\Development\DAI_Spawner\DAISpawnManager.cpp.obj"
-"F:\PluginTest\spawnManager\Plugins\DAI_Spawner\Intermediate\Build\Win64\x64\UnrealEditor\Development\DAI_Spawner\DAISpawnMarker.cpp.obj"
-"F:\PluginTest\spawnManager\Plugins\DAI_Spawner\Intermediate\Build\Win64\x64\UnrealEditor\Development\DAI_Spawner\DAI_Spawner.cpp.obj"
-"F:\PluginTest\spawnManager\Plugins\DAI_Spawner\Intermediate\Build\Win64\x64\UnrealEditor\Development\DAI_Spawner\Default.rc2.res"
-/OUT:"F:\PluginTest\spawnManager\Plugins\DAI_Spawner\Intermediate\Build\Win64\x64\UnrealEditor\Development\DAI_Spawner\UnrealEditor-DAI_Spawner.lib"
+"F:\githubdesktop\Spawner\spawnManager\Intermediate\Build\Win64\x64\spawnManagerEditor\Development\UnrealEd\SharedPCH.UnrealEd.Project.ValApi.Cpp20.InclOrderUnreal5_3.h.obj"
+"F:\githubdesktop\Spawner\spawnManager\Plugins\DAI_Spawner\Intermediate\Build\Win64\x64\UnrealEditor\Development\DAI_Spawner\Module.DAI_Spawner.cpp.obj"
+"F:\githubdesktop\Spawner\spawnManager\Plugins\DAI_Spawner\Intermediate\Build\Win64\x64\UnrealEditor\Development\DAI_Spawner\Default.rc2.res"
+/OUT:"F:\githubdesktop\Spawner\spawnManager\Plugins\DAI_Spawner\Intermediate\Build\Win64\x64\UnrealEditor\Development\DAI_Spawner\UnrealEditor-DAI_Spawner.lib"
