@@ -5,11 +5,11 @@
 #include "GameplayTagContainer.h"
 #include "Curves/CurveFloat.h"
 #include "TimerManager.h"
+#include "NiagaraSystem.h"
 #include "SpawnManagerComponent.generated.h"
 
 class UStaticMesh;
 class UMaterialInterface;
-class UNiagaraSystem;
 
 /** Scope for spawn cooldowns */
 UENUM(BlueprintType)
