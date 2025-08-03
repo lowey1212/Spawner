@@ -480,10 +480,12 @@ void ADAISpawnManager::Tick(float DeltaSeconds)
         FVector MeshLocation = FVector::ZeroVector;
         FRotator SpawnRot = FRotator::ZeroRotator;
         bool bLocationValid = false;
-        constexpr int32 MaxAttempts = 5;
+
+        const bool bUsingMarker = Entry.bUseMarker && IsValid(Entry.MarkerActor);
+        const int32 MaxAttempts = bUsingMarker ? 1 : 5;
         for (int32 Attempt = 0; Attempt < MaxAttempts && !bLocationValid; ++Attempt)
         {
-            if (Entry.bUseMarker && IsValid(Entry.MarkerActor))
+            if (bUsingMarker)
             {
                 ActorLocation = Entry.MarkerActor->GetActorLocation() + Entry.ActorOffset;
                 if (const ADAISpawnMarker* Marker = Cast<ADAISpawnMarker>(Entry.MarkerActor))
@@ -506,16 +508,16 @@ void ADAISpawnManager::Tick(float DeltaSeconds)
             {
                 ActorLocation = GetSpawnLocation() + Entry.ActorOffset;
                 MeshLocation = ActorLocation + Entry.MeshOffset;
-            }
 
-            if (bProjectToNavMesh)
-            {
-                FNavLocation NavLoc;
-                if (UNavigationSystemV1* NavSys = FNavigationSystem::GetCurrent<UNavigationSystemV1>(World))
+                if (bProjectToNavMesh)
                 {
-                    if (NavSys->ProjectPointToNavigation(ActorLocation, NavLoc))
+                    FNavLocation NavLoc;
+                    if (UNavigationSystemV1* NavSys = FNavigationSystem::GetCurrent<UNavigationSystemV1>(World))
                     {
-                        ActorLocation = NavLoc.Location;
+                        if (NavSys->ProjectPointToNavigation(ActorLocation, NavLoc))
+                        {
+                            ActorLocation = NavLoc.Location;
+                        }
                     }
                 }
             }
