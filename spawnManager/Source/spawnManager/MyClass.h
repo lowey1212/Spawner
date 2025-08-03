@@ -10,6 +10,9 @@
 class SPAWNMANAGER_API MyClass
 {
 public:
-	MyClass();
-	~MyClass();
+        MyClass();
+        /**
+         * Virtual destructor to ensure proper cleanup when inherited.
+         */
+        virtual ~MyClass();
 };
