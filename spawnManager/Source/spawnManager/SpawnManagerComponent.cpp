@@ -2,6 +2,8 @@
 #include "GameFramework/Actor.h"
 #include "Engine/World.h"
 #include "TimerManager.h"
+#include "Engine/StaticMeshActor.h"
+#include "Components/StaticMeshComponent.h"
 
 TMap<FName, int32> USpawnManagerComponent::GlobalTagCounts;
 TMap<FName, double> USpawnManagerComponent::ClassCooldowns;
@@ -134,16 +136,24 @@ void USpawnManagerComponent::HandleDespawn(int32 Index)
     {
         FSpawnPool& Pool = Pools.FindOrAdd(Info.Actor->GetClass());
         Pool.Release(Info.Actor);
+    }
 
-        if (Info.Respawn.bRespawnOnDeath)
+    for (AActor* Companion : Info.Companions)
+    {
+        if (Companion)
         {
-            FTimerHandle Handle;
-            GetWorld()->GetTimerManager().SetTimer(Handle, [this, Info]()
-            {
-                FSpawnContext Context;
-                SpawnCycle(Context);
-            }, Info.Respawn.RespawnDelay, false);
+            Companion->Destroy();
         }
+    }
+
+    if (Info.Actor && Info.Respawn.bRespawnOnDeath)
+    {
+        FTimerHandle Handle;
+        GetWorld()->GetTimerManager().SetTimer(Handle, [this]()
+        {
+            FSpawnContext Context;
+            SpawnCycle(Context);
+        }, Info.Respawn.RespawnDelay, false);
     }
 }
 
@@ -362,6 +372,74 @@ void USpawnManagerComponent::SpawnCycle(const FSpawnContext& Context)
             Info.SpawnTime = FPlatformTime::Seconds();
             Info.DespawnPolicy = Entry.DespawnPolicy;
             Info.Respawn = Entry.RespawnSettings;
+
+            // Spawn any companion static meshes
+            for (const FStaticMeshCompanion& Companion : Entry.StaticMeshCompanions)
+            {
+                if (!Companion.Mesh)
+                {
+                    continue;
+                }
+
+                FTransform CompanionTransform = SpawnTransform;
+                if (Companion.Placement == ECompanionPlacement::AtActor)
+                {
+                    CompanionTransform = Actor->GetActorTransform();
+                }
+                else if (Companion.Placement == ECompanionPlacement::OffsetForward)
+                {
+                    CompanionTransform = Actor->GetActorTransform();
+                    CompanionTransform.AddToTranslation(Actor->GetActorForwardVector() * Companion.ForwardOffset);
+                }
+
+                const FRotator RandRot(
+                    FMath::FRandRange(Companion.RandomRotationMin.Pitch, Companion.RandomRotationMax.Pitch),
+                    FMath::FRandRange(Companion.RandomRotationMin.Yaw, Companion.RandomRotationMax.Yaw),
+                    FMath::FRandRange(Companion.RandomRotationMin.Roll, Companion.RandomRotationMax.Roll));
+                CompanionTransform.ConcatenateRotation(RandRot.Quaternion());
+
+                if (Companion.bUniformScale)
+                {
+                    const float Scale = FMath::FRandRange(Companion.RandomScaleMin.X, Companion.RandomScaleMax.X);
+                    CompanionTransform.SetScale3D(FVector(Scale));
+                }
+                else
+                {
+                    const FVector Scale(
+                        FMath::FRandRange(Companion.RandomScaleMin.X, Companion.RandomScaleMax.X),
+                        FMath::FRandRange(Companion.RandomScaleMin.Y, Companion.RandomScaleMax.Y),
+                        FMath::FRandRange(Companion.RandomScaleMin.Z, Companion.RandomScaleMax.Z));
+                    CompanionTransform.SetScale3D(Scale);
+                }
+
+                AStaticMeshActor* MeshActor = World->SpawnActor<AStaticMeshActor>(CompanionTransform);
+                if (!MeshActor)
+                {
+                    continue;
+                }
+
+                UStaticMeshComponent* MeshComp = MeshActor->GetStaticMeshComponent();
+                if (MeshComp)
+                {
+                    MeshComp->SetStaticMesh(Companion.Mesh);
+                    if (Companion.MaterialOverrides.Num() > 0)
+                    {
+                        int32 MatIdx = FMath::RandHelper(Companion.MaterialOverrides.Num());
+                        MeshComp->SetMaterial(0, Companion.MaterialOverrides[MatIdx]);
+                    }
+                }
+
+                if (Companion.Lifetime == ECompanionLifetime::TiedToActor)
+                {
+                    MeshActor->AttachToActor(Actor, FAttachmentTransformRules::KeepWorldTransform);
+                    Info.Companions.Add(MeshActor);
+                }
+                else if (Companion.Lifetime == ECompanionLifetime::TimedFade)
+                {
+                    MeshActor->SetLifeSpan(Companion.LifetimeSeconds);
+                }
+            }
+
             ActiveSpawns.Add(Info);
 
             for (const FGameplayTag& Tag : Entry.Tags)

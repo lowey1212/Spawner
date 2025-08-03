@@ -7,6 +7,10 @@
 #include "TimerManager.h"
 #include "SpawnManagerComponent.generated.h"
 
+class UStaticMesh;
+class UMaterialInterface;
+class UNiagaraSystem;
+
 /** Scope for spawn cooldowns */
 UENUM(BlueprintType)
 enum class ECooldownScope : uint8
@@ -85,6 +89,79 @@ struct FRespawnSettings
     float DifficultyMultiplier = 1.f;
 };
 
+/** Determines how long a companion mesh should persist */
+UENUM(BlueprintType)
+enum class ECompanionLifetime : uint8
+{
+    Permanent,
+    TiedToActor,
+    TimedFade
+};
+
+/** Determines where a companion mesh should be placed */
+UENUM(BlueprintType)
+enum class ECompanionPlacement : uint8
+{
+    AtMarker,
+    AtActor,
+    OffsetForward
+};
+
+/** Configuration for a static mesh spawned alongside the main actor */
+USTRUCT(BlueprintType)
+struct FStaticMeshCompanion
+{
+    GENERATED_BODY();
+
+    /** Mesh to spawn */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Companion")
+    UStaticMesh* Mesh = nullptr;
+
+    /** Optional material overrides; a random one is chosen */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Companion")
+    TArray<UMaterialInterface*> MaterialOverrides;
+
+    /** Lifetime policy for the mesh */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Companion")
+    ECompanionLifetime Lifetime = ECompanionLifetime::Permanent;
+
+    /** Seconds before despawn when using TimedFade */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Companion", meta=(EditCondition="Lifetime==ECompanionLifetime::TimedFade"))
+    float LifetimeSeconds = 0.f;
+
+    /** Placement relative to spawn */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Companion")
+    ECompanionPlacement Placement = ECompanionPlacement::AtMarker;
+
+    /** Forward offset when Placement is OffsetForward */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Companion", meta=(EditCondition="Placement==ECompanionPlacement::OffsetForward"))
+    float ForwardOffset = 0.f;
+
+    /** Minimum random rotation */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Companion|Transform")
+    FRotator RandomRotationMin = FRotator::ZeroRotator;
+
+    /** Maximum random rotation */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Companion|Transform")
+    FRotator RandomRotationMax = FRotator::ZeroRotator;
+
+    /** Minimum random scale */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Companion|Transform")
+    FVector RandomScaleMin = FVector(1.f, 1.f, 1.f);
+
+    /** Maximum random scale */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Companion|Transform")
+    FVector RandomScaleMax = FVector(1.f, 1.f, 1.f);
+
+    /** If true uses uniform scaling based on X of scale range */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Companion|Transform")
+    bool bUniformScale = true;
+
+    /** Optional Niagara effect when despawning */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Companion")
+    UNiagaraSystem* DespawnEffect = nullptr;
+};
+
 /** Simple persistent representation of a spawned actor */
 USTRUCT(BlueprintType)
 struct FPersistentSpawnData
@@ -131,6 +208,10 @@ struct FActiveSpawn
 
     UPROPERTY()
     FRespawnSettings Respawn;
+
+    /** Companion actors spawned alongside the main actor */
+    UPROPERTY()
+    TArray<AActor*> Companions;
 };
 
 /** Entry describing what and how to spawn.
@@ -210,6 +291,10 @@ struct FManagedSpawnEntry
     /** Respawn configuration */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Spawn|Lifecycle")
     FRespawnSettings RespawnSettings;
+
+    /** Companion static meshes to spawn with the actor */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Spawn|Companion")
+    TArray<FStaticMeshCompanion> StaticMeshCompanions;
 
     /** Number of actors to prewarm in the pool on BeginPlay */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Spawn|Performance")
