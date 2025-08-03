@@ -42,6 +42,30 @@ ADAISpawnManager::ADAISpawnManager()
 void ADAISpawnManager::OnConstruction(const FTransform& Transform)
 {
     Super::OnConstruction(Transform);
+    // Cache marker transforms so shipping builds can spawn without editor-only actors.
+    for (FSpawnEntry& Entry : SpawnEntries)
+    {
+        if (Entry.bUseMarker && IsValid(Entry.MarkerActor))
+        {
+            Entry.CachedMarkerTransform = Entry.MarkerActor->GetActorTransform();
+            if (const ADAISpawnMarker* Marker = Cast<ADAISpawnMarker>(Entry.MarkerActor))
+            {
+                if (Marker->SpawnPoint)
+                {
+                    Entry.CachedSpawnPointTransform = Marker->SpawnPoint->GetComponentTransform();
+                }
+                else
+                {
+                    Entry.CachedSpawnPointTransform = Entry.MarkerActor->GetActorTransform();
+                }
+            }
+            else
+            {
+                Entry.CachedSpawnPointTransform = Entry.MarkerActor->GetActorTransform();
+            }
+            Entry.bCachedTransformsValid = true;
+        }
+    }
 #if WITH_EDITOR
     if (UWorld* W = GetWorld())
     {
@@ -481,18 +505,25 @@ void ADAISpawnManager::Tick(float DeltaSeconds)
         FRotator SpawnRot = FRotator::ZeroRotator;
         bool bLocationValid = false;
 
-        const bool bUsingMarker = Entry.bUseMarker && IsValid(Entry.MarkerActor);
+        const bool bUsingMarker = Entry.bUseMarker && (IsValid(Entry.MarkerActor) || Entry.bCachedTransformsValid);
         const int32 MaxAttempts = bUsingMarker ? 1 : 5;
         for (int32 Attempt = 0; Attempt < MaxAttempts && !bLocationValid; ++Attempt)
         {
             if (bUsingMarker)
             {
-                ActorLocation = Entry.MarkerActor->GetActorLocation() + Entry.ActorOffset;
-                if (const ADAISpawnMarker* Marker = Cast<ADAISpawnMarker>(Entry.MarkerActor))
+                if (IsValid(Entry.MarkerActor))
                 {
-                    if (Marker->SpawnPoint)
+                    ActorLocation = Entry.MarkerActor->GetActorLocation() + Entry.ActorOffset;
+                    if (const ADAISpawnMarker* Marker = Cast<ADAISpawnMarker>(Entry.MarkerActor))
                     {
-                        MeshLocation = Marker->SpawnPoint->GetComponentLocation() + Entry.MeshOffset;
+                        if (Marker->SpawnPoint)
+                        {
+                            MeshLocation = Marker->SpawnPoint->GetComponentLocation() + Entry.MeshOffset;
+                        }
+                        else
+                        {
+                            MeshLocation = Entry.MarkerActor->GetActorLocation() + Entry.MeshOffset;
+                        }
                     }
                     else
                     {
@@ -501,7 +532,8 @@ void ADAISpawnManager::Tick(float DeltaSeconds)
                 }
                 else
                 {
-                    MeshLocation = Entry.MarkerActor->GetActorLocation() + Entry.MeshOffset;
+                    ActorLocation = Entry.CachedMarkerTransform.GetLocation() + Entry.ActorOffset;
+                    MeshLocation  = Entry.CachedSpawnPointTransform.GetLocation() + Entry.MeshOffset;
                 }
             }
             else
@@ -551,9 +583,12 @@ void ADAISpawnManager::Tick(float DeltaSeconds)
                 }
                 if (bAlignToGround)
                 {
-                    if (bFaceMarkerForward && Entry.bUseMarker && IsValid(Entry.MarkerActor))
+                    if (bFaceMarkerForward && Entry.bUseMarker && (IsValid(Entry.MarkerActor) || Entry.bCachedTransformsValid))
                     {
-                        SpawnRot = UKismetMathLibrary::MakeRotFromXZ(Entry.MarkerActor->GetActorForwardVector(), GroundHit.ImpactNormal);
+                        const FVector Forward = IsValid(Entry.MarkerActor)
+                            ? Entry.MarkerActor->GetActorForwardVector()
+                            : Entry.CachedMarkerTransform.GetRotation().GetForwardVector();
+                        SpawnRot = UKismetMathLibrary::MakeRotFromXZ(Forward, GroundHit.ImpactNormal);
                     }
                     else
                     {
