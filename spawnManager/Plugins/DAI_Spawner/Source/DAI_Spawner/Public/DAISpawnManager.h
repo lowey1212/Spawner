@@ -104,9 +104,17 @@ struct FSpawnEntry
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement")
     FVector ActorOffset = FVector::ZeroVector;
 
-    /** Optional offset applied to the static mesh location.  When using a marker this is relative to the marker transform. */
+    /** Optional offset applied to the static mesh location.  When using a marker this is relative to the marker's spawn point. */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement")
     FVector MeshOffset = FVector::ZeroVector;
+
+    /** If true, spawn using the specified marker rather than a random location. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Marker")
+    bool bUseMarker = false;
+
+    /** Marker providing spawn transforms when bUseMarker is enabled.  The actor spawns at the marker's root while the mesh uses the marker's secondary SpawnPoint if available. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Marker", meta = (EditCondition = "bUseMarker"))
+    AActor* MarkerActor = nullptr;
 };
 
 /**
@@ -150,14 +158,6 @@ public:
     /** List of entries from which a random selection will be made when spawning. */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
     TArray<FSpawnEntry> SpawnEntries;
-
-    /** If true, spawn all actors at the location of MarkerActor instead of randomly within the volume. */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
-    bool bUseMarker = false;
-
-    /** When bUseMarker is true, this actor's transform is used as the spawn location.  It should be hidden/invisible. */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn", meta = (EditCondition = "bUseMarker"))
-    AActor* MarkerActor = nullptr;
 
     /** Whether to automatically spawn one actor on BeginPlay. */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
@@ -271,8 +271,8 @@ protected:
     virtual bool CanSpawnForEntry_Implementation(const FSpawnEntry& Entry);
 
     /**
-     * Compute a random spawn location within the configured volume or at
-     * MarkerActor when bUseMarker is true.  Called internally by SpawnActors().
+     * Compute a random spawn location within the configured volume.
+     * Used internally for entries that are not bound to a marker.
      */
     FVector GetSpawnLocation() const;
 
