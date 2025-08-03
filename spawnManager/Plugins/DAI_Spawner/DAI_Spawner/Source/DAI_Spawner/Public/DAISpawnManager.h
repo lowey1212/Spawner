@@ -2,9 +2,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "DAISpawnManager.generated.h"
 #include "GameFramework/Actor.h"
 #include "UObject/WeakObjectPtr.h"
+#include "DAISpawnManager.generated.h"
 
 class UHierarchicalInstancedStaticMeshComponent;
 class USceneComponent;
