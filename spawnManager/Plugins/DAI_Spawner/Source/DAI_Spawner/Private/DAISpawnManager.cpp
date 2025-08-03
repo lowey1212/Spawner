@@ -486,27 +486,24 @@ void ADAISpawnManager::Tick(float DeltaSeconds)
         {
             if (Entry.bUseMarker && IsValid(Entry.MarkerActor))
             {
-                ActorLocation = Entry.MarkerActor->GetActorLocation() + Entry.ActorOffset;
                 if (const ADAISpawnMarker* Marker = Cast<ADAISpawnMarker>(Entry.MarkerActor))
                 {
-                    if (Marker->SpawnPoint)
-                    {
-                        MeshLocation = Marker->SpawnPoint->GetComponentLocation() + Entry.MeshOffset;
-                    }
-                    else
-                    {
-                        MeshLocation = Entry.MarkerActor->GetActorLocation() + Entry.MeshOffset;
-                    }
+                    const FVector MarkerLoc = Marker->SpawnPoint
+                        ? Marker->SpawnPoint->GetComponentLocation()
+                        : Entry.MarkerActor->GetActorLocation();
+                    ActorLocation = MarkerLoc + Entry.ActorOffset;
+                    MeshLocation  = MarkerLoc + Entry.MeshOffset;
                 }
                 else
                 {
-                    MeshLocation = Entry.MarkerActor->GetActorLocation() + Entry.MeshOffset;
+                    ActorLocation = Entry.MarkerActor->GetActorLocation() + Entry.ActorOffset;
+                    MeshLocation  = Entry.MarkerActor->GetActorLocation() + Entry.MeshOffset;
                 }
             }
             else
             {
                 ActorLocation = GetSpawnLocation() + Entry.ActorOffset;
-                MeshLocation = ActorLocation + Entry.MeshOffset;
+                MeshLocation  = ActorLocation + Entry.MeshOffset;
             }
 
             if (bProjectToNavMesh)
