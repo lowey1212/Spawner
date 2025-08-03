@@ -44,10 +44,10 @@ public:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Marker")
     UWidgetComponent* WidgetComponent;
 
-    /** Spawn point component indicating where the actor and optional static mesh should spawn relative to the marker.
-     *  Designers can move this component in the editor to adjust the spawn location (e.g. centre of a cave).
-     *  When a spawn entry is configured to use this marker, both the actor and static mesh are placed at the
-     *  world location of this component.
+    /** Spawn point component indicating where the optional static mesh should spawn relative to the marker.
+     *  Designers can move this component in the editor to adjust the mesh placement (e.g. centre of a cave).
+     *  When a spawn entry is configured to use this marker, the actor is placed at the marker's root while
+     *  the static mesh uses the world location of this component.
      */
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Marker")
     USceneComponent* SpawnPoint;
