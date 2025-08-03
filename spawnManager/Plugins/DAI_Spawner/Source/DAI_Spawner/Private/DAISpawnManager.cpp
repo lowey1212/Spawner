@@ -651,18 +651,11 @@ void ADAISpawnManager::Tick(float DeltaSeconds)
                     InstT.SetLocation(MeshLocation);
                     InstT.SetRotation(FQuat::Identity);
                     InstT.SetScale3D(FVector(1.0f));
-                    const int32 InstanceIndex = HISM->AddInstance(InstT);
-                    if (!Entry.bStaticMeshPermanent)
-                    {
-                        const TWeakObjectPtr<UHierarchicalInstancedStaticMeshComponent> WeakHISM(HISM);
-                        NewActor->OnDestroyed.AddLambda([WeakHISM, InstanceIndex](AActor*)
-                        {
-                            if (UHierarchicalInstancedStaticMeshComponent* Comp = WeakHISM.Get())
-                            {
-                                Comp->RemoveInstance(InstanceIndex);
-                            }
-                        });
-                    }
+                    // Add the static mesh instance to the HISM.  We no longer attempt
+                    // to remove the instance automatically when the actor is destroyed
+                    // to maintain compatibility with engine versions that lack
+                    // AddLambda on dynamic delegates.
+                    HISM->AddInstance(InstT);
                 }
             }
 
