@@ -7,6 +7,7 @@
 #include "DAISpawnManager.generated.h"
 
 class UHierarchicalInstancedStaticMeshComponent;
+class USceneComponent;
 class UCurveFloat;
 class UMaterialInterface;
 class UPrimitiveComponent;
@@ -189,13 +190,11 @@ public:
     UCurveFloat* RadiusCurve = nullptr;
 
     /**
-     * A HISM component used to efficiently render the static meshes associated
-     * with spawn entries.  Instances are added on spawn and removed when
-     * DespawnAll() is called.  If you require per‑mesh HISMs you can derive
-     * from this class and create additional components as needed.
+     * Simple scene root used for attachments.  Static mesh components are
+     * created on demand only when entries request a mesh.
      */
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Spawn|HISM")
-    UHierarchicalInstancedStaticMeshComponent* HISMComponent;
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Spawn")
+    USceneComponent* SceneRoot;
 
     /** If true, spawn locations are projected onto the navigation mesh. */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement")
@@ -308,11 +307,13 @@ private:
     /** Get or create the HISM for a given mesh. */
     UHierarchicalInstancedStaticMeshComponent* GetOrCreateHISM(UStaticMesh* Mesh);
 
+#if WITH_EDITOR
     /** Redraws non-persistent debug shapes. */
     void DrawDebugArea() const;
 
     /** Clears non-persistent editor debug previews. */
     void ClearNonPersistentDebug();
+#endif
 
 private:
     /** Internal function that performs the actual spawning and schedules the next

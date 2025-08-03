@@ -12,6 +12,7 @@
 #include "DAISpawnManager.h"
 
 #include "Components/HierarchicalInstancedStaticMeshComponent.h"
+#include "Components/SceneComponent.h"
 #include "Engine/World.h"
 #include "TimerManager.h"
 #include "Kismet/GameplayStatics.h"
@@ -32,19 +33,26 @@ ADAISpawnManager::ADAISpawnManager()
     PrimaryActorTick.bCanEverTick = true;
     PrimaryActorTick.bStartWithTickEnabled = true;
 
-    // Create the HISM component.  We set it as root to avoid the need for an
-    // additional scene component; however, users are free to add a separate
-    // root in a Blueprint to adjust orientation without affecting instances.
-    HISMComponent = CreateDefaultSubobject<UHierarchicalInstancedStaticMeshComponent>(TEXT("HISMComponent"));
-    RootComponent = HISMComponent;
+    // Create a simple scene root. Static mesh components are created lazily
+    // when spawn entries request them.
+    SceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("SceneRoot"));
+    RootComponent = SceneRoot;
 }
 
 void ADAISpawnManager::OnConstruction(const FTransform& Transform)
 {
     Super::OnConstruction(Transform);
-    if (UWorld* W = GetWorld()) { FlushPersistentDebugLines(W); }
+#if WITH_EDITOR
+    if (UWorld* W = GetWorld())
+    {
+        FlushPersistentDebugLines(W);
+    }
     ClearNonPersistentDebug();
-    if (bDebug) { DrawDebugArea(); }
+    if (bDebug)
+    {
+        DrawDebugArea();
+    }
+#endif
 }
 
 // Called when the game starts or when spawned
@@ -364,8 +372,8 @@ void ADAISpawnManager::DespawnAll()
 
 // Retrieve or create a Hierarchical Instanced Static Mesh component for the given mesh. When
 // spawning static meshes we reuse existing HISM components to improve performance.  If no
-// component exists for a particular mesh one will be created, attached to the root HISM
-// component and registered.
+// component exists for a particular mesh one will be created, attached to the scene root
+// and registered.
 UHierarchicalInstancedStaticMeshComponent* ADAISpawnManager::GetOrCreateHISM(UStaticMesh* Mesh)
 {
     if (!Mesh)
@@ -384,7 +392,7 @@ UHierarchicalInstancedStaticMeshComponent* ADAISpawnManager::GetOrCreateHISM(USt
     {
         return nullptr;
     }
-    NewHISM->SetupAttachment(HISMComponent);
+    NewHISM->SetupAttachment(SceneRoot);
     NewHISM->RegisterComponent();
     NewHISM->SetStaticMesh(Mesh);
     MeshToHISM.Add(Mesh, NewHISM);
@@ -394,8 +402,9 @@ UHierarchicalInstancedStaticMeshComponent* ADAISpawnManager::GetOrCreateHISM(USt
 // Draw debug preview of the spawn area. This method draws simple shapes to visualise the
 // configured spawn volume. For a square area a box is drawn; for circle, curve and noise
 // shapes a circle is drawn representing the maximum radius.  Debug drawings are non‑persistent.
+#if WITH_EDITOR
 void ADAISpawnManager::DrawDebugArea() const
-{
+{ 
     UWorld* World = GetWorld();
     if (!World)
     {
@@ -423,10 +432,11 @@ void ADAISpawnManager::DrawDebugArea() const
         break;
     }
     }
-}
+#endif
 
 // Remove non‑persistent debug visuals.  This flushes persistent debug lines and clears
 // all instanced meshes from HISM components so that preview meshes do not accumulate.
+#if WITH_EDITOR
 void ADAISpawnManager::ClearNonPersistentDebug()
 {
     if (UWorld* World = GetWorld())
@@ -441,6 +451,7 @@ void ADAISpawnManager::ClearNonPersistentDebug()
         }
     }
 }
+#endif
 
 // Tick function. Processes pending spawns and handles debug drawing.  This method exists
 // in all builds to ensure the linker resolves the symbol even when Tick is only
@@ -628,21 +639,34 @@ void ADAISpawnManager::Tick(float DeltaSeconds)
             }
             TArray<TWeakObjectPtr<AActor>>& Arr = ActiveByClass.FindOrAdd(Entry.ActorClass);
             Arr.Add(NewActor);
-        }
-        // Add static mesh instance if specified
-        if (Entry.StaticMesh)
-        {
-            UHierarchicalInstancedStaticMeshComponent* HISM = GetOrCreateHISM(Entry.StaticMesh);
-            if (HISM)
+
+            // Add static mesh instance if specified and actor spawned
+            if (Entry.StaticMesh)
             {
-                FTransform InstT;
-                InstT.SetLocation(MeshLocation);
-                InstT.SetRotation(FQuat::Identity);
-                InstT.SetScale3D(FVector(1.0f));
-                HISM->AddInstance(InstT);
+                UHierarchicalInstancedStaticMeshComponent* HISM = GetOrCreateHISM(Entry.StaticMesh);
+                if (HISM)
+                {
+                    FTransform InstT;
+                    InstT.SetLocation(MeshLocation);
+                    InstT.SetRotation(FQuat::Identity);
+                    InstT.SetScale3D(FVector(1.0f));
+                    const int32 InstanceIndex = HISM->AddInstance(InstT);
+                    if (!Entry.bStaticMeshPermanent)
+                    {
+                        const TWeakObjectPtr<UHierarchicalInstancedStaticMeshComponent> WeakHISM(HISM);
+                        NewActor->OnDestroyed.AddLambda([WeakHISM, InstanceIndex](AActor*)
+                        {
+                            if (UHierarchicalInstancedStaticMeshComponent* Comp = WeakHISM.Get())
+                            {
+                                Comp->RemoveInstance(InstanceIndex);
+                            }
+                        });
+                    }
+                }
             }
+
+            RecentSpawnLocations.Add(ActorLocation);
         }
-        RecentSpawnLocations.Add(ActorLocation);
         SpawnedThisTick++;
         Item.Count--;
         if (Item.Count <= 0)
