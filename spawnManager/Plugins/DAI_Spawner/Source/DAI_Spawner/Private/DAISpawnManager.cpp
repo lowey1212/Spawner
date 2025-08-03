@@ -41,8 +41,9 @@ ADAISpawnManager::ADAISpawnManager() {
 void ADAISpawnManager::OnConstruction(const FTransform &Transform) {
   Super::OnConstruction(Transform);
   // Mark this actor dirty so that cached transforms persist when saving the
-  // level.
-  Modify();
+  // level. Using Modify(true) ensures the package is marked dirty even when
+  // no transaction is in progress so the cached values are serialized.
+  Modify(true);
   // Cache marker transforms so shipping builds can spawn without editor-only
   // actors.
   for (FSpawnEntry &Entry : SpawnEntries) {
