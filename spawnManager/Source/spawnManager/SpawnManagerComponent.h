@@ -248,9 +248,15 @@ struct FManagedSpawnEntry {
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
   UCurveFloat *DifficultyWeight = nullptr;
 
-  /** Local space offset from the owning actor's location */
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Transform")
-  FVector SpawnOffset = FVector::ZeroVector;
+
+    /** Location offset applied on spawn */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Spawn|Transform")
+    FVector LocationOffset = FVector::ZeroVector;
+
+    /** Minimum random rotation applied on spawn */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Spawn|Transform")
+    FRotator RandomRotationMin = FRotator::ZeroRotator;
+
 
   /** Minimum random rotation applied on spawn */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Transform")
