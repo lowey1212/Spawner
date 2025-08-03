@@ -432,6 +432,7 @@ void ADAISpawnManager::DrawDebugArea() const
         break;
     }
     }
+}
 #endif
 
 // Remove non‑persistent debug visuals.  This flushes persistent debug lines and clears
