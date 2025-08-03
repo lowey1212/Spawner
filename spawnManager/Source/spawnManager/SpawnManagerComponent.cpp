@@ -9,6 +9,7 @@ TMap<FName, int32> USpawnManagerComponent::GlobalTagCounts;
 TMap<FName, double> USpawnManagerComponent::ClassCooldowns;
 TMap<FName, double> USpawnManagerComponent::TagCooldowns;
 double USpawnManagerComponent::GlobalCooldownTime = 0.0;
+TWeakObjectPtr<UWorld> USpawnManagerComponent::InitializedWorld;
 
 USpawnManagerComponent::USpawnManagerComponent()
 {
@@ -18,6 +19,17 @@ USpawnManagerComponent::USpawnManagerComponent()
 void USpawnManagerComponent::BeginPlay()
 {
     Super::BeginPlay();
+
+    UWorld* World = GetWorld();
+    if (!InitializedWorld.IsValid() || InitializedWorld.Get() != World)
+    {
+        GlobalTagCounts.Reset();
+        ClassCooldowns.Reset();
+        TagCooldowns.Reset();
+        GlobalCooldownTime = 0.0;
+        InitializedWorld = World;
+    }
+
     PrewarmPools();
 }
 
