@@ -392,11 +392,11 @@ void USpawnManagerComponent::SpawnCycle(const FSpawnContext& Context)
                     CompanionTransform.AddToTranslation(Actor->GetActorForwardVector() * Companion.ForwardOffset);
                 }
 
-                const FRotator RandRot(
+                const FRotator CompanionRandRot(
                     FMath::FRandRange(Companion.RandomRotationMin.Pitch, Companion.RandomRotationMax.Pitch),
                     FMath::FRandRange(Companion.RandomRotationMin.Yaw, Companion.RandomRotationMax.Yaw),
                     FMath::FRandRange(Companion.RandomRotationMin.Roll, Companion.RandomRotationMax.Roll));
-                CompanionTransform.ConcatenateRotation(RandRot.Quaternion());
+                CompanionTransform.ConcatenateRotation(CompanionRandRot.Quaternion());
 
                 if (Companion.bUniformScale)
                 {
@@ -412,7 +412,7 @@ void USpawnManagerComponent::SpawnCycle(const FSpawnContext& Context)
                     CompanionTransform.SetScale3D(Scale);
                 }
 
-                AStaticMeshActor* MeshActor = World->SpawnActor<AStaticMeshActor>(CompanionTransform);
+                AStaticMeshActor* MeshActor = World->SpawnActor<AStaticMeshActor>(AStaticMeshActor::StaticClass(), CompanionTransform);
                 if (!MeshActor)
                 {
                     continue;
