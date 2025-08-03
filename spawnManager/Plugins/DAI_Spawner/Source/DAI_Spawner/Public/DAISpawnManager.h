@@ -113,7 +113,9 @@ struct FSpawnEntry
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Marker")
     bool bUseMarker = false;
 
-    /** Marker providing spawn transforms when bUseMarker is enabled.  The actor spawns at the marker's root while the mesh uses the marker's secondary SpawnPoint if available. */
+    /** Marker providing spawn transforms when bUseMarker is enabled.  The actor and static mesh use the
+     *  marker's SpawnPoint if available; otherwise the marker's root is used.
+     */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Marker", meta = (EditCondition = "bUseMarker"))
     AActor* MarkerActor = nullptr;
 };
