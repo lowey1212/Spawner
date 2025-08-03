@@ -10,6 +10,8 @@ class UHierarchicalInstancedStaticMeshComponent;
 class UCurveFloat;
 class UMaterialInterface;
 class UPrimitiveComponent;
+class AVolume;
+class UPhysicalMaterial;
 
 /**
  * Enum describing the shape of the spawn area.  Circle and Square are
@@ -97,6 +99,14 @@ struct FSpawnEntry
     /** Max number of active actors of this entry allowed at once (0 = unlimited). */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn", meta = (ClampMin = "0"))
     int32 MaxActive = 0;
+
+    /** Optional offset applied to the actor spawn location relative to the chosen spawn point. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement")
+    FVector ActorOffset = FVector::ZeroVector;
+
+    /** Optional offset applied to the static mesh location.  When using a marker this is relative to the marker transform. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement")
+    FVector MeshOffset = FVector::ZeroVector;
 };
 
 /**
@@ -187,6 +197,50 @@ public:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Spawn|HISM")
     UHierarchicalInstancedStaticMeshComponent* HISMComponent;
 
+    /** If true, spawn locations are projected onto the navigation mesh. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement")
+    bool bProjectToNavMesh = true;
+
+    /** Radius used when validating safe placement.  Zero disables the overlap check. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement", meta = (ClampMin = "0.0"))
+    float SafePlacementRadius = 0.0f;
+
+    /** Minimum distance required between newly spawned actors. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement", meta = (ClampMin = "0.0"))
+    float MinDistanceBetweenSpawns = 0.0f;
+
+    /** Volumes that spawns must be inside (empty = any location). */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement")
+    TArray<AVolume*> InclusionVolumes;
+
+    /** Volumes that spawns must avoid. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement")
+    TArray<AVolume*> ExclusionVolumes;
+
+    /** Actor tags considered forbidden when detected beneath the spawn point. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement")
+    TArray<FName> ForbiddenActorTags;
+
+    /** Physical materials that disallow spawning when detected on the ground. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement")
+    TArray<UPhysicalMaterial*> ForbiddenPhysMaterials;
+
+    /** Align spawn rotation to ground normal. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement")
+    bool bAlignToGround = true;
+
+    /** When aligning to ground, optionally face the marker's forward direction. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement")
+    bool bFaceMarkerForward = false;
+
+    /** If true and RequiredLevelName is set, spawning will wait until that streaming level is loaded. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|LevelStreaming")
+    bool bWaitForLevelToLoad = false;
+
+    /** Name of the streaming level that must be loaded before spawning. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|LevelStreaming")
+    FName RequiredLevelName;
+
     /** Spawn one actor according to the configured rules.  If multiple entries
      *  exist they will be considered by weight.  This method is exposed to
      *  Blueprints so designers can trigger spawns manually.  It is safe to
@@ -240,6 +294,9 @@ public:
 private:
     /** Queue of pending spawns to process in Tick. */
     TArray<FPendingSpawn> PendingSpawns;
+
+    /** Recently spawned locations used to enforce minimum separation. */
+    TArray<FVector> RecentSpawnLocations;
 
     /** Track active instances per class for MaxActive enforcement. */
     TMap<TSubclassOf<AActor>, TArray<TWeakObjectPtr<AActor>>> ActiveByClass;

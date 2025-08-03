@@ -31,17 +31,20 @@ public class DAI_Spawner : ModuleRules
 			);
 			
 		
-		PrivateDependencyModuleNames.AddRange(
-			new string[]
-			{
-				"CoreUObject",
-				"Engine",
-				"Slate",
-				"SlateCore",
-				"UMG",
-				// ... add private dependencies that you statically link with here ...	
-			}
-			);
+                PrivateDependencyModuleNames.AddRange(
+                        new string[]
+                        {
+                                "CoreUObject",
+                                "Engine",
+                                "Slate",
+                                "SlateCore",
+                                "UMG",
+                                "NavigationSystem",
+                                "AIModule",
+                                "PhysicsCore",
+                                // ... add private dependencies that you statically link with here ...
+                        }
+                        );
 		
 		
 		DynamicallyLoadedModuleNames.AddRange(
