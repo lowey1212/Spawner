@@ -6,10 +6,12 @@
 #include "Curves/CurveFloat.h"
 #include "TimerManager.h"
 #include "NiagaraSystem.h"
+#include "UObject/WeakObjectPtr.h"
 #include "SpawnManagerComponent.generated.h"
 
 class UStaticMesh;
 class UMaterialInterface;
+class UWorld;
 
 /** Scope for spawn cooldowns */
 UENUM(BlueprintType)
@@ -378,5 +380,6 @@ protected:
     static TMap<FName, double> ClassCooldowns;
     static TMap<FName, double> TagCooldowns;
     static double GlobalCooldownTime;
+    static TWeakObjectPtr<UWorld> InitializedWorld;
 };
 
