@@ -5,6 +5,7 @@
 #include "GameFramework/Actor.h"
 #include "TimerManager.h"
 
+// Shared tracking data used by all spawn manager components
 TMap<FName, int32> USpawnManagerComponent::GlobalTagCounts;
 TMap<FName, double> USpawnManagerComponent::ClassCooldowns;
 TMap<FName, double> USpawnManagerComponent::TagCooldowns;
@@ -12,6 +13,7 @@ double USpawnManagerComponent::GlobalCooldownTime = 0.0;
 TWeakObjectPtr<UWorld> USpawnManagerComponent::InitializedWorld;
 
 USpawnManagerComponent::USpawnManagerComponent() {
+  // Enable ticking so we can manage spawned actors every frame
   PrimaryComponentTick.bCanEverTick = true;
 }
 
@@ -19,6 +21,7 @@ void USpawnManagerComponent::BeginPlay() {
   Super::BeginPlay();
 
   UWorld *World = GetWorld();
+  // If this is the first component in a new world, reset global data
   if (!InitializedWorld.IsValid() || InitializedWorld.Get() != World) {
     GlobalTagCounts.Reset();
     ClassCooldowns.Reset();
@@ -27,6 +30,7 @@ void USpawnManagerComponent::BeginPlay() {
     InitializedWorld = World;
   }
 
+  // Prepare reusable actors before gameplay begins
   PrewarmPools();
 }
 
@@ -37,6 +41,7 @@ void USpawnManagerComponent::TickComponent(
 
   const double Now = FPlatformTime::Seconds();
 
+  // Check each active spawn to see if it should be removed
   for (int32 Index = ActiveSpawns.Num() - 1; Index >= 0; --Index) {
     FActiveSpawn &Info = ActiveSpawns[Index];
     if (!Info.Actor) {
@@ -45,15 +50,18 @@ void USpawnManagerComponent::TickComponent(
     }
 
     bool bDespawn = false;
+    // Despawn after a certain lifetime
     if (Info.DespawnPolicy.TimeToLive >= 0.f &&
         (Now - Info.SpawnTime) > Info.DespawnPolicy.TimeToLive) {
       bDespawn = true;
     } else if (Info.DespawnPolicy.MaxDistance >= 0.f) {
+      // Despawn if it strays too far
       const float DistSq = FVector::DistSquared(
           Info.SpawnTransform.GetLocation(), Info.Actor->GetActorLocation());
       if (DistSq > FMath::Square(Info.DespawnPolicy.MaxDistance)) {
         if (Info.DespawnPolicy.LeashRadius >= 0.f &&
             DistSq > FMath::Square(Info.DespawnPolicy.LeashRadius)) {
+          // If leashing, snap back instead of despawning
           Info.Actor->SetActorLocation(Info.SpawnTransform.GetLocation());
         } else {
           bDespawn = true;
@@ -61,6 +69,7 @@ void USpawnManagerComponent::TickComponent(
       }
     } else if (Info.DespawnPolicy.bDespawnOutOfView &&
                !Info.Actor->WasRecentlyRendered(0.1f)) {
+      // Despawn when off-screen
       bDespawn = true;
     }
 
@@ -75,6 +84,7 @@ AActor *FSpawnPool::Acquire(UWorld *World, TSubclassOf<AActor> Class,
   if (!World) {
     return nullptr;
   }
+  // Try to reuse an existing inactive actor
   for (int32 i = 0; i < Inactive.Num(); ++i) {
     AActor *Actor = Inactive[i];
     if (Actor && Actor->GetClass() == Class) {
@@ -85,6 +95,7 @@ AActor *FSpawnPool::Acquire(UWorld *World, TSubclassOf<AActor> Class,
       return Actor;
     }
   }
+  // None available, so spawn a brand new actor
   return World->SpawnActor<AActor>(Class, Transform, FActorSpawnParameters());
 }
 
@@ -92,6 +103,7 @@ void FSpawnPool::Release(AActor *Actor) {
   if (!Actor) {
     return;
   }
+  // Hide the actor and disable collisions so it can be reused later
   Actor->SetActorHiddenInGame(true);
   Actor->SetActorEnableCollision(false);
   Inactive.Add(Actor);
@@ -103,6 +115,7 @@ void USpawnManagerComponent::PrewarmPools() {
     return;
   }
 
+  // Create a few actors ahead of time so spawning later is faster
   for (const FManagedSpawnEntry &Entry : Entries) {
     if (!Entry.ActorClass || Entry.PrewarmCount <= 0) {
       continue;
@@ -123,17 +136,20 @@ void USpawnManagerComponent::HandleDespawn(int32 Index) {
   FActiveSpawn Info = ActiveSpawns[Index];
   ActiveSpawns.RemoveAt(Index);
 
+  // Return the main actor to its pool
   if (Info.Actor) {
     FSpawnPool &Pool = Pools.FindOrAdd(Info.Actor->GetClass());
     Pool.Release(Info.Actor);
   }
 
+  // Clean up any companion actors
   for (AActor *Companion : Info.Companions) {
     if (Companion) {
       Companion->Destroy();
     }
   }
 
+  // Schedule a respawn if requested
   if (Info.Actor && Info.Respawn.bRespawnOnDeath) {
     FTimerHandle Handle;
     GetWorld()->GetTimerManager().SetTimer(
@@ -148,6 +164,7 @@ void USpawnManagerComponent::HandleDespawn(int32 Index) {
 
 TArray<FPersistentSpawnData> USpawnManagerComponent::SaveActiveSpawns() const {
   TArray<FPersistentSpawnData> Result;
+  // Store enough info to recreate each active spawn later
   for (const FActiveSpawn &Spawn : ActiveSpawns) {
     if (Spawn.Actor) {
       FPersistentSpawnData Data;
@@ -165,6 +182,7 @@ void USpawnManagerComponent::LoadActiveSpawns(
   if (!World) {
     return;
   }
+  // Recreate each saved spawn using the pool system
   for (const FPersistentSpawnData &Entry : Data) {
     if (!Entry.ActorClass) {
       continue;
@@ -182,6 +200,7 @@ void USpawnManagerComponent::LoadActiveSpawns(
 
 bool USpawnManagerComponent::CanSpawnEntry(
     const FManagedSpawnEntry &Entry) const {
+  // Enforce global limits based on gameplay tags
   if (Entry.GlobalCap >= 0) {
     for (const FGameplayTag &Tag : Entry.Tags) {
       const int32 *Count = GlobalTagCounts.Find(Tag.GetTagName());
@@ -197,6 +216,7 @@ float USpawnManagerComponent::GetEntryWeight(
     const FManagedSpawnEntry &Entry, const FSpawnContext &Context) const {
   float Result = Entry.Weight;
 
+  // Modify weight based on various context factors
   if (Entry.TimeOfDayWeight) {
     Result *= Entry.TimeOfDayWeight->GetFloatValue(Context.TimeOfDay);
   }
@@ -224,6 +244,7 @@ bool USpawnManagerComponent::RespectCooldown(
   const double Now = FPlatformTime::Seconds();
   const double *LastTime = nullptr;
 
+  // Look up when this entry was last spawned based on its scope
   switch (Entry.Cooldown.Scope) {
   case ECooldownScope::PerClass:
     if (Entry.ActorClass) {
@@ -256,6 +277,7 @@ bool USpawnManagerComponent::RespectCooldown(
 
 void USpawnManagerComponent::UpdateCooldown(const FManagedSpawnEntry &Entry) {
   const double Now = FPlatformTime::Seconds();
+  // Record the time of this spawn based on the cooldown scope
   switch (Entry.Cooldown.Scope) {
   case ECooldownScope::PerClass:
     if (Entry.ActorClass) {
@@ -282,6 +304,7 @@ void USpawnManagerComponent::SpawnCycle(const FSpawnContext &Context) {
   const double StartTime = FPlatformTime::Seconds();
   int32 SpawnedThisFrame = 0;
 
+  // Go through each possible entry and spawn as needed
   for (FManagedSpawnEntry &Entry : Entries) {
     if (!CanSpawnEntry(Entry) || !RespectCooldown(Entry)) {
       continue;
@@ -289,6 +312,7 @@ void USpawnManagerComponent::SpawnCycle(const FSpawnContext &Context) {
 
     int32 DesiredCount = FMath::RandRange(Entry.MinPerCycle, Entry.MaxPerCycle);
     for (int32 i = 0; i < DesiredCount; ++i) {
+      // Respect per-frame spawn budgets
       if (SpawnedThisFrame >= SpawnCountBudget) {
         return;
       }
@@ -297,12 +321,14 @@ void USpawnManagerComponent::SpawnCycle(const FSpawnContext &Context) {
         return;
       }
 
+      // Start from the owner's transform and apply offsets
       FTransform SpawnTransform =
           GetOwner() ? GetOwner()->GetActorTransform() : FTransform::Identity;
       SpawnTransform.SetLocation(
           SpawnTransform.GetLocation() +
           SpawnTransform.GetRotation().RotateVector(Entry.LocationOffset));
 
+      // Apply random rotation
       const FRotator SpawnRandomRot(
           FMath::FRandRange(Entry.RandomRotationMin.Pitch,
                              Entry.RandomRotationMax.Pitch),
@@ -312,6 +338,7 @@ void USpawnManagerComponent::SpawnCycle(const FSpawnContext &Context) {
                              Entry.RandomRotationMax.Roll));
       SpawnTransform.ConcatenateRotation(SpawnRandomRot.Quaternion());
 
+      // Apply random scale, either uniform or per-axis
       if (Entry.bUniformScale) {
         const float Scale =
             FMath::FRandRange(Entry.RandomScaleMin.X, Entry.RandomScaleMax.X);
@@ -324,6 +351,7 @@ void USpawnManagerComponent::SpawnCycle(const FSpawnContext &Context) {
         SpawnTransform.SetScale3D(Scale);
       }
 
+      // Spawn or reuse an actor from the pool
       FSpawnPool &Pool = Pools.FindOrAdd(Entry.ActorClass);
       AActor *Actor = Pool.Acquire(World, Entry.ActorClass, SpawnTransform);
       if (!Actor) {
@@ -337,6 +365,7 @@ void USpawnManagerComponent::SpawnCycle(const FSpawnContext &Context) {
       Info.DespawnPolicy = Entry.DespawnPolicy;
       Info.Respawn = Entry.RespawnSettings;
 
+      // Spawn any companion meshes alongside the main actor
       for (const FStaticMeshCompanion &Companion : Entry.StaticMeshCompanions) {
         if (!Companion.Mesh) {
           continue;
@@ -383,6 +412,7 @@ void USpawnManagerComponent::SpawnCycle(const FSpawnContext &Context) {
 
         UStaticMeshComponent *MeshComp = MeshActor->GetStaticMeshComponent();
         if (MeshComp) {
+          // Apply the mesh and optionally a random material
           MeshComp->SetStaticMesh(Companion.Mesh);
           if (Companion.MaterialOverrides.Num() > 0) {
             int32 MatIdx = FMath::RandHelper(Companion.MaterialOverrides.Num());
@@ -391,10 +421,12 @@ void USpawnManagerComponent::SpawnCycle(const FSpawnContext &Context) {
         }
 
         if (Companion.Lifetime == ECompanionLifetime::TiedToActor) {
+          // Keep the mesh attached to the main actor
           MeshActor->AttachToActor(
               Actor, FAttachmentTransformRules::KeepWorldTransform);
           Info.Companions.Add(MeshActor);
         } else if (Companion.Lifetime == ECompanionLifetime::TimedFade) {
+          // Let the mesh destroy itself after a short time
           MeshActor->SetLifeSpan(Companion.LifetimeSeconds);
         }
       }

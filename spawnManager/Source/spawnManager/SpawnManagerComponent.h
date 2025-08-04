@@ -14,7 +14,10 @@ class UStaticMesh;
 class UMaterialInterface;
 class UWorld;
 
-/** Scope for spawn cooldowns */
+/**
+ * Describes how we track cooldown timers:
+ * per actor class, per gameplay tag, or one timer shared by all spawns.
+ */
 UENUM(BlueprintType)
 enum class ECooldownScope : uint8 { PerClass, PerTag, Global };
 
@@ -23,15 +26,15 @@ USTRUCT(BlueprintType)
 struct FSpawnCooldown {
   GENERATED_BODY()
 
-  /** Base cooldown in seconds */
+  /** How many seconds to wait before spawning again */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cooldown")
   float BaseCooldown = 0.f;
 
-  /** Optional curve to drive cooldown based on spawn count */
+  /** Optional curve to change the cooldown as more actors spawn */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cooldown")
   UCurveFloat *CooldownCurve = nullptr;
 
-  /** Determines if cooldown is unique per class, tag, or global */
+  /** Whether cooldown is tracked per class, per tag, or for everyone */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cooldown")
   ECooldownScope Scope = ECooldownScope::PerClass;
 };
@@ -41,59 +44,60 @@ USTRUCT(BlueprintType)
 struct FDespawnPolicy {
   GENERATED_BODY();
 
-  /** Despawn if farther than this distance from its spawn transform. Negative
-   * disables check */
+  /**
+   * If the actor wanders this far from where it spawned, remove it.
+   * Use a negative value to disable this check.
+   */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Despawn")
   float MaxDistance = -1.f;
 
-  /** Despawn after this many seconds. Negative disables check */
+  /** How many seconds the actor is allowed to live. Negative means forever. */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Despawn")
   float TimeToLive = -1.f;
 
-  /** Despawn when actor is no longer rendered */
+  /** Remove the actor if it hasn't been seen on screen recently */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Despawn")
   bool bDespawnOutOfView = false;
 
-  /** If set, actor is teleported back when exceeding radius instead of despawn
-   */
+  /** Instead of removing the actor, bring it back when it exceeds this radius */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Despawn")
   float LeashRadius = -1.f;
 
-  /** If true the actor will despawn when an owning quest finishes */
+  /** Despawn when an associated quest is finished */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Despawn")
   bool bDespawnOnQuestEnd = false;
 };
 
-/** Options controlling how dead actors return */
+/** Settings for bringing an actor back after it dies */
 USTRUCT(BlueprintType)
 struct FRespawnSettings {
   GENERATED_BODY();
 
-  /** Allow this actor to respawn after death */
+  /** Should the actor come back to life when it dies */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Respawn")
   bool bRespawnOnDeath = false;
 
-  /** Delay before respawn occurs */
+  /** How long to wait before bringing the actor back */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Respawn",
             meta = (EditCondition = "bRespawnOnDeath"))
   float RespawnDelay = 0.f;
 
-  /** Number of actors to respawn in a wave */
+  /** Number of actors to revive at once */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Respawn",
             meta = (EditCondition = "bRespawnOnDeath"))
   int32 WaveCount = 0;
 
-  /** Multiplier applied each respawn to increase difficulty */
+  /** Difficulty boost applied each time it respawns */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Respawn",
             meta = (EditCondition = "bRespawnOnDeath"))
   float DifficultyMultiplier = 1.f;
 };
 
-/** Determines how long a companion mesh should persist */
+/** How long a companion mesh should stick around */
 UENUM(BlueprintType)
 enum class ECompanionLifetime : uint8 { Permanent, TiedToActor, TimedFade };
 
-/** Determines where a companion mesh should be placed */
+/** Where to position a companion mesh */
 UENUM(BlueprintType)
 enum class ECompanionPlacement : uint8 { AtMarker, AtActor, OffsetForward };
 
@@ -110,46 +114,46 @@ struct FStaticMeshCompanion {
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Companion")
   TArray<UMaterialInterface *> MaterialOverrides;
 
-  /** Lifetime policy for the mesh */
+  /** How long the extra mesh should stay alive */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Companion")
   ECompanionLifetime Lifetime = ECompanionLifetime::Permanent;
 
-  /** Seconds before despawn when using TimedFade */
+  /** If using TimedFade, how many seconds before it disappears */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Companion",
             meta = (EditCondition = "Lifetime==ECompanionLifetime::TimedFade"))
   float LifetimeSeconds = 0.f;
 
-  /** Placement relative to spawn */
+  /** Where to place the mesh relative to the main spawn */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Companion")
   ECompanionPlacement Placement = ECompanionPlacement::AtMarker;
 
-  /** Forward offset when Placement is OffsetForward */
+  /** How far forward to move the mesh when using OffsetForward placement */
   UPROPERTY(
       EditAnywhere, BlueprintReadWrite, Category = "Companion",
       meta = (EditCondition = "Placement==ECompanionPlacement::OffsetForward"))
   float ForwardOffset = 0.f;
 
-  /** Minimum random rotation */
+  /** Lowest random rotation angles */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Companion|Transform")
   FRotator RandomRotationMin = FRotator::ZeroRotator;
 
-  /** Maximum random rotation */
+  /** Highest random rotation angles */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Companion|Transform")
   FRotator RandomRotationMax = FRotator::ZeroRotator;
 
-  /** Minimum random scale */
+  /** Smallest random size */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Companion|Transform")
   FVector RandomScaleMin = FVector(1.f, 1.f, 1.f);
 
-  /** Maximum random scale */
+  /** Largest random size */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Companion|Transform")
   FVector RandomScaleMax = FVector(1.f, 1.f, 1.f);
 
-  /** If true uses uniform scaling based on X of scale range */
+  /** If true, scale equally on all axes using the X value */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Companion|Transform")
   bool bUniformScale = true;
 
-  /** Optional Niagara effect when despawning */
+  /** Optional Niagara particle effect to play when this mesh disappears */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Companion")
   UNiagaraSystem *DespawnEffect = nullptr;
 };
@@ -159,9 +163,11 @@ USTRUCT(BlueprintType)
 struct FPersistentSpawnData {
   GENERATED_BODY();
 
+  /** Type of actor that was spawned */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Persistence")
   TSubclassOf<AActor> ActorClass;
 
+  /** Where the actor was located */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Persistence")
   FTransform Transform;
 };
@@ -171,11 +177,15 @@ USTRUCT()
 struct FSpawnPool {
   GENERATED_BODY();
 
+  /** Actors that are currently not in use */
   UPROPERTY()
   TArray<AActor *> Inactive;
 
+  /** Get an actor from the pool or spawn a new one if needed */
   AActor *Acquire(UWorld *World, TSubclassOf<AActor> Class,
                   const FTransform &Transform);
+
+  /** Return an actor back to the pool for later reuse */
   void Release(AActor *Actor);
 };
 
@@ -184,22 +194,27 @@ USTRUCT()
 struct FActiveSpawn {
   GENERATED_BODY();
 
+  /** The actual actor instance we spawned */
   UPROPERTY()
   AActor *Actor = nullptr;
 
+  /** Where the actor was originally placed */
   UPROPERTY()
   FTransform SpawnTransform;
 
+  /** Game time when the actor appeared */
   UPROPERTY()
   float SpawnTime = 0.f;
 
+  /** Rules for removing the actor later */
   UPROPERTY()
   FDespawnPolicy DespawnPolicy;
 
+  /** Settings describing how to respawn after death */
   UPROPERTY()
   FRespawnSettings Respawn;
 
-  /** Companion actors spawned alongside the main actor */
+  /** Any companion actors created along with the main one */
   UPROPERTY()
   TArray<AActor *> Companions;
 };
@@ -356,21 +371,43 @@ protected:
   TickComponent(float DeltaTime, ELevelTick TickType,
                 FActorComponentTickFunction *ThisTickFunction) override;
 
-  bool CanSpawnEntry(const FManagedSpawnEntry &Entry) const;
-  float GetEntryWeight(const FManagedSpawnEntry &Entry,
-                       const FSpawnContext &Context) const;
-  bool RespectCooldown(const FManagedSpawnEntry &Entry) const;
-  void UpdateCooldown(const FManagedSpawnEntry &Entry);
+    /** Checks if this entry is allowed to spawn right now */
+    bool CanSpawnEntry(const FManagedSpawnEntry &Entry) const;
 
-  void PrewarmPools();
-  void HandleDespawn(int32 Index);
+    /** Calculates how likely this entry is to be chosen based on context */
+    float GetEntryWeight(const FManagedSpawnEntry &Entry,
+                         const FSpawnContext &Context) const;
 
+    /** Makes sure a spawn obeys its cooldown rules */
+    bool RespectCooldown(const FManagedSpawnEntry &Entry) const;
+
+    /** Records the time when an entry was spawned to enforce cooldowns */
+    void UpdateCooldown(const FManagedSpawnEntry &Entry);
+
+    /** Fills actor pools so future spawns are faster */
+    void PrewarmPools();
+
+    /** Removes an actor and updates bookkeeping */
+    void HandleDespawn(int32 Index);
+
+  /** List of actors currently spawned by this component */
   TArray<FActiveSpawn> ActiveSpawns;
+
+  /** Pools keep inactive actors around so we can reuse them later */
   TMap<TSubclassOf<AActor>, FSpawnPool> Pools;
 
+  /** Counts how many actors are using each gameplay tag across all managers */
   static TMap<FName, int32> GlobalTagCounts;
+
+  /** Last time an actor class was spawned, used for cooldown tracking */
   static TMap<FName, double> ClassCooldowns;
+
+  /** Last time a tag was used for spawning, used for cooldown tracking */
   static TMap<FName, double> TagCooldowns;
+
+  /** Global timestamp for when any spawn happened */
   static double GlobalCooldownTime;
+
+  /** Keeps track of which game world initialized the static data */
   static TWeakObjectPtr<UWorld> InitializedWorld;
 };

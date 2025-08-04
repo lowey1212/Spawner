@@ -1,6 +1,5 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "spawnManager.h"
 #include "Modules/ModuleManager.h"
 
+// Registers the main game module so Unreal can start the game.
 IMPLEMENT_PRIMARY_GAME_MODULE( FDefaultGameModuleImpl, spawnManager, "spawnManager" );

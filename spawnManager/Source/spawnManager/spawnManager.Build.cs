@@ -1,24 +1,18 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 using UnrealBuildTool;
 
+// Build rules tell Unreal which modules and libraries this project needs.
 public class spawnManager : ModuleRules
 {
-	public spawnManager(ReadOnlyTargetRules Target) : base(Target)
-	{
-		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-	
+        public spawnManager(ReadOnlyTargetRules Target) : base(Target)
+        {
+                // Use precompiled headers to speed up build times.
+                PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+
+                // Core Unreal modules required by the project.
                 PublicDependencyModuleNames.AddRange(
                     new string[] { "Core", "CoreUObject", "Engine", "InputCore", "GameplayTags", "Niagara" });
 
+                // Modules that are only needed privately by this project.
                 PrivateDependencyModuleNames.AddRange(new string[] { "Niagara" });
-
-		// Uncomment if you are using Slate UI
-		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
-		
-		// Uncomment if you are using online features
-		// PrivateDependencyModuleNames.Add("OnlineSubsystem");
-
-		// To include OnlineSubsystemSteam, add it to the plugins section in your uproject file with the Enabled attribute set to true
-	}
+        }
 }
