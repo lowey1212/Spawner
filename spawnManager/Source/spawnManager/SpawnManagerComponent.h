@@ -4,7 +4,6 @@
 #include "CoreMinimal.h"
 #include "Curves/CurveFloat.h"
 #include "GameplayTagContainer.h"
-#include "NiagaraSystem.h"
 #include "TimerManager.h"
 #include "UObject/WeakObjectPtr.h"
 
@@ -173,10 +172,6 @@ struct FStaticMeshCompanion {
   /** If true, scale equally on all axes using the X value */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Companion|Transform")
   bool bUniformScale = true;
-
-  /** Optional Niagara particle effect to play when this mesh disappears */
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Companion")
-  UNiagaraSystem *DespawnEffect = nullptr;
 };
 
 /** Simple persistent representation of a spawned actor */

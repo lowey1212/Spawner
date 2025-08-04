@@ -3,9 +3,11 @@
 #include "DAISpawnMarker.h"
 
 #include "Components/ArrowComponent.h"
+#include "Components/SceneComponent.h"
+#if WITH_EDITOR
 #include "Components/WidgetComponent.h"
 #include "Blueprint/UserWidget.h"
-#include "Components/SceneComponent.h"
+#endif
 
 ADAISpawnMarker::ADAISpawnMarker()
 {
@@ -29,12 +31,14 @@ ADAISpawnMarker::ADAISpawnMarker()
     ArrowComponent->SetHiddenInGame(true);
 
     // Widget component for user provided visuals
+#if WITH_EDITORONLY_DATA
     WidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("WidgetComponent"));
     WidgetComponent->SetupAttachment(SceneRoot);
     WidgetComponent->SetRelativeLocation(FVector::ZeroVector);
     WidgetComponent->SetWidgetSpace(EWidgetSpace::Screen);
     WidgetComponent->SetDrawAtDesiredSize(true);
     WidgetComponent->SetHiddenInGame(true);
+#endif
 
     // Create spawn point component used for determining where the NPC spawns relative to this marker
     SpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("SpawnPoint"));
@@ -42,10 +46,11 @@ ADAISpawnMarker::ADAISpawnMarker()
     SpawnPoint->SetRelativeLocation(FVector::ZeroVector);
 }
 
+#if WITH_EDITOR
 void ADAISpawnMarker::OnConstruction(const FTransform& Transform)
 {
     Super::OnConstruction(Transform);
-
+#if WITH_EDITORONLY_DATA
     // Apply the user provided widget class if one is set.  This will replace
     // whatever widget might currently be assigned.
     if (MarkerWidgetClass)
@@ -57,4 +62,6 @@ void ADAISpawnMarker::OnConstruction(const FTransform& Transform)
     {
         WidgetComponent->SetVisibility(false);
     }
+#endif
 }
+#endif

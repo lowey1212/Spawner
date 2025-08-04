@@ -3,17 +3,19 @@
 #if WITH_EDITOR
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Engine/World.h"
 #include "NiagaraComponent.h"
 #endif
 
 ASpawnerActor::ASpawnerActor() {
+  bIsEditorOnlyActor = true;
+  PrimaryActorTick.bCanEverTick = false;
 #if WITH_EDITORONLY_DATA
   PreviewComponent =
       CreateDefaultSubobject<UNiagaraComponent>(TEXT("SpawnPreview"));
   PreviewComponent->SetupAttachment(RootComponent);
   PreviewComponent->bAutoActivate = false;
   PreviewComponent->SetAutoDestroy(false);
-  PreviewComponent->SetHiddenInGame(true);
 #endif
 }
 
@@ -46,6 +48,7 @@ void ASpawnerActor::OnConstruction(const FTransform &Transform) {
                                           HologramMaterial);
   }
 
+  PreviewComponent->SetHiddenInGame(false);
   PreviewComponent->Activate();
 }
 #endif
