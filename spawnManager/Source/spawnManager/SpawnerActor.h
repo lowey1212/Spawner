@@ -4,15 +4,9 @@
 #include "GameFramework/Actor.h"
 #include "SpawnerActor.generated.h"
 
-#if WITH_EDITORONLY_DATA
-class UNiagaraComponent;
-class UNiagaraSystem;
-class UMaterialInterface;
-#endif
-
 /**
- * Actor used to mark spawn locations. In the editor a Niagara effect
- * renders the actor's mesh as a hologram for easy visualization.
+ * Actor used to mark spawn locations. In the editor a preview actor
+ * is spawned at the marker's location for easy visualization.
  */
 UCLASS()
 class SPAWNMANAGER_API ASpawnerActor : public AActor {
@@ -23,19 +17,12 @@ public:
 
 #if WITH_EDITORONLY_DATA
 protected:
-  /** Niagara component used to visualize the actor in the editor */
-  UPROPERTY(Transient)
-  TObjectPtr<UNiagaraComponent> PreviewComponent;
+  /** Editor-only preview actor spawned for visualization. Not cooked into builds. */
+  UPROPERTY(VisibleAnywhere, Transient, Category = "Visualization",
+            meta = (ToolTip = "Editor-only preview actor; not cooked into builds"))
+  TObjectPtr<AActor> PreviewActor;
 
-  /** Niagara system used for the hologram effect */
-  UPROPERTY(EditAnywhere, Category = "Visualization")
-  TObjectPtr<UNiagaraSystem> PreviewSystem;
-
-  /** Optional material to override the Niagara mesh material */
-  UPROPERTY(EditAnywhere, Category = "Visualization")
-  TObjectPtr<UMaterialInterface> HologramMaterial;
-
-  /** Actor class whose mesh should be shown by the preview effect */
+  /** Actor class whose instance is spawned for preview */
   UPROPERTY(EditAnywhere, Category = "Visualization")
   TSubclassOf<AActor> PreviewActorClass;
 #endif

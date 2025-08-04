@@ -1,21 +1,14 @@
 #include "SpawnerActor.h"
 
 #if WITH_EDITOR
-#include "Components/SkeletalMeshComponent.h"
-#include "Components/StaticMeshComponent.h"
 #include "Engine/World.h"
-#include "NiagaraComponent.h"
 #endif
 
 ASpawnerActor::ASpawnerActor() {
   bIsEditorOnlyActor = true;
   PrimaryActorTick.bCanEverTick = false;
 #if WITH_EDITORONLY_DATA
-  PreviewComponent =
-      CreateDefaultSubobject<UNiagaraComponent>(TEXT("SpawnPreview"));
-  PreviewComponent->SetupAttachment(RootComponent);
-  PreviewComponent->bAutoActivate = false;
-  PreviewComponent->SetAutoDestroy(false);
+  PreviewActor = nullptr;
 #endif
 }
 
@@ -23,54 +16,27 @@ ASpawnerActor::ASpawnerActor() {
 void ASpawnerActor::OnConstruction(const FTransform &Transform) {
   Super::OnConstruction(Transform);
 
-  if (!PreviewComponent || !PreviewSystem) {
+  if (!GetWorld() || GetWorld()->WorldType != EWorldType::Editor) {
     return;
   }
 
-  PreviewComponent->SetAsset(PreviewSystem);
+#if WITH_EDITORONLY_DATA
+  if (PreviewActor) {
+    PreviewActor->Destroy();
+    PreviewActor = nullptr;
+  }
 
-  // Ensure the preview effect spawns at the actor's origin
-  PreviewComponent->SetWorldLocation(GetActorLocation());
-
-  // Determine which actor's mesh to visualize
-  AActor *SourceActor = this;
   if (PreviewActorClass) {
-    SourceActor = PreviewActorClass->GetDefaultObject<AActor>();
-  }
-
-  // Use the first available mesh component from the source actor as the
-  // preview mesh
-  TArray<USkeletalMeshComponent *> SkeletalMeshComponents;
-  SourceActor->GetComponents(SkeletalMeshComponents);
-  if (SkeletalMeshComponents.Num() > 0) {
-    if (USkeletalMesh *SkeletalMesh =
-            SkeletalMeshComponents[0]->GetSkeletalMeshAsset()) {
-      PreviewComponent->SetVariableObject(TEXT("User.SkeletalMesh"),
-                                          SkeletalMesh);
-      PreviewComponent->SetVariableObject(TEXT("User.Mesh"),
-                                          SkeletalMesh);
-    }
-  } else {
-    TArray<UStaticMeshComponent *> StaticMeshComponents;
-    SourceActor->GetComponents(StaticMeshComponents);
-    if (StaticMeshComponents.Num() > 0 &&
-        StaticMeshComponents[0]->GetStaticMesh()) {
-      PreviewComponent->SetVariableStaticMesh(TEXT("User.StaticMesh"),
-                                              StaticMeshComponents[0]
-                                                  ->GetStaticMesh());
-      PreviewComponent->SetVariableObject(TEXT("User.Mesh"),
-                                          StaticMeshComponents[0]
-                                              ->GetStaticMesh());
+    FActorSpawnParameters Params;
+    Params.ObjectFlags = RF_Transient;
+    PreviewActor =
+        GetWorld()->SpawnActor<AActor>(PreviewActorClass, GetActorTransform(),
+                                       Params);
+    if (PreviewActor) {
+      PreviewActor->bIsEditorOnlyActor = true;
     }
   }
-
-  if (HologramMaterial) {
-    PreviewComponent->SetVariableMaterial(TEXT("User.Material"),
-                                          HologramMaterial);
-  }
-
-  PreviewComponent->SetHiddenInGame(false);
-  PreviewComponent->SetVisibility(true);
-  PreviewComponent->Activate();
+#endif
 }
 #endif
+

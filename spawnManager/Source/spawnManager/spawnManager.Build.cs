@@ -7,13 +7,8 @@ public class spawnManager : ModuleRules {
     PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
     // Core Unreal modules required by the project.
-    PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject",
-                                                        "Engine", "InputCore",
-                                                        "GameplayTags" });
-
-    // Only depend on Niagara when building the editor for preview effects.
-    if (Target.bBuildEditor) {
-      PrivateDependencyModuleNames.Add("Niagara");
-    }
+    PublicDependencyModuleNames.AddRange(new string[] {
+        "Core", "CoreUObject", "Engine", "InputCore", "GameplayTags"
+    });
   }
 }
