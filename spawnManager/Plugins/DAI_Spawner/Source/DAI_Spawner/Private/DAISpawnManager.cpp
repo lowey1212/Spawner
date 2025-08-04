@@ -681,8 +681,14 @@ void ADAISpawnManager::Tick(float DeltaSeconds) {
         UHierarchicalInstancedStaticMeshComponent *HISM =
             GetOrCreateHISM(Entry.StaticMesh);
         if (HISM) {
+          // Convert world-space mesh location into the HISM's local space so the
+          // instance appears at the expected world position instead of relative
+          // to the spawner actor.
+          const FVector RelativeLocation =
+              HISM->GetComponentTransform().InverseTransformPosition(
+                  MeshLocation);
           FTransform InstT;
-          InstT.SetLocation(MeshLocation);
+          InstT.SetLocation(RelativeLocation);
           InstT.SetRotation(FQuat::Identity);
           InstT.SetScale3D(FVector(1.0f));
           // Add the static mesh instance to the HISM.  We no longer attempt
