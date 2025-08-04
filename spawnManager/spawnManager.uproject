@@ -10,13 +10,17 @@
 			"LoadingPhase": "Default"
 		}
 	],
-	"Plugins": [
-		{
-			"Name": "ModelingToolsEditorMode",
-			"Enabled": true,
-			"TargetAllowList": [
-				"Editor"
-			]
-		}
-	]
+        "Plugins": [
+                {
+                        "Name": "ModelingToolsEditorMode",
+                        "Enabled": true,
+                        "TargetAllowList": [
+                                "Editor"
+                        ]
+                },
+                {
+                        "Name": "Niagara",
+                        "Enabled": true
+                }
+        ]
 }
