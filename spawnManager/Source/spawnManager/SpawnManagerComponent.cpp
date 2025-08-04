@@ -299,12 +299,10 @@ void USpawnManagerComponent::SpawnCycle(const FSpawnContext &Context) {
 
       FTransform SpawnTransform =
           GetOwner() ? GetOwner()->GetActorTransform() : FTransform::Identity;
+      SpawnTransform.SetLocation(
+          SpawnTransform.GetLocation() +
+          SpawnTransform.GetRotation().RotateVector(Entry.LocationOffset));
 
-      // Apply local spawn offset in world space
-      SpawnTransform.AddToTranslation(
-          SpawnTransform.TransformVector(Entry.SpawnOffset));
-
-      // Apply random rotation
       const FRotator RandRot(FMath::FRandRange(Entry.RandomRotationMin.Pitch,
                                                Entry.RandomRotationMax.Pitch),
                              FMath::FRandRange(Entry.RandomRotationMin.Yaw,
@@ -313,7 +311,6 @@ void USpawnManagerComponent::SpawnCycle(const FSpawnContext &Context) {
                                                Entry.RandomRotationMax.Roll));
       SpawnTransform.ConcatenateRotation(RandRot.Quaternion());
 
-      // Apply random scale
       if (Entry.bUniformScale) {
         const float Scale =
             FMath::FRandRange(Entry.RandomScaleMin.X, Entry.RandomScaleMax.X);
@@ -339,7 +336,6 @@ void USpawnManagerComponent::SpawnCycle(const FSpawnContext &Context) {
       Info.DespawnPolicy = Entry.DespawnPolicy;
       Info.Respawn = Entry.RespawnSettings;
 
-      // Spawn any companion static meshes
       for (const FStaticMeshCompanion &Companion : Entry.StaticMeshCompanions) {
         if (!Companion.Mesh) {
           continue;
@@ -392,134 +388,12 @@ void USpawnManagerComponent::SpawnCycle(const FSpawnContext &Context) {
           }
         }
 
-
-        int32 DesiredCount = FMath::RandRange(Entry.MinPerCycle, Entry.MaxPerCycle);
-        for (int32 i = 0; i < DesiredCount; ++i)
-        {
-            if (SpawnedThisFrame >= SpawnCountBudget)
-            {
-                return;
-            }
-            if ((FPlatformTime::Seconds() - StartTime) * 1000.0 >= SpawnTimeBudgetMs)
-            {
-                return;
-            }
-
-            FTransform SpawnTransform = GetOwner() ? GetOwner()->GetActorTransform() : FTransform::Identity;
-            SpawnTransform.SetLocation(SpawnTransform.GetLocation() + SpawnTransform.GetRotation().RotateVector(Entry.LocationOffset));
-
-            // Apply random rotation
-            const FRotator RandRot(
-                FMath::FRandRange(Entry.RandomRotationMin.Pitch, Entry.RandomRotationMax.Pitch),
-                FMath::FRandRange(Entry.RandomRotationMin.Yaw, Entry.RandomRotationMax.Yaw),
-                FMath::FRandRange(Entry.RandomRotationMin.Roll, Entry.RandomRotationMax.Roll));
-            SpawnTransform.ConcatenateRotation(RandRot.Quaternion());
-
-            // Apply random scale
-            if (Entry.bUniformScale)
-            {
-                const float Scale = FMath::FRandRange(Entry.RandomScaleMin.X, Entry.RandomScaleMax.X);
-                SpawnTransform.SetScale3D(FVector(Scale));
-            }
-            else
-            {
-                const FVector Scale(
-                    FMath::FRandRange(Entry.RandomScaleMin.X, Entry.RandomScaleMax.X),
-                    FMath::FRandRange(Entry.RandomScaleMin.Y, Entry.RandomScaleMax.Y),
-                    FMath::FRandRange(Entry.RandomScaleMin.Z, Entry.RandomScaleMax.Z));
-                SpawnTransform.SetScale3D(Scale);
-            }
-
-            FSpawnPool& Pool = Pools.FindOrAdd(Entry.ActorClass);
-            AActor* Actor = Pool.Acquire(World, Entry.ActorClass, SpawnTransform);
-            if (!Actor)
-            {
-                continue;
-            }
-
-            FActiveSpawn Info;
-            Info.Actor = Actor;
-            Info.SpawnTransform = SpawnTransform;
-            Info.SpawnTime = FPlatformTime::Seconds();
-            Info.DespawnPolicy = Entry.DespawnPolicy;
-            Info.Respawn = Entry.RespawnSettings;
-
-            // Spawn any companion static meshes
-            for (const FStaticMeshCompanion& Companion : Entry.StaticMeshCompanions)
-            {
-                if (!Companion.Mesh)
-                {
-                    continue;
-                }
-
-                FTransform CompanionTransform = SpawnTransform;
-                if (Companion.Placement == ECompanionPlacement::AtActor)
-                {
-                    CompanionTransform = Actor->GetActorTransform();
-                }
-                else if (Companion.Placement == ECompanionPlacement::OffsetForward)
-                {
-                    CompanionTransform = Actor->GetActorTransform();
-                    CompanionTransform.AddToTranslation(Actor->GetActorForwardVector() * Companion.ForwardOffset);
-                }
-
-                const FRotator CompanionRandRot(
-                    FMath::FRandRange(Companion.RandomRotationMin.Pitch, Companion.RandomRotationMax.Pitch),
-                    FMath::FRandRange(Companion.RandomRotationMin.Yaw, Companion.RandomRotationMax.Yaw),
-                    FMath::FRandRange(Companion.RandomRotationMin.Roll, Companion.RandomRotationMax.Roll));
-                CompanionTransform.ConcatenateRotation(CompanionRandRot.Quaternion());
-
-                if (Companion.bUniformScale)
-                {
-                    const float Scale = FMath::FRandRange(Companion.RandomScaleMin.X, Companion.RandomScaleMax.X);
-                    CompanionTransform.SetScale3D(FVector(Scale));
-                }
-                else
-                {
-                    const FVector Scale(
-                        FMath::FRandRange(Companion.RandomScaleMin.X, Companion.RandomScaleMax.X),
-                        FMath::FRandRange(Companion.RandomScaleMin.Y, Companion.RandomScaleMax.Y),
-                        FMath::FRandRange(Companion.RandomScaleMin.Z, Companion.RandomScaleMax.Z));
-                    CompanionTransform.SetScale3D(Scale);
-                }
-
-                AStaticMeshActor* MeshActor = World->SpawnActor<AStaticMeshActor>(AStaticMeshActor::StaticClass(), CompanionTransform);
-                if (!MeshActor)
-                {
-                    continue;
-                }
-
-                UStaticMeshComponent* MeshComp = MeshActor->GetStaticMeshComponent();
-                if (MeshComp)
-                {
-                    MeshComp->SetStaticMesh(Companion.Mesh);
-                    if (Companion.MaterialOverrides.Num() > 0)
-                    {
-                        int32 MatIdx = FMath::RandHelper(Companion.MaterialOverrides.Num());
-                        MeshComp->SetMaterial(0, Companion.MaterialOverrides[MatIdx]);
-                    }
-                }
-
-                if (Companion.Lifetime == ECompanionLifetime::TiedToActor)
-                {
-                    MeshActor->AttachToActor(Actor, FAttachmentTransformRules::KeepWorldTransform);
-                    Info.Companions.Add(MeshActor);
-                }
-                else if (Companion.Lifetime == ECompanionLifetime::TimedFade)
-                {
-                    MeshActor->SetLifeSpan(Companion.LifetimeSeconds);
-                }
-            }
-
-            ActiveSpawns.Add(Info);
-
-            for (const FGameplayTag& Tag : Entry.Tags)
-            {
-                GlobalTagCounts.FindOrAdd(Tag.GetTagName())++;
-            }
-            UpdateCooldown(Entry);
-            SpawnedThisFrame++;
-
+        if (Companion.Lifetime == ECompanionLifetime::TiedToActor) {
+          MeshActor->AttachToActor(
+              Actor, FAttachmentTransformRules::KeepWorldTransform);
+          Info.Companions.Add(MeshActor);
+        } else if (Companion.Lifetime == ECompanionLifetime::TimedFade) {
+          MeshActor->SetLifeSpan(Companion.LifetimeSeconds);
         }
       }
 

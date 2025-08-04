@@ -5,9 +5,10 @@
 #include "Curves/CurveFloat.h"
 #include "GameplayTagContainer.h"
 #include "NiagaraSystem.h"
-#include "SpawnManagerComponent.generated.h"
 #include "TimerManager.h"
 #include "UObject/WeakObjectPtr.h"
+
+#include "SpawnManagerComponent.generated.h"
 
 class UStaticMesh;
 class UMaterialInterface;
@@ -248,15 +249,9 @@ struct FManagedSpawnEntry {
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
   UCurveFloat *DifficultyWeight = nullptr;
 
-
-    /** Location offset applied on spawn */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Spawn|Transform")
-    FVector LocationOffset = FVector::ZeroVector;
-
-    /** Minimum random rotation applied on spawn */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Spawn|Transform")
-    FRotator RandomRotationMin = FRotator::ZeroRotator;
-
+  /** Location offset applied on spawn */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Transform")
+  FVector LocationOffset = FVector::ZeroVector;
 
   /** Minimum random rotation applied on spawn */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Transform")
