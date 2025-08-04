@@ -303,13 +303,14 @@ void USpawnManagerComponent::SpawnCycle(const FSpawnContext &Context) {
           SpawnTransform.GetLocation() +
           SpawnTransform.GetRotation().RotateVector(Entry.LocationOffset));
 
-      const FRotator RandRot(FMath::FRandRange(Entry.RandomRotationMin.Pitch,
-                                               Entry.RandomRotationMax.Pitch),
-                             FMath::FRandRange(Entry.RandomRotationMin.Yaw,
-                                               Entry.RandomRotationMax.Yaw),
-                             FMath::FRandRange(Entry.RandomRotationMin.Roll,
-                                               Entry.RandomRotationMax.Roll));
-      SpawnTransform.ConcatenateRotation(RandRot.Quaternion());
+      const FRotator SpawnRandRot(
+          FMath::FRandRange(Entry.RandomRotationMin.Pitch,
+                             Entry.RandomRotationMax.Pitch),
+          FMath::FRandRange(Entry.RandomRotationMin.Yaw,
+                             Entry.RandomRotationMax.Yaw),
+          FMath::FRandRange(Entry.RandomRotationMin.Roll,
+                             Entry.RandomRotationMax.Roll));
+      SpawnTransform.ConcatenateRotation(SpawnRandRot.Quaternion());
 
       if (Entry.bUniformScale) {
         const float Scale =
@@ -374,7 +375,8 @@ void USpawnManagerComponent::SpawnCycle(const FSpawnContext &Context) {
         }
 
         AStaticMeshActor *MeshActor = World->SpawnActor<AStaticMeshActor>(
-            AStaticMeshActor::StaticClass(), CompanionTransform);
+            AStaticMeshActor::StaticClass(), CompanionTransform,
+            FActorSpawnParameters());
         if (!MeshActor) {
           continue;
         }
