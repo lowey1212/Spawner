@@ -85,7 +85,7 @@ AActor *FSpawnPool::Acquire(UWorld *World, TSubclassOf<AActor> Class,
       return Actor;
     }
   }
-  return World->SpawnActor<AActor>(Class, Transform);
+  return World->SpawnActor<AActor>(Class, Transform, FActorSpawnParameters());
 }
 
 void FSpawnPool::Release(AActor *Actor) {
@@ -303,14 +303,14 @@ void USpawnManagerComponent::SpawnCycle(const FSpawnContext &Context) {
           SpawnTransform.GetLocation() +
           SpawnTransform.GetRotation().RotateVector(Entry.LocationOffset));
 
-      const FRotator SpawnRandRot(
+      const FRotator SpawnRandomRot(
           FMath::FRandRange(Entry.RandomRotationMin.Pitch,
                              Entry.RandomRotationMax.Pitch),
           FMath::FRandRange(Entry.RandomRotationMin.Yaw,
                              Entry.RandomRotationMax.Yaw),
           FMath::FRandRange(Entry.RandomRotationMin.Roll,
                              Entry.RandomRotationMax.Roll));
-      SpawnTransform.ConcatenateRotation(SpawnRandRot.Quaternion());
+      SpawnTransform.ConcatenateRotation(SpawnRandomRot.Quaternion());
 
       if (Entry.bUniformScale) {
         const float Scale =
@@ -351,14 +351,14 @@ void USpawnManagerComponent::SpawnCycle(const FSpawnContext &Context) {
                                               Companion.ForwardOffset);
         }
 
-        const FRotator CompanionRandRot(
+        const FRotator CompanionRandomRot(
             FMath::FRandRange(Companion.RandomRotationMin.Pitch,
                               Companion.RandomRotationMax.Pitch),
             FMath::FRandRange(Companion.RandomRotationMin.Yaw,
                               Companion.RandomRotationMax.Yaw),
             FMath::FRandRange(Companion.RandomRotationMin.Roll,
                               Companion.RandomRotationMax.Roll));
-        CompanionTransform.ConcatenateRotation(CompanionRandRot.Quaternion());
+        CompanionTransform.ConcatenateRotation(CompanionRandomRot.Quaternion());
 
         if (Companion.bUniformScale) {
           const float Scale = FMath::FRandRange(Companion.RandomScaleMin.X,
