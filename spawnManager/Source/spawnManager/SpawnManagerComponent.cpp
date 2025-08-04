@@ -374,9 +374,9 @@ void USpawnManagerComponent::SpawnCycle(const FSpawnContext &Context) {
           CompanionTransform.SetScale3D(Scale);
         }
 
+        FActorSpawnParameters SpawnParams;
         AStaticMeshActor *MeshActor = World->SpawnActor<AStaticMeshActor>(
-            AStaticMeshActor::StaticClass(), CompanionTransform,
-            FActorSpawnParameters());
+            AStaticMeshActor::StaticClass(), CompanionTransform, SpawnParams);
         if (!MeshActor) {
           continue;
         }
