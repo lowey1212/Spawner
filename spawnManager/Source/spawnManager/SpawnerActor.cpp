@@ -32,9 +32,16 @@ void ASpawnerActor::OnConstruction(const FTransform &Transform) {
   // Ensure the preview effect spawns at the actor's origin
   PreviewComponent->SetWorldLocation(GetActorLocation());
 
-  // Use the first available mesh component as the preview mesh
+  // Determine which actor's mesh to visualize
+  AActor *SourceActor = this;
+  if (PreviewActorClass) {
+    SourceActor = PreviewActorClass->GetDefaultObject<AActor>();
+  }
+
+  // Use the first available mesh component from the source actor as the
+  // preview mesh
   TArray<USkeletalMeshComponent *> SkeletalMeshComponents;
-  GetComponents(SkeletalMeshComponents);
+  SourceActor->GetComponents(SkeletalMeshComponents);
   if (SkeletalMeshComponents.Num() > 0) {
     if (USkeletalMesh *SkeletalMesh =
             SkeletalMeshComponents[0]->GetSkeletalMeshAsset()) {
@@ -45,7 +52,7 @@ void ASpawnerActor::OnConstruction(const FTransform &Transform) {
     }
   } else {
     TArray<UStaticMeshComponent *> StaticMeshComponents;
-    GetComponents(StaticMeshComponents);
+    SourceActor->GetComponents(StaticMeshComponents);
     if (StaticMeshComponents.Num() > 0 &&
         StaticMeshComponents[0]->GetStaticMesh()) {
       PreviewComponent->SetVariableStaticMesh(TEXT("User.StaticMesh"),
