@@ -7,9 +7,7 @@
 
 // Shared tracking data used by all spawn manager components
 TMap<FName, int32> USpawnManagerComponent::GlobalTagCounts;
-TMap<FName, double> USpawnManagerComponent::ClassCooldowns;
-TMap<FName, double> USpawnManagerComponent::TagCooldowns;
-double USpawnManagerComponent::GlobalCooldownTime = 0.0;
+TMap<FCooldownKey, FCooldownData> USpawnManagerComponent::Cooldowns;
 TWeakObjectPtr<UWorld> USpawnManagerComponent::InitializedWorld;
 
 USpawnManagerComponent::USpawnManagerComponent() {
@@ -24,9 +22,7 @@ void USpawnManagerComponent::BeginPlay() {
   // If this is the first component in a new world, reset global data
   if (!InitializedWorld.IsValid() || InitializedWorld.Get() != World) {
     GlobalTagCounts.Reset();
-    ClassCooldowns.Reset();
-    TagCooldowns.Reset();
-    GlobalCooldownTime = 0.0;
+    Cooldowns.Reset();
     InitializedWorld = World;
   }
 
@@ -45,7 +41,7 @@ void USpawnManagerComponent::TickComponent(
   for (int32 Index = ActiveSpawns.Num() - 1; Index >= 0; --Index) {
     FActiveSpawn &Info = ActiveSpawns[Index];
     if (!Info.Actor) {
-      ActiveSpawns.RemoveAt(Index);
+      ActiveSpawns.RemoveAtSwap(Index);
       continue;
     }
 
@@ -134,7 +130,7 @@ void USpawnManagerComponent::HandleDespawn(int32 Index) {
     return;
   }
   FActiveSpawn Info = ActiveSpawns[Index];
-  ActiveSpawns.RemoveAt(Index);
+  ActiveSpawns.RemoveAtSwap(Index);
 
   // Return the main actor to its pool
   if (Info.Actor) {
@@ -164,6 +160,7 @@ void USpawnManagerComponent::HandleDespawn(int32 Index) {
 
 TArray<FPersistentSpawnData> USpawnManagerComponent::SaveActiveSpawns() const {
   TArray<FPersistentSpawnData> Result;
+  Result.Reserve(ActiveSpawns.Num()); // keep enough room for all spawns
   // Store enough info to recreate each active spawn later
   for (const FActiveSpawn &Spawn : ActiveSpawns) {
     if (Spawn.Actor) {
@@ -182,6 +179,9 @@ void USpawnManagerComponent::LoadActiveSpawns(
   if (!World) {
     return;
   }
+  ActiveSpawns.Reserve(ActiveSpawns.Num() +
+                       Data.Num()); // room for restored spawns
+  const double Now = FPlatformTime::Seconds();
   // Recreate each saved spawn using the pool system
   for (const FPersistentSpawnData &Entry : Data) {
     if (!Entry.ActorClass) {
@@ -193,7 +193,7 @@ void USpawnManagerComponent::LoadActiveSpawns(
     FActiveSpawn SpawnInfo;
     SpawnInfo.Actor = Actor;
     SpawnInfo.SpawnTransform = Entry.Transform;
-    SpawnInfo.SpawnTime = FPlatformTime::Seconds();
+    SpawnInfo.SpawnTime = Now;
     ActiveSpawns.Add(SpawnInfo);
   }
 }
@@ -242,26 +242,30 @@ float USpawnManagerComponent::GetEntryWeight(
 bool USpawnManagerComponent::RespectCooldown(
     const FManagedSpawnEntry &Entry) const {
   const double Now = FPlatformTime::Seconds();
-  const double *LastTime = nullptr;
+  const FCooldownData *Data = nullptr;
 
   // Look up when this entry was last spawned based on its scope
   switch (Entry.Cooldown.Scope) {
   case ECooldownScope::PerClass:
     if (Entry.ActorClass) {
-      LastTime = ClassCooldowns.Find(Entry.ActorClass->GetFName());
+      FCooldownKey Key{Entry.ActorClass->GetFName(), ECooldownScope::PerClass};
+      Data = Cooldowns.Find(Key);
     }
     break;
   case ECooldownScope::PerTag:
     for (const FGameplayTag &Tag : Entry.Tags) {
-      if (const double *Found = TagCooldowns.Find(Tag.GetTagName())) {
-        LastTime = Found;
+      FCooldownKey Key{Tag.GetTagName(), ECooldownScope::PerTag};
+      if (const FCooldownData *Found = Cooldowns.Find(Key)) {
+        Data = Found;
         break;
       }
     }
     break;
-  case ECooldownScope::Global:
-    LastTime = &GlobalCooldownTime;
+  case ECooldownScope::Global: {
+    FCooldownKey Key{NAME_None, ECooldownScope::Global};
+    Data = Cooldowns.Find(Key);
     break;
+  }
   }
 
   float Cooldown = Entry.Cooldown.BaseCooldown;
@@ -269,8 +273,8 @@ bool USpawnManagerComponent::RespectCooldown(
     Cooldown = Entry.Cooldown.CooldownCurve->GetFloatValue(Cooldown);
   }
 
-  if (LastTime) {
-    return (Now - *LastTime) >= Cooldown;
+  if (Data) {
+    return (Now - Data->Time) >= Cooldown;
   }
   return true;
 }
@@ -281,17 +285,21 @@ void USpawnManagerComponent::UpdateCooldown(const FManagedSpawnEntry &Entry) {
   switch (Entry.Cooldown.Scope) {
   case ECooldownScope::PerClass:
     if (Entry.ActorClass) {
-      ClassCooldowns.Add(Entry.ActorClass->GetFName(), Now);
+      FCooldownKey Key{Entry.ActorClass->GetFName(), ECooldownScope::PerClass};
+      Cooldowns.FindOrAdd(Key).Time = Now;
     }
     break;
   case ECooldownScope::PerTag:
     for (const FGameplayTag &Tag : Entry.Tags) {
-      TagCooldowns.Add(Tag.GetTagName(), Now);
+      FCooldownKey Key{Tag.GetTagName(), ECooldownScope::PerTag};
+      Cooldowns.FindOrAdd(Key).Time = Now;
     }
     break;
-  case ECooldownScope::Global:
-    GlobalCooldownTime = Now;
+  case ECooldownScope::Global: {
+    FCooldownKey Key{NAME_None, ECooldownScope::Global};
+    Cooldowns.FindOrAdd(Key).Time = Now;
     break;
+  }
   }
 }
 
@@ -303,6 +311,8 @@ void USpawnManagerComponent::SpawnCycle(const FSpawnContext &Context) {
 
   const double StartTime = FPlatformTime::Seconds();
   int32 SpawnedThisFrame = 0;
+  ActiveSpawns.Reserve(ActiveSpawns.Num() +
+                       SpawnCountBudget); // avoid growing during this cycle
 
   // Go through each possible entry and spawn as needed
   for (FManagedSpawnEntry &Entry : Entries) {
@@ -316,8 +326,8 @@ void USpawnManagerComponent::SpawnCycle(const FSpawnContext &Context) {
       if (SpawnedThisFrame >= SpawnCountBudget) {
         return;
       }
-      if ((FPlatformTime::Seconds() - StartTime) * 1000.0 >=
-          SpawnTimeBudgetMs) {
+      const double Now = FPlatformTime::Seconds();
+      if ((Now - StartTime) * 1000.0 >= SpawnTimeBudgetMs) {
         return;
       }
 
@@ -331,11 +341,11 @@ void USpawnManagerComponent::SpawnCycle(const FSpawnContext &Context) {
       // Apply random rotation
       const FRotator SpawnRandomRot(
           FMath::FRandRange(Entry.RandomRotationMin.Pitch,
-                             Entry.RandomRotationMax.Pitch),
+                            Entry.RandomRotationMax.Pitch),
           FMath::FRandRange(Entry.RandomRotationMin.Yaw,
-                             Entry.RandomRotationMax.Yaw),
+                            Entry.RandomRotationMax.Yaw),
           FMath::FRandRange(Entry.RandomRotationMin.Roll,
-                             Entry.RandomRotationMax.Roll));
+                            Entry.RandomRotationMax.Roll));
       SpawnTransform.ConcatenateRotation(SpawnRandomRot.Quaternion());
 
       // Apply random scale, either uniform or per-axis
@@ -361,7 +371,7 @@ void USpawnManagerComponent::SpawnCycle(const FSpawnContext &Context) {
       FActiveSpawn Info;
       Info.Actor = Actor;
       Info.SpawnTransform = SpawnTransform;
-      Info.SpawnTime = FPlatformTime::Seconds();
+      Info.SpawnTime = Now;
       Info.DespawnPolicy = Entry.DespawnPolicy;
       Info.Respawn = Entry.RespawnSettings;
 
