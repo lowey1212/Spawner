@@ -21,6 +21,26 @@ class UWorld;
 UENUM(BlueprintType)
 enum class ECooldownScope : uint8 { PerClass, PerTag, Global };
 
+// Key used to look up cooldown timers
+struct FCooldownKey {
+  FName Name = NAME_None;
+  ECooldownScope Scope = ECooldownScope::Global;
+
+  bool operator==(const FCooldownKey &Other) const {
+    return Name == Other.Name && Scope == Other.Scope;
+  }
+};
+
+// Allow FCooldownKey to be used in TMap
+FORCEINLINE uint32 GetTypeHash(const FCooldownKey &Key) {
+  return HashCombine(GetTypeHash(Key.Name), static_cast<uint32>(Key.Scope));
+}
+
+// Stored cooldown information
+struct FCooldownData {
+  double Time = 0.0;
+};
+
 /** Configurable cooldown with optional curve and scope */
 USTRUCT(BlueprintType)
 struct FSpawnCooldown {
@@ -59,7 +79,8 @@ struct FDespawnPolicy {
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Despawn")
   bool bDespawnOutOfView = false;
 
-  /** Instead of removing the actor, bring it back when it exceeds this radius */
+  /** Instead of removing the actor, bring it back when it exceeds this radius
+   */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Despawn")
   float LeashRadius = -1.f;
 
@@ -371,24 +392,24 @@ protected:
   TickComponent(float DeltaTime, ELevelTick TickType,
                 FActorComponentTickFunction *ThisTickFunction) override;
 
-    /** Checks if this entry is allowed to spawn right now */
-    bool CanSpawnEntry(const FManagedSpawnEntry &Entry) const;
+  /** Checks if this entry is allowed to spawn right now */
+  bool CanSpawnEntry(const FManagedSpawnEntry &Entry) const;
 
-    /** Calculates how likely this entry is to be chosen based on context */
-    float GetEntryWeight(const FManagedSpawnEntry &Entry,
-                         const FSpawnContext &Context) const;
+  /** Calculates how likely this entry is to be chosen based on context */
+  float GetEntryWeight(const FManagedSpawnEntry &Entry,
+                       const FSpawnContext &Context) const;
 
-    /** Makes sure a spawn obeys its cooldown rules */
-    bool RespectCooldown(const FManagedSpawnEntry &Entry) const;
+  /** Makes sure a spawn obeys its cooldown rules */
+  bool RespectCooldown(const FManagedSpawnEntry &Entry) const;
 
-    /** Records the time when an entry was spawned to enforce cooldowns */
-    void UpdateCooldown(const FManagedSpawnEntry &Entry);
+  /** Records the time when an entry was spawned to enforce cooldowns */
+  void UpdateCooldown(const FManagedSpawnEntry &Entry);
 
-    /** Fills actor pools so future spawns are faster */
-    void PrewarmPools();
+  /** Fills actor pools so future spawns are faster */
+  void PrewarmPools();
 
-    /** Removes an actor and updates bookkeeping */
-    void HandleDespawn(int32 Index);
+  /** Removes an actor and updates bookkeeping */
+  void HandleDespawn(int32 Index);
 
   /** List of actors currently spawned by this component */
   TArray<FActiveSpawn> ActiveSpawns;
