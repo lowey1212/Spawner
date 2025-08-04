@@ -4,9 +4,11 @@
 #include "GameFramework/Actor.h"
 #include "SpawnerActor.generated.h"
 
+#if WITH_EDITORONLY_DATA
 class UNiagaraComponent;
 class UNiagaraSystem;
 class UMaterialInterface;
+#endif
 
 /**
  * Actor used to mark spawn locations. In the editor a Niagara effect
@@ -32,7 +34,9 @@ protected:
   /** Optional material to override the Niagara mesh material */
   UPROPERTY(EditAnywhere, Category = "Visualization")
   TObjectPtr<UMaterialInterface> HologramMaterial;
+#endif
 
+#if WITH_EDITOR
   virtual void OnConstruction(const FTransform &Transform) override;
 #endif
 };

@@ -1,18 +1,19 @@
 using UnrealBuildTool;
 
 // Build rules tell Unreal which modules and libraries this project needs.
-public class spawnManager : ModuleRules
-{
-        public spawnManager(ReadOnlyTargetRules Target) : base(Target)
-        {
-                // Use precompiled headers to speed up build times.
-                PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+public class spawnManager : ModuleRules {
+  public spawnManager(ReadOnlyTargetRules Target) : base(Target) {
+    // Use precompiled headers to speed up build times.
+    PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-                // Core Unreal modules required by the project.
-                PublicDependencyModuleNames.AddRange(
-                    new string[] { "Core", "CoreUObject", "Engine", "InputCore", "GameplayTags", "Niagara" });
+    // Core Unreal modules required by the project.
+    PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject",
+                                                        "Engine", "InputCore",
+                                                        "GameplayTags" });
 
-                // Modules that are only needed privately by this project.
-                PrivateDependencyModuleNames.AddRange(new string[] { "Niagara" });
-        }
+    // Only depend on Niagara when building the editor for preview effects.
+    if (Target.bBuildEditor) {
+      PrivateDependencyModuleNames.Add("Niagara");
+    }
+  }
 }
