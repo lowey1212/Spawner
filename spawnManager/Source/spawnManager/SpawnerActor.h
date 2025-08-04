@@ -16,9 +16,16 @@ public:
   ASpawnerActor();
 
 #if WITH_EDITORONLY_DATA
-  /** Actor class used for in-editor visualization. Not cooked into builds. */
-  UPROPERTY(EditAnywhere, Category = "Visualization",
-            meta = (ToolTip = "In-editor only actor class for preview; not cooked into builds"))
+
+protected:
+  /** Editor-only preview actor spawned for visualization. Not cooked into builds. */
+  UPROPERTY(VisibleAnywhere, Transient, Category = "Visualization",
+            meta = (ToolTip = "Editor-only preview actor; not cooked into builds"))
+  TObjectPtr<AActor> PreviewActor;
+
+  /** Actor class whose instance is spawned for preview */
+  UPROPERTY(EditAnywhere, Category = "Visualization")
+
   TSubclassOf<AActor> PreviewActorClass;
 
 protected:
