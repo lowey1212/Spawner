@@ -517,16 +517,21 @@ void ADAISpawnManager::Tick(float DeltaSeconds) {
     FRotator SpawnRot = FRotator::ZeroRotator;
     bool bLocationValid = false;
 
-    const bool bHasCached =
-        Entry.bCachedTransformsValid ||
-        !Entry.CachedMarkerTransform.Equals(FTransform::Identity);
-    const bool bUsingMarker =
-        Entry.bUseMarker && (IsValid(Entry.MarkerActor) || bHasCached);
+    const bool bHasCached = Entry.bCachedTransformsValid;
+    const bool bMarkerValid =
+        IsValid(Entry.MarkerActor) && Entry.MarkerActor->GetWorld() == World;
+    const bool bUsingMarker = Entry.bUseMarker && (bMarkerValid || bHasCached);
     const int32 MaxAttempts = bUsingMarker ? 1 : 5;
     for (int32 Attempt = 0; Attempt < MaxAttempts && !bLocationValid;
          ++Attempt) {
       if (bUsingMarker) {
-        if (IsValid(Entry.MarkerActor)) {
+        if (bHasCached) {
+          ActorLocation =
+              Entry.CachedMarkerTransform.GetLocation() + Entry.ActorOffset;
+          MeshLocation =
+              Entry.CachedSpawnPointTransform.GetLocation() + Entry.MeshOffset;
+          SpawnRot = Entry.CachedMarkerTransform.GetRotation().Rotator();
+        } else if (bMarkerValid) {
           if (const ADAISpawnMarker *Marker =
                   Cast<ADAISpawnMarker>(Entry.MarkerActor)) {
             // Actor spawns at the marker's root while the static mesh uses the
@@ -546,11 +551,6 @@ void ADAISpawnManager::Tick(float DeltaSeconds) {
             MeshLocation =
                 Entry.MarkerActor->GetActorLocation() + Entry.MeshOffset;
           }
-        } else {
-          ActorLocation =
-              Entry.CachedMarkerTransform.GetLocation() + Entry.ActorOffset;
-          MeshLocation =
-              Entry.CachedSpawnPointTransform.GetLocation() + Entry.MeshOffset;
         }
       } else {
         ActorLocation = GetSpawnLocation() + Entry.ActorOffset;
@@ -592,12 +592,11 @@ void ADAISpawnManager::Tick(float DeltaSeconds) {
         }
         if (bAlignToGround) {
           if (bFaceMarkerForward && Entry.bUseMarker &&
-              (IsValid(Entry.MarkerActor) || Entry.bCachedTransformsValid)) {
+              (bMarkerValid || bHasCached)) {
             const FVector Forward =
-                IsValid(Entry.MarkerActor)
-                    ? Entry.MarkerActor->GetActorForwardVector()
-                    : Entry.CachedMarkerTransform.GetRotation()
-                          .GetForwardVector();
+                bMarkerValid ? Entry.MarkerActor->GetActorForwardVector()
+                             : Entry.CachedMarkerTransform.GetRotation()
+                                   .GetForwardVector();
             SpawnRot = UKismetMathLibrary::MakeRotFromXZ(
                 Forward, GroundHit.ImpactNormal);
           } else {
