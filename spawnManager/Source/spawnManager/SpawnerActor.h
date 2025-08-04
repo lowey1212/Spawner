@@ -34,6 +34,10 @@ protected:
   /** Optional material to override the Niagara mesh material */
   UPROPERTY(EditAnywhere, Category = "Visualization")
   TObjectPtr<UMaterialInterface> HologramMaterial;
+
+  /** Actor class whose mesh should be shown by the preview effect */
+  UPROPERTY(EditAnywhere, Category = "Visualization")
+  TSubclassOf<AActor> PreviewActorClass;
 #endif
 
 #if WITH_EDITOR
