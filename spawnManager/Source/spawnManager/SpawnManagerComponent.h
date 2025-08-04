@@ -420,14 +420,8 @@ protected:
   /** Counts how many actors are using each gameplay tag across all managers */
   static TMap<FName, int32> GlobalTagCounts;
 
-  /** Last time an actor class was spawned, used for cooldown tracking */
-  static TMap<FName, double> ClassCooldowns;
-
-  /** Last time a tag was used for spawning, used for cooldown tracking */
-  static TMap<FName, double> TagCooldowns;
-
-  /** Global timestamp for when any spawn happened */
-  static double GlobalCooldownTime;
+  /** Shared table of cooldown timers keyed by class, tag, or global scope */
+  static TMap<FCooldownKey, FCooldownData> Cooldowns;
 
   /** Keeps track of which game world initialized the static data */
   static TWeakObjectPtr<UWorld> InitializedWorld;
