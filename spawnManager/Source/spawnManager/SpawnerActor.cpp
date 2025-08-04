@@ -29,17 +29,31 @@ void ASpawnerActor::OnConstruction(const FTransform &Transform) {
 
   PreviewComponent->SetAsset(PreviewSystem);
 
-  if (USkeletalMeshComponent *SkeletalComp =
-          FindComponentByClass<USkeletalMeshComponent>()) {
-    if (USkeletalMesh *SkeletalMesh = SkeletalComp->GetSkeletalMeshAsset()) {
+  // Ensure the preview effect spawns at the actor's origin
+  PreviewComponent->SetWorldLocation(GetActorLocation());
+
+  // Use the first available mesh component as the preview mesh
+  TArray<USkeletalMeshComponent *> SkeletalMeshComponents;
+  GetComponents(SkeletalMeshComponents);
+  if (SkeletalMeshComponents.Num() > 0) {
+    if (USkeletalMesh *SkeletalMesh =
+            SkeletalMeshComponents[0]->GetSkeletalMeshAsset()) {
       PreviewComponent->SetVariableObject(TEXT("User.SkeletalMesh"),
                                           SkeletalMesh);
+      PreviewComponent->SetVariableObject(TEXT("User.Mesh"),
+                                          SkeletalMesh);
     }
-  } else if (UStaticMeshComponent *StaticComp =
-                 FindComponentByClass<UStaticMeshComponent>()) {
-    if (StaticComp->GetStaticMesh()) {
+  } else {
+    TArray<UStaticMeshComponent *> StaticMeshComponents;
+    GetComponents(StaticMeshComponents);
+    if (StaticMeshComponents.Num() > 0 &&
+        StaticMeshComponents[0]->GetStaticMesh()) {
       PreviewComponent->SetVariableStaticMesh(TEXT("User.StaticMesh"),
-                                              StaticComp->GetStaticMesh());
+                                              StaticMeshComponents[0]
+                                                  ->GetStaticMesh());
+      PreviewComponent->SetVariableObject(TEXT("User.Mesh"),
+                                          StaticMeshComponents[0]
+                                              ->GetStaticMesh());
     }
   }
 
@@ -49,6 +63,7 @@ void ASpawnerActor::OnConstruction(const FTransform &Transform) {
   }
 
   PreviewComponent->SetHiddenInGame(false);
+  PreviewComponent->SetVisibility(true);
   PreviewComponent->Activate();
 }
 #endif
