@@ -29,9 +29,9 @@ void ASpawnerActor::OnConstruction(const FTransform &Transform) {
 
   if (USkeletalMeshComponent *SkeletalComp =
           FindComponentByClass<USkeletalMeshComponent>()) {
-    if (SkeletalComp->SkeletalMesh) {
-      PreviewComponent->SetVariableSkeletalMesh(TEXT("User.SkeletalMesh"),
-                                                SkeletalComp->SkeletalMesh);
+    if (USkeletalMesh *SkeletalMesh = SkeletalComp->GetSkeletalMeshAsset()) {
+      PreviewComponent->SetVariableObject(TEXT("User.SkeletalMesh"),
+                                          SkeletalMesh);
     }
   } else if (UStaticMeshComponent *StaticComp =
                  FindComponentByClass<UStaticMeshComponent>()) {
