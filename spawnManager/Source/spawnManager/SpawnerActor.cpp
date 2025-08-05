@@ -28,21 +28,34 @@ void ASpawnerActor::OnConstruction(const FTransform &Transform) {
   }
 
 #if WITH_EDITORONLY_DATA
-  if (PreviewActor) {
+  // Only spawn a single preview actor and reuse it when possible.
+  UClass *DesiredClass =
+      PreviewActorClasses.Num() > 0 ? PreviewActorClasses[0] : nullptr;
+
+  // Destroy any existing preview actor if the class changed or we no longer
+  // want to preview one.
+  if (PreviewActor && (!DesiredClass || PreviewActor->GetClass() != DesiredClass)) {
     PreviewActor->Destroy();
     PreviewActor = nullptr;
   }
 
-  if (PreviewActorClasses.Num() > 0 && PreviewActorClasses[0]) {
+  // Create the preview actor if needed.
+  if (!PreviewActor && DesiredClass) {
     FActorSpawnParameters Params;
     Params.ObjectFlags = RF_Transient;
-    PreviewActor = GetWorld()->SpawnActor<AActor>(PreviewActorClasses[0],
-                                                  GetActorTransform(), Params);
+    PreviewActor =
+        GetWorld()->SpawnActor<AActor>(DesiredClass, GetActorTransform(), Params);
     if (PreviewActor) {
       PreviewActor->bIsEditorOnlyActor = true;
     }
   }
 
+  // Keep the preview actor in sync with this actor's transform.
+  if (PreviewActor) {
+    PreviewActor->SetActorTransform(GetActorTransform());
+  }
+
+  // Ensure only one class is stored for previewing.
   if (PreviewActorClasses.Num() > 1) {
     PreviewActorClasses.SetNum(1);
   }
