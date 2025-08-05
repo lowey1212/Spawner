@@ -3,14 +3,19 @@
 #include "DAISpawnMarker.h"
 
 #include "Components/ArrowComponent.h"
+#include "Components/SceneComponent.h"
+#if WITH_EDITOR
 #include "Components/WidgetComponent.h"
 #include "Blueprint/UserWidget.h"
-#include "Components/SceneComponent.h"
+#endif
 
 ADAISpawnMarker::ADAISpawnMarker()
 {
     PrimaryActorTick.bCanEverTick = false;
-    bIsEditorOnlyActor = true; // prevent this marker from appearing in game builds
+
+    // Mark as editor-only; the spawn manager caches transforms so runtime builds
+    // can still spawn at these locations without the marker actor.
+    bIsEditorOnlyActor = true;
 
     // Create scene root
     SceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("SceneRoot"));
@@ -28,12 +33,14 @@ ADAISpawnMarker::ADAISpawnMarker()
     ArrowComponent->SetHiddenInGame(true);
 
     // Widget component for user provided visuals
+#if WITH_EDITORONLY_DATA
     WidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("WidgetComponent"));
     WidgetComponent->SetupAttachment(SceneRoot);
     WidgetComponent->SetRelativeLocation(FVector::ZeroVector);
     WidgetComponent->SetWidgetSpace(EWidgetSpace::Screen);
     WidgetComponent->SetDrawAtDesiredSize(true);
     WidgetComponent->SetHiddenInGame(true);
+#endif
 
     // Create spawn point component used for determining where the NPC spawns relative to this marker
     SpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("SpawnPoint"));
@@ -41,10 +48,11 @@ ADAISpawnMarker::ADAISpawnMarker()
     SpawnPoint->SetRelativeLocation(FVector::ZeroVector);
 }
 
+#if WITH_EDITOR
 void ADAISpawnMarker::OnConstruction(const FTransform& Transform)
 {
     Super::OnConstruction(Transform);
-
+#if WITH_EDITORONLY_DATA
     // Apply the user provided widget class if one is set.  This will replace
     // whatever widget might currently be assigned.
     if (MarkerWidgetClass)
@@ -56,4 +64,6 @@ void ADAISpawnMarker::OnConstruction(const FTransform& Transform)
     {
         WidgetComponent->SetVisibility(false);
     }
+#endif
 }
+#endif

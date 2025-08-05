@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include "CoreMinimal.h"
@@ -6,229 +7,374 @@
 #include "DAISpawnManager.generated.h"
 
 class UHierarchicalInstancedStaticMeshComponent;
+class USceneComponent;
 class UCurveFloat;
 class UMaterialInterface;
 class UPrimitiveComponent;
-class UStaticMesh; // <-- added forward declaration
+class AVolume;
+class UPhysicalMaterial;
 
 /**
  * Enum describing the shape of the spawn area.  Circle and Square are
- * straightforward geometric primitives, Curve allows sampling of a user supplied
- * curve asset to shape the boundary.
+ * straightforward geometric primitives, Curve allows sampling of a user
+ * supplied radius curve to bias distribution along a radial gradient, and Noise
+ * uses Perlin noise to scatter spawns more organically.  Additional shapes can
+ * be added later by extending GetSpawnLocation().
  */
 UENUM(BlueprintType)
-enum class ESpawnAreaShape : uint8
-{
-    Circle UMETA(DisplayName = "Circle"),
-    Square UMETA(DisplayName = "Square"),
-    Curve  UMETA(DisplayName = "Curve")
+enum class ESpawnAreaShape : uint8 {
+  /** Spawn points are chosen within a square of side length 2*Radius centred on
+     the actor. */
+  Square UMETA(DisplayName = "Square"),
+
+  /** Spawn points are chosen within a circle of radius Radius centred on the
+     actor. */
+  Circle UMETA(DisplayName = "Circle"),
+
+  /** Spawn points use a user provided curve (0..1 input) to bias the radial
+     distribution. */
+  Curve UMETA(DisplayName = "Curve"),
+
+  /** Spawn points are chosen using Perlin noise to produce more natural
+     scatter. */
+  Noise UMETA(DisplayName = "Noise")
 };
 
 /**
- * A single entry in the spawn list.  Each entry specifies weight, amount per batch,
- * whether it’s unique, cooldowns, optional static mesh (with persistence) and required tags.
+ * Structure that defines a single entry in the spawn table.  Each entry
+ * specifies what actor to spawn, how likely it is to be selected relative to
+ * other entries, whether only one instance of that actor may exist at once,
+ * optional cooldown windows when unique instances are destroyed, the static
+ * mesh that should accompany the actor (if any), whether that mesh should
+ * persist beyond the lifetime of the actor and a list of tags that must be
+ * present on the first player pawn in order for the spawn to proceed.  A
+ * simple probability field (SpawnChance) allows designers to dial in random
+ * non‑spawning even when an entry is selected by weight.
  */
 USTRUCT(BlueprintType)
-struct FSpawnEntry
-{
-    GENERATED_BODY()
+struct FSpawnEntry {
+  GENERATED_BODY()
 
-    /** The actor class to spawn. */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
-    TSubclassOf<AActor> ActorClass = nullptr;
+  /** The actor class to spawn. */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
+  TSubclassOf<AActor> ActorClass = nullptr;
 
-    /** Static mesh to instance along with the actor (optional). */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Mesh")
-    UStaticMesh* StaticMesh = nullptr;
+  /** Weight used for weighted random selection.  Must be positive to be
+   * considered. */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn",
+            meta = (ClampMin = "0.0"))
+  float Weight = 1.0f;
 
-    /** Whether the mesh should persist after the actor is destroyed. */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Mesh")
-    bool bMeshPersists = false;
+  /** If true, only one instance of this ActorClass may exist at any given time.
+   */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
+  bool bUniqueInstance = false;
 
-    /** Number of units to spawn for this entry in a batch. */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
-    int32 Amount = 1;
+  /** Minimum cooldown in seconds before this entry may spawn again when unique.
+   */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn",
+            meta = (EditCondition = "bUniqueInstance", ClampMin = "0.0"))
+  float CooldownMin = 5.0f;
 
-    /** Weight for random selection. */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn", meta = (ClampMin = "0.0"))
-    float Weight = 1.f;
+  /** Maximum cooldown in seconds before this entry may spawn again when unique.
+   */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn",
+            meta = (EditCondition = "bUniqueInstance", ClampMin = "0.0"))
+  float CooldownMax = 10.0f;
 
-    /** Chance to skip spawn even if selected (0..1). */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn", meta = (ClampMin = "0.0", ClampMax = "1.0"))
-    float SpawnChance = 1.f;
+  /** If true, choose a random cooldown between CooldownMin and CooldownMax.  If
+   * false, CooldownMin is used as a fixed delay. */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn",
+            meta = (EditCondition = "bUniqueInstance"))
+  bool bUseRandomCooldown = false;
 
-    /** Only one instance of this actor may exist at once. */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Unique")
-    bool bUniqueInstance = false;
+  /** Optional static mesh to place at the spawn location along with the actor.
+   */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
+  UStaticMesh *StaticMesh = nullptr;
 
-    /** Cooldown in seconds before another of this class can spawn (unique). */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Unique", meta = (EditCondition = "bUniqueInstance", ClampMin = "0.0"))
-    float UniqueRespawnCooldown = 0.f;
+  /** If true, the static mesh instance will persist after the actor is
+   * destroyed. */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
+  bool bStaticMeshPermanent = false;
 
-    /** Required tags on first player pawn to allow spawn. */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Requirements")
-    TArray<FName> RequiredPlayerTags;
-};
+  /** A list of tags that must be present on the first player pawn for this
+   * spawn to occur. */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
+  TArray<FName> RequiredTags;
 
-/** Runtime-only container describing a single pending spawn choice. */
-struct FPendingSpawn
-{
-    TSubclassOf<AActor> ActorClass = nullptr; // class to spawn
-    UStaticMesh* Mesh = nullptr;       // optional instanced mesh
-    bool                bMeshPersists = false;
-    int32               Count = 0;            // remaining spawns for this item
-    int32               PerEntryIndex = -1;   // index into SpawnEntries
+  /** Additional probability check (0.0–1.0).  Even if this entry is selected by
+   * weight, it may still not spawn. */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn",
+            meta = (ClampMin = "0.0", ClampMax = "1.0"))
+  float SpawnChance = 1.0f;
+
+  /** How many actors to spawn each time this entry is selected. */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn",
+            meta = (ClampMin = "1"))
+  int32 Amount = 1;
+
+  /** Max number of active actors of this entry allowed at once (0 = unlimited).
+   */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn",
+            meta = (ClampMin = "0"))
+  int32 MaxActive = 0;
+
+  /** Optional offset applied to the actor spawn location relative to the chosen
+   * spawn point. */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement")
+  FVector ActorOffset = FVector::ZeroVector;
+
+  /** Optional offset applied to the static mesh location.  When using a marker
+   * this is relative to the marker's spawn point. */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement")
+  FVector MeshOffset = FVector::ZeroVector;
+
+  /** If true, spawn using the specified marker rather than a random location.
+   */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Marker")
+  bool bUseMarker = false;
+
+  /** Marker providing spawn transforms when bUseMarker is enabled.  The actor
+   * spawns at the marker's root while the mesh uses the marker's secondary
+   * SpawnPoint if available. */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Marker",
+            meta = (EditCondition = "bUseMarker"))
+  AActor *MarkerActor = nullptr;
+
+  /** Cached world transform of the marker's root, captured in the editor so
+   *  shipping builds can spawn without the marker actor present. */
+  UPROPERTY(VisibleAnywhere, Category = "Spawn|Marker")
+  FTransform CachedMarkerTransform;
+
+  /** Cached world transform of the marker's spawn point component (or root if
+   *  no spawn point exists). */
+  UPROPERTY(VisibleAnywhere, Category = "Spawn|Marker")
+  FTransform CachedSpawnPointTransform;
+
+  /** True if the cached transforms above are valid. */
+  UPROPERTY(VisibleAnywhere, Category = "Spawn|Marker")
+  bool bCachedTransformsValid = false;
 };
 
 /**
- * DAISpawnManager – manages weighted, batched spawns plus optional instanced meshes,
- * editor debug visualisation, and (now) safety & nav validation.
+ * ADAISpawnManager is an actor that can be placed in a level to manage spawning
+ * of other actors.  It supports different area shapes, weighted random
+ * selection from a list of spawn entries, unique instance rules, cooldowns,
+ * optional static meshes and tag based conditional spawning.  Spawning can be
+ * triggered on BeginPlay, called manually, or scheduled on a timer to repeat
+ * automatically.
  */
-UCLASS(Blueprintable)
-class DAI_SPAWNER_API ADAISpawnManager : public AActor
-{
-    GENERATED_BODY()
+/** Pending spawn request item for async batching. */
+USTRUCT(BlueprintType)
+struct FPendingSpawn {
+  GENERATED_BODY()
+  UPROPERTY()
+  TSubclassOf<AActor> ActorClass = nullptr;
+  UPROPERTY()
+  int32 Count = 0;
+  UPROPERTY()
+  int32 PerEntryIndex = -1; // index into SpawnEntries for mesh/flags lookups
+};
+
+UCLASS(Blueprintable, BlueprintType, ClassGroup = (Custom),
+       meta = (BlueprintSpawnableComponent))
+class DAI_SPAWNER_API ADAISpawnManager : public AActor {
+  GENERATED_BODY()
 
 public:
-    ADAISpawnManager();
+  /** Default constructor.  Sets sensible defaults and creates internal
+   * components. */
+  ADAISpawnManager();
 
-    /** Root HISM that owns per-mesh HISM children. */
-    UPROPERTY(VisibleAnywhere, Category = "Spawn|Mesh")
-    UHierarchicalInstancedStaticMeshComponent* HISMComponent;
+  /** The shape of the volume within which spawn points will be generated. */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
+  ESpawnAreaShape SpawnAreaShape = ESpawnAreaShape::Circle;
 
-    /** Use a placed marker to supply spawn location for meshes; actors use marker’s SpawnPoint. */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Marker")
-    bool bUseMarker = false;
+  /** Maximum distance from the spawner at which actors may spawn. */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn",
+            meta = (ClampMin = "0.0"))
+  float Radius = 500.0f;
 
-    /** Marker actor, if using a marker. */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Marker", meta = (EditCondition = "bUseMarker"))
-    AActor* MarkerActor = nullptr;
+  /** List of entries from which a random selection will be made when spawning.
+   */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
+  TArray<FSpawnEntry> SpawnEntries;
 
-    /** Area shape. */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Area")
-    ESpawnAreaShape AreaShape = ESpawnAreaShape::Circle;
+  /** Whether to automatically spawn one actor on BeginPlay. */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
+  bool bSpawnOnBeginPlay = true;
 
-    /** Area radius/half-extent depending on shape. */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Area", meta = (ClampMin = "0.0"))
-    float AreaSize = 1000.f;
+  /** Whether to automatically continue spawning at random intervals. */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
+  bool bLoopSpawning = false;
 
-    /** Optional curve for custom boundary. */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Area")
-    UCurveFloat* AreaCurve = nullptr;
+  /** Minimum interval between automatic spawns when bLoopSpawning is true. */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn",
+            meta = (EditCondition = "bLoopSpawning", ClampMin = "0.0"))
+  float SpawnIntervalMin = 30.0f;
 
-    /** Draw editor debug. */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Debug")
-    bool bDebug = false;
+  /** Maximum interval between automatic spawns when bLoopSpawning is true. */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn",
+            meta = (EditCondition = "bLoopSpawning", ClampMin = "0.0"))
+  float SpawnIntervalMax = 60.0f;
 
-    /** Entries used for weighted selection. */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
-    TArray<FSpawnEntry> SpawnEntries;
+  /** Global async batch size: maximum actors to spawn per tick. */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
+  int32 MaxSpawnPerTick = 50;
+  /**
+   * Optional curve used when SpawnAreaShape is Curve.  The curve is sampled
+   * at a random x in 0..1 and multiplied by Radius to determine the spawn
+   * distance from the spawner.  This allows designers to bias where in the
+   * volume spawns occur (e.g. close to centre or around the edges).
+   */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Curve")
+  UCurveFloat *RadiusCurve = nullptr;
 
-    /** Spawn immediately on BeginPlay. */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Timing")
-    bool bSpawnOnBeginPlay = false;
+  /**
+   * Simple scene root used for attachments.  Static mesh components are
+   * created on demand only when entries request a mesh.
+   */
+  UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Spawn")
+  USceneComponent *SceneRoot;
 
-    /** Loop automatic spawning between min/max interval. */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Timing")
-    bool bLoopSpawning = false;
+  /** If true, spawn locations are projected onto the navigation mesh. */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement")
+  bool bProjectToNavMesh = true;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Timing", meta = (ClampMin = "0.0"))
-    float SpawnIntervalMin = 5.f;
+  /** Radius used when validating safe placement.  Zero disables the overlap
+   * check. */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement",
+            meta = (ClampMin = "0.0"))
+  float SafePlacementRadius = 0.0f;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Timing", meta = (ClampMin = "0.0"))
-    float SpawnIntervalMax = 10.f;
+  /** Minimum distance required between newly spawned actors. */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement",
+            meta = (ClampMin = "0.0"))
+  float MinDistanceBetweenSpawns = 0.0f;
 
-    /** Max number spawned per tick (budget). */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Perf", meta = (ClampMin = "1"))
-    int32 MaxSpawnsPerTick = 8;
+  /** Volumes that spawns must be inside (empty = any location). */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement")
+  TArray<AVolume *> InclusionVolumes;
 
-    /** Trigger a spawn batch now. */
-    UFUNCTION(BlueprintCallable, Category = "Spawn")
-    void SpawnActors();
+  /** Volumes that spawns must avoid. */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement")
+  TArray<AVolume *> ExclusionVolumes;
 
-    /** Returns a spawn point for the actor (center + random offset within area). */
-    UFUNCTION(BlueprintCallable, Category = "Spawn")
-    FVector GetSpawnLocation() const;
+  /** Actor tags considered forbidden when detected beneath the spawn point. */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement")
+  TArray<FName> ForbiddenActorTags;
 
-    virtual void OnConstruction(const FTransform& Transform) override;
-    virtual void BeginPlay() override;
+  /** Physical materials that disallow spawning when detected on the ground. */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement")
+  TArray<UPhysicalMaterial *> ForbiddenPhysMaterials;
 
-    // --- Runtime state ---
+  /** Align spawn rotation to ground normal. */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement")
+  bool bAlignToGround = true;
 
-    /** Current pending selections to spawn (built per batch). */
-    // Runtime-only; no reflection
-    TArray<FPendingSpawn> PendingSpawns;
+  /** When aligning to ground, optionally face the marker's forward direction.
+   */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement")
+  bool bFaceMarkerForward = false;
 
-    /** Active-by-class for distance checks & uniqueness. */
-    // Runtime-only; no reflection
-    TMap<TSubclassOf<AActor>, TArray<TWeakObjectPtr<AActor>>> ActiveByClass;
+  /** If true and RequiredLevelName is set, spawning will wait until that
+   * streaming level is loaded. */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|LevelStreaming")
+  bool bWaitForLevelToLoad = false;
 
-    /** One HISM per unique mesh, all owned by this spawner. */
-    UPROPERTY()
-    TMap<UStaticMesh*, UHierarchicalInstancedStaticMeshComponent*> MeshToHISM;
+  /** Name of the streaming level that must be loaded before spawning. */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|LevelStreaming")
+  FName RequiredLevelName;
 
-    /** Get or create the HISM for a given mesh. */
-    UHierarchicalInstancedStaticMeshComponent* GetOrCreateHISM(UStaticMesh* Mesh);
+  /** Spawn one actor according to the configured rules.  If multiple entries
+   *  exist they will be considered by weight.  This method is exposed to
+   *  Blueprints so designers can trigger spawns manually.  It is safe to
+   *  call this repeatedly; unique/cooldown rules will be observed. */
+  UFUNCTION(BlueprintCallable, Category = "Spawn")
+  void SpawnActors();
 
-    /** Redraws non-persistent debug shapes. */
-    void DrawDebugArea() const;
+  /** Destroy all dynamically spawned actors and clear any non‑permanent
+   *  static meshes.  Persistent static meshes (bStaticMeshPermanent == true)
+   *  remain and can be cleaned up manually if desired. */
+  UFUNCTION(BlueprintCallable, Category = "Spawn")
+  void DespawnAll();
 
-    /** Clears non-persistent editor debug previews. */
-    void ClearNonPersistentDebug();
+protected:
+  virtual void BeginPlay() override;
+  virtual void OnConstruction(const FTransform &Transform) override;
 
-    UFUNCTION()
-    void HandleSpawnedActorDestroyed(AActor* DestroyedActor);
+  /**
+   * Override this in Blueprints or C++ to implement custom spawn conditions.
+   * The default implementation will check RequiredTags on the first player
+   * pawn.  Return true to allow spawning or false to skip the spawn.  If
+   * false is returned the spawn call will end quietly.  This allows hook
+   * up to quest systems, time‑of‑day logic and other complex conditions
+   * without modifying the C++ class.
+   */
+  UFUNCTION(BlueprintNativeEvent, Category = "Spawn")
+  bool CanSpawnForEntry(const FSpawnEntry &Entry);
+  virtual bool CanSpawnForEntry_Implementation(const FSpawnEntry &Entry);
 
-    // --- Placement / Safety ---
+  /**
+   * Compute a random spawn location within the configured volume.
+   * Used internally for entries that are not bound to a marker.
+   */
+  FVector GetSpawnLocation() const;
 
-    /** Min distance between any two spawned actors (units). */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Safety", meta = (ClampMin = "0.0"))
-    float MinDistanceBetweenSpawns = 150.f;
+public:
+  virtual void Tick(float DeltaSeconds) override;
+#if WITH_EDITOR
+  virtual bool ShouldTickIfViewportsOnly() const override { return bDebug; }
+#endif
 
-    /** Min distance from the local player pawn. */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Safety", meta = (ClampMin = "0.0"))
-    float MinDistanceFromPlayer = 600.f;
+  /** Enable in-editor debug previews and radius. */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Debug")
+  bool bDebug = false;
 
-    /** Max attempts to find a safe spot for one spawn before skipping. */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Safety", meta = (ClampMin = "1"))
-    int32 MaxPlacementAttempts = 10;
-
-    /** Perform navmesh validation with ProjectPointToNavigation. */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Nav")
-    bool bValidateNavmesh = true;
-
-    /** If nav validation fails, try nearest point on navmesh. */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Nav", meta = (EditCondition = "bValidateNavmesh"))
-    bool bUseNearestOnNavFail = true;
-
-    /** Z offset applied to actor spawns (after nav projection). */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Offsets")
-    float ActorZOffset = 0.f;
-
-    /** Z offset applied to static mesh instances. */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Offsets")
-    float MeshZOffset = 0.f;
-
-    /** If no safe placement found within MaxPlacementAttempts, skip the spawn. */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Safety")
-    bool bSkipWhenUnsafe = true;
-
-    // Helpers for placement safety & nav
-    bool TryFindSafeSpawn(FVector& OutActorLoc, FVector& OutMeshLoc) const;
-    bool IsFarEnoughFromOthers(const FVector& Test) const;
-    bool IsFarEnoughFromPlayer(const FVector& Test) const;
-    bool HasBlockingOverlap(const FVector& Test) const;
+  /** Optional ghost material to apply to preview meshes in editor. */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Debug")
+  UMaterialInterface *DebugGhostMaterial = nullptr;
 
 private:
-    /** Internal function that performs the actual spawning and schedules the next automatic spawn. */
-    void SpawnActorsInternal();
+  /** Queue of pending spawns to process in Tick. */
+  TArray<FPendingSpawn> PendingSpawns;
 
-    /** Handle used for scheduling the automatic spawning timer. */
-    FTimerHandle SpawnTimerHandle;
+  /** Recently spawned locations used to enforce minimum separation. */
+  TArray<FVector> RecentSpawnLocations;
 
-    /** Records the last spawn time for each unique actor class to implement cooldowns. */
-    TMap<TSubclassOf<AActor>, float> LastSpawnTimeMap;
+  /** Track active instances per class for MaxActive enforcement. */
+  TMap<TSubclassOf<AActor>, TArray<TWeakObjectPtr<AActor>>> ActiveByClass;
 
-    /** Holds weak pointers to the active unique instances when bUniqueInstance is set. */
-    TMap<TSubclassOf<AActor>, TWeakObjectPtr<AActor>> ActiveInstances;
+  /** One HISM per unique mesh, all owned by this spawner. */
+  UPROPERTY()
+  TMap<UStaticMesh *, UHierarchicalInstancedStaticMeshComponent *> MeshToHISM;
+
+  /** Get or create the HISM for a given mesh. */
+  UHierarchicalInstancedStaticMeshComponent *GetOrCreateHISM(UStaticMesh *Mesh);
+
+#if WITH_EDITOR
+  /** Redraws non-persistent debug shapes. */
+  void DrawDebugArea() const;
+
+  /** Clears non-persistent editor debug previews. */
+  void ClearNonPersistentDebug();
+#endif
+
+private:
+  /** Internal function that performs the actual spawning and schedules the next
+   *  automatic spawn if bLoopSpawning is enabled. */
+  void SpawnActorsInternal();
+
+  /** Handle used for scheduling the automatic spawning timer. */
+  FTimerHandle SpawnTimerHandle;
+
+  /** Records the last spawn time for each unique actor class to implement
+   * cooldowns. */
+  TMap<TSubclassOf<AActor>, float> LastSpawnTimeMap;
+
+  /** Holds weak pointers to the active unique instances so that we can avoid
+   *  spawning additional ones when bUniqueInstance is set.  When the actor
+   *  is destroyed the pointer becomes invalid. */
+  TMap<TSubclassOf<AActor>, TWeakObjectPtr<AActor>> ActiveInstances;
 };

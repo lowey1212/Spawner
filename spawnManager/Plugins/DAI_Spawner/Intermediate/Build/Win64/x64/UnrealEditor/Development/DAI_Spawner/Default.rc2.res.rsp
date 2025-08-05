@@ -84,5 +84,5 @@
 /DPROJECT_COPYRIGHT_STRING="Fill out your copyright notice in the Description page of Project Settings."
 /DPROJECT_PRODUCT_NAME="Third Person BP Game Template"
 /DPROJECT_PRODUCT_IDENTIFIER=spawnManager
-/fo "F:\PluginTest\spawnManager\Plugins\DAI_Spawner\Intermediate\Build\Win64\x64\UnrealEditor\Development\DAI_Spawner\Default.rc2.res"
+/fo "F:\githubdesktop\Spawner\spawnManager\Plugins\DAI_Spawner\Intermediate\Build\Win64\x64\UnrealEditor\Development\DAI_Spawner\Default.rc2.res"
 "..\Build\Windows\Resources\Default.rc2"

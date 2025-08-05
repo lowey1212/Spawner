@@ -20,9 +20,11 @@
 #include "DAISpawnMarker.generated.h"
 
 class UArrowComponent;
+class USceneComponent;
+#if WITH_EDITORONLY_DATA
 class UWidgetComponent;
 class UUserWidget;
-class USceneComponent;
+#endif
 
 UCLASS(Blueprintable)
 class DAI_SPAWNER_API ADAISpawnMarker : public AActor
@@ -40,10 +42,6 @@ public:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Marker")
     UArrowComponent* ArrowComponent;
 
-    /** Widget component that can host a user provided marker widget. */
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Marker")
-    UWidgetComponent* WidgetComponent;
-
     /** Spawn point component indicating where the NPC should spawn relative to the marker.  Designers
      *  can move this component in the editor to adjust the spawn location (e.g. centre of a
      *  cave).  When bUseMarker is enabled on the spawn manager, the actor will be spawned at
@@ -53,12 +51,20 @@ public:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Marker")
     USceneComponent* SpawnPoint;
 
+#if WITH_EDITORONLY_DATA
+    /** Widget component that can host a user provided marker widget. */
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Marker")
+    UWidgetComponent* WidgetComponent;
+
     /** Optional widget class used to represent the marker visually.  This
      *  widget will be spawned on the WidgetComponent during construction.
      */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Marker")
     TSubclassOf<UUserWidget> MarkerWidgetClass;
+#endif
 
 protected:
+#if WITH_EDITOR
     virtual void OnConstruction(const FTransform& Transform) override;
+#endif
 };

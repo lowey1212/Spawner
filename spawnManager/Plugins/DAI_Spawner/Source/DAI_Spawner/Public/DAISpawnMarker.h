@@ -6,12 +6,12 @@
  * DAISpawnMarker.h
  *
  * A simple marker actor that can be placed in levels and referenced by
- * ADAISpawnManager as the location at which to spawn actors when
- * bUseMarker is true.  The marker contains an arrow component to indicate
- * direction and optionally hosts a widget component so designers can supply
- * their own visual cue (e.g. a downwards pointing arrow).  Markers are
- * hidden in game by default but visible in the editor for setup.
- */
+ * ADAISpawnManager spawn entries for precise placement.  The marker
+ * contains an arrow component to indicate direction and optionally hosts a
+ * widget component so designers can supply their own visual cue (e.g. a
+ * downwards pointing arrow).  Markers are hidden in game by default but
+ * visible in the editor for setup.
+*/
 
 #pragma once
 
@@ -20,9 +20,11 @@
 #include "DAISpawnMarker.generated.h"
 
 class UArrowComponent;
+class USceneComponent;
+#if WITH_EDITORONLY_DATA
 class UWidgetComponent;
 class UUserWidget;
-class USceneComponent;
+#endif
 
 UCLASS(Blueprintable)
 class DAI_SPAWNER_API ADAISpawnMarker : public AActor
@@ -40,25 +42,28 @@ public:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Marker")
     UArrowComponent* ArrowComponent;
 
-    /** Widget component that can host a user provided marker widget. */
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Marker")
-    UWidgetComponent* WidgetComponent;
-
-    /** Spawn point component indicating where the NPC should spawn relative to the marker.  Designers
-     *  can move this component in the editor to adjust the spawn location (e.g. centre of a
-     *  cave).  When bUseMarker is enabled on the spawn manager, the actor will be spawned at
-     *  the world location of this component while the static mesh is placed at the marker actor's
-     *  location.
+    /** Spawn point component indicating where the optional static mesh should spawn relative to the marker.
+     *  Designers can move this component in the editor to adjust the mesh placement (e.g. centre of a cave).
+     *  When a spawn entry is configured to use this marker, the actor is placed at the marker's root while
+     *  the static mesh uses the world location of this component.
      */
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Marker")
     USceneComponent* SpawnPoint;
+
+#if WITH_EDITORONLY_DATA
+    /** Widget component that can host a user provided marker widget. */
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Marker")
+    UWidgetComponent* WidgetComponent;
 
     /** Optional widget class used to represent the marker visually.  This
      *  widget will be spawned on the WidgetComponent during construction.
      */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Marker")
     TSubclassOf<UUserWidget> MarkerWidgetClass;
+#endif
 
 protected:
+#if WITH_EDITOR
     virtual void OnConstruction(const FTransform& Transform) override;
+#endif
 };
