@@ -4,6 +4,7 @@
 #include "Engine/World.h"
 #include "GameFramework/Actor.h"
 #include "TimerManager.h"
+#include "NiagaraFunctionLibrary.h"
 
 // Shared tracking data used by all spawn manager components
 TMap<FName, int32> USpawnManagerComponent::GlobalTagCounts;
@@ -428,6 +429,12 @@ void USpawnManagerComponent::SpawnCycle(const FSpawnContext &Context) {
             int32 MatIdx = FMath::RandHelper(Companion.MaterialOverrides.Num());
             MeshComp->SetMaterial(0, Companion.MaterialOverrides[MatIdx]);
           }
+        }
+
+        if (Companion.SpawnEffect) {
+          UNiagaraFunctionLibrary::SpawnSystemAtLocation(
+              World, Companion.SpawnEffect, CompanionTransform.GetLocation(),
+              CompanionTransform.GetRotation().Rotator());
         }
 
         if (Companion.Lifetime == ECompanionLifetime::TiedToActor) {

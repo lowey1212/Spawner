@@ -12,6 +12,7 @@
 class UStaticMesh;
 class UMaterialInterface;
 class UWorld;
+class UNiagaraSystem;
 
 /**
  * Describes how we track cooldown timers:
@@ -172,6 +173,10 @@ struct FStaticMeshCompanion {
   /** If true, scale equally on all axes using the X value */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Companion|Transform")
   bool bUniformScale = true;
+
+  /** Optional Niagara effect to play alongside the mesh */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Companion")
+  UNiagaraSystem *SpawnEffect = nullptr;
 };
 
 /** Simple persistent representation of a spawned actor */
