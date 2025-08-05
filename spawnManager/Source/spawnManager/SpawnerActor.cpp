@@ -9,6 +9,7 @@ ASpawnerActor::ASpawnerActor() {
   PrimaryActorTick.bCanEverTick = false;
 #if WITH_EDITORONLY_DATA
   PreviewActor = nullptr;
+  PreviewActorClass = nullptr;
 #endif
 }
 
