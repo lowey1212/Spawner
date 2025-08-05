@@ -83,6 +83,7 @@ void ASpawnerActor::OnConstruction(const FTransform &Transform) {
         GetWorld()->SpawnActor<AActor>(Class, SpawnTransform, Params);
     if (Spawned) {
       Spawned->bIsEditorOnlyActor = true;
+      Spawned->bEditable = false;
       PreviewActors.Add(Spawned);
     }
   }
