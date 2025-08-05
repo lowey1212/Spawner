@@ -16,7 +16,6 @@ public:
   ASpawnerActor();
 
 #if WITH_EDITORONLY_DATA
-
 protected:
   /** Editor-only preview actor spawned for visualization. Not cooked into builds. */
   UPROPERTY(VisibleAnywhere, Transient, Category = "Visualization",
@@ -25,14 +24,7 @@ protected:
 
   /** Actor class whose instance is spawned for preview */
   UPROPERTY(EditAnywhere, Category = "Visualization")
-
   TSubclassOf<AActor> PreviewActorClass;
-
-protected:
-  /** Editor-only preview actor spawned for visualization. Not cooked into builds. */
-  UPROPERTY(VisibleAnywhere, Transient, Category = "Visualization",
-            meta = (ToolTip = "Editor-only preview actor; not cooked into builds"))
-  TObjectPtr<AActor> PreviewActor;
 #endif
 
 #if WITH_EDITOR
