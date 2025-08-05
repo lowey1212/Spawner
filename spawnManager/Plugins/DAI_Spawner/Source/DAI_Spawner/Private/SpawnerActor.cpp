@@ -1,6 +1,6 @@
 #include "SpawnerActor.h"
 
-#include "Components/StaticMeshComponent.h"
+#include "Components/SceneComponent.h"
 
 #if WITH_EDITOR
 #include "Engine/World.h"
@@ -10,10 +10,8 @@ ASpawnerActor::ASpawnerActor() {
   bIsEditorOnlyActor = true;
   PrimaryActorTick.bCanEverTick = false;
 
-  MeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
-  RootComponent = MeshComponent;
-  MeshComponent->SetComponentTickEnabled(false);
-  MeshComponent->PrimaryComponentTick.bCanEverTick = false;
+  RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("SceneRoot"));
+  RootComponent->SetComponentTickEnabled(false);
 }
 
 #if WITH_EDITOR
