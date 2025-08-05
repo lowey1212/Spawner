@@ -112,12 +112,10 @@ void ADAISpawnManager::SpawnActorsInternal() {
     return;
   }
 
-  // Build a list of candidate entries along with remaining spawn counts and
-  // weights
+  // Build a list of candidate entries and their weights. Only one actor will be
+  // spawned per call so we don't track per-entry counts.
   TArray<int32> CandidateIndices;
-  TArray<int32> CandidateRemaining;
   TArray<float> CandidateWeights;
-  int32 TotalToSpawn = 0;
 
   const float CurrentTime = GetWorld()->GetTimeSeconds();
   for (int32 i = 0; i < SpawnEntries.Num(); ++i) {
@@ -169,74 +167,48 @@ void ADAISpawnManager::SpawnActorsInternal() {
     // Include this entry in the candidate list
     CandidateIndices.Add(i);
     CandidateWeights.Add(Entry.Weight);
-    CandidateRemaining.Add(DesiredCount);
-    TotalToSpawn += DesiredCount;
   }
 
   // If there are no candidates, return early
-  if (CandidateIndices.Num() == 0 || TotalToSpawn <= 0) {
+  if (CandidateIndices.Num() == 0) {
     return;
   }
 
-  // For each spawn we select a candidate entry at random based on its weight
-  // and enqueue a single spawn
-  for (int32 SpawnIdx = 0; SpawnIdx < TotalToSpawn; ++SpawnIdx) {
-    // Compute the total weight of candidates with remaining spawns
-    float WeightedSum = 0.0f;
-    for (int32 j = 0; j < CandidateIndices.Num(); ++j) {
-      if (CandidateRemaining[j] > 0) {
-        WeightedSum += CandidateWeights[j];
-      }
-    }
-    if (WeightedSum <= 0.0f) {
-      break;
-    }
-    // Choose a candidate index based on weight
-    float Roll = FMath::FRand() * WeightedSum;
-    int32 ChosenIndex = INDEX_NONE;
-    for (int32 j = 0; j < CandidateIndices.Num(); ++j) {
-      if (CandidateRemaining[j] <= 0) {
-        continue;
-      }
-      Roll -= CandidateWeights[j];
-      if (Roll <= 0.0f) {
-        ChosenIndex = j;
-        break;
-      }
-    }
-    if (ChosenIndex == INDEX_NONE) {
-      // fallback: choose the first available candidate
-      for (int32 j = 0; j < CandidateIndices.Num(); ++j) {
-        if (CandidateRemaining[j] > 0) {
-          ChosenIndex = j;
-          break;
-        }
-      }
-    }
-    if (ChosenIndex == INDEX_NONE) {
-      break;
-    }
-    const int32 EntryIndex = CandidateIndices[ChosenIndex];
-    const FSpawnEntry &ChosenEntry = SpawnEntries[EntryIndex];
-    // Roll spawn chance per spawn
-    if (ChosenEntry.SpawnChance < 1.0f &&
-        FMath::FRand() > ChosenEntry.SpawnChance) {
-      // Skip this spawn without enqueuing but still decrement the remaining
-      // count
-      CandidateRemaining[ChosenIndex]--;
-      if (CandidateRemaining[ChosenIndex] <= 0) {
-        CandidateRemaining[ChosenIndex] = 0;
-      }
-      continue;
-    }
-    // Enqueue a single spawn for the chosen entry
-    FPendingSpawn Pending;
-    Pending.ActorClass = ChosenEntry.ActorClass;
-    Pending.Count = 1;
-    Pending.PerEntryIndex = EntryIndex;
-    PendingSpawns.Add(Pending);
-    CandidateRemaining[ChosenIndex]--;
+  // Compute total weight of candidates
+  float WeightedSum = 0.0f;
+  for (float W : CandidateWeights) {
+    WeightedSum += W;
   }
+  if (WeightedSum <= 0.0f) {
+    return;
+  }
+
+  // Choose a candidate index based on weight
+  float Roll = FMath::FRand() * WeightedSum;
+  int32 ChosenIndex = 0;
+  for (int32 j = 0; j < CandidateIndices.Num(); ++j) {
+    Roll -= CandidateWeights[j];
+    if (Roll <= 0.0f) {
+      ChosenIndex = j;
+      break;
+    }
+  }
+
+  const int32 EntryIndex = CandidateIndices[ChosenIndex];
+  const FSpawnEntry &ChosenEntry = SpawnEntries[EntryIndex];
+
+  // Roll spawn chance for the selected entry
+  if (ChosenEntry.SpawnChance < 1.0f &&
+      FMath::FRand() > ChosenEntry.SpawnChance) {
+    return;
+  }
+
+  // Enqueue a single spawn for the chosen entry
+  FPendingSpawn Pending;
+  Pending.ActorClass = ChosenEntry.ActorClass;
+  Pending.Count = 1;
+  Pending.PerEntryIndex = EntryIndex;
+  PendingSpawns.Add(Pending);
 
   // Schedule the next automatic spawn if looping is enabled.  We randomise the
   // delay again to avoid synchronised spawning across multiple spawners.  The
@@ -622,18 +594,7 @@ void ADAISpawnManager::DrawDebugArea() const {
             InstT.SetLocation(MeshLocation);
             InstT.SetRotation(FQuat::Identity);
             InstT.SetScale3D(FVector(1.0f));
-            const int32 InstanceIndex = HISM->AddInstance(InstT);
-            if (!Entry.bStaticMeshPermanent) {
-              const TWeakObjectPtr<UHierarchicalInstancedStaticMeshComponent>
-                  WeakHISM(HISM);
-              NewActor->OnDestroyed.AddLambda(
-                  [WeakHISM, InstanceIndex](AActor *) {
-                    if (UHierarchicalInstancedStaticMeshComponent *Comp =
-                            WeakHISM.Get()) {
-                      Comp->RemoveInstance(InstanceIndex);
-                    }
-                  });
-            }
+            HISM->AddInstance(InstT);
           }
         }
 
