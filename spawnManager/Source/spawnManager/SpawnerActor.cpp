@@ -27,65 +27,17 @@ void ASpawnerActor::OnConstruction(const FTransform &Transform) {
     PreviewActor = nullptr;
   }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
   if (PreviewActorClass) {
     FActorSpawnParameters Params;
     Params.ObjectFlags = RF_Transient;
     PreviewActor =
         GetWorld()->SpawnActor<AActor>(PreviewActorClass, GetActorTransform(),
                                        Params);
-=======
-  if (PreviewActorClasses.Num() > 0 && PreviewActorClasses[0]) {
-    FActorSpawnParameters Params;
-    Params.ObjectFlags = RF_Transient;
-    PreviewActor = GetWorld()->SpawnActor<AActor>(PreviewActorClasses[0],
-                                                  GetActorTransform(), Params);
->>>>>>> parent of f53abd6 (Merge pull request #51 from lowey1212/codex/fix-spawner-to-spawn-only-one-actor)
-=======
-  if (PreviewActorClasses.Num() > 0 && PreviewActorClasses[0]) {
-    FActorSpawnParameters Params;
-    Params.ObjectFlags = RF_Transient;
-    PreviewActor = GetWorld()->SpawnActor<AActor>(PreviewActorClasses[0],
-                                                  GetActorTransform(), Params);
->>>>>>> parent of f53abd6 (Merge pull request #51 from lowey1212/codex/fix-spawner-to-spawn-only-one-actor)
-=======
-  if (PreviewActorClasses.Num() > 0 && PreviewActorClasses[0]) {
-    FActorSpawnParameters Params;
-    Params.ObjectFlags = RF_Transient;
-    PreviewActor = GetWorld()->SpawnActor<AActor>(PreviewActorClasses[0],
-                                                  GetActorTransform(), Params);
->>>>>>> parent of f53abd6 (Merge pull request #51 from lowey1212/codex/fix-spawner-to-spawn-only-one-actor)
-=======
-  if (PreviewActorClasses.Num() > 0 && PreviewActorClasses[0]) {
-    FActorSpawnParameters Params;
-    Params.ObjectFlags = RF_Transient;
-    PreviewActor = GetWorld()->SpawnActor<AActor>(PreviewActorClasses[0],
-                                                  GetActorTransform(), Params);
->>>>>>> parent of f53abd6 (Merge pull request #51 from lowey1212/codex/fix-spawner-to-spawn-only-one-actor)
-=======
-  if (PreviewActorClasses.Num() > 0 && PreviewActorClasses[0]) {
-    FActorSpawnParameters Params;
-    Params.ObjectFlags = RF_Transient;
-    PreviewActor = GetWorld()->SpawnActor<AActor>(PreviewActorClasses[0],
-                                                  GetActorTransform(), Params);
->>>>>>> parent of f53abd6 (Merge pull request #51 from lowey1212/codex/fix-spawner-to-spawn-only-one-actor)
     if (PreviewActor) {
       PreviewActor->bIsEditorOnlyActor = true;
     }
   }
-<<<<<<< HEAD
-#endif
-=======
-
-  if (PreviewActorClasses.Num() > 1) {
-    PreviewActorClasses.SetNum(1);
-  }
 #endif // WITH_EDITORONLY_DATA
->>>>>>> parent of f53abd6 (Merge pull request #51 from lowey1212/codex/fix-spawner-to-spawn-only-one-actor)
 }
 #endif
 
