@@ -19,13 +19,16 @@ public:
 protected:
   /** Actor class used for in-editor visualization. Not cooked into builds. */
   UPROPERTY(EditAnywhere, Category = "Visualization",
-            meta = (ToolTip = "In-editor only actor class for preview; not cooked into builds"))
-  TSubclassOf<AActor> PreviewActorClass;
+            meta = (ToolTip = "In-editor only actor class for preview; not "
+                              "cooked into builds"))
+  TSubclassOf<AActor> PreviewActorClass = nullptr;
 
-  /** Editor-only preview actor spawned for visualization. Not cooked into builds. */
-  UPROPERTY(VisibleAnywhere, Transient, Category = "Visualization",
-            meta = (ToolTip = "Editor-only preview actor; not cooked into builds"))
-  TObjectPtr<AActor> PreviewActor;
+  /** Editor-only preview actor spawned for visualization. Not cooked into
+   * builds. */
+  UPROPERTY(
+      VisibleAnywhere, Transient, Category = "Visualization",
+      meta = (ToolTip = "Editor-only preview actor; not cooked into builds"))
+  TObjectPtr<AActor> PreviewActor = nullptr;
 #endif
 
 #if WITH_EDITOR
