@@ -31,12 +31,20 @@ void ASpawnerActor::OnConstruction(const FTransform &Transform) {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   if (PreviewActorClass) {
     FActorSpawnParameters Params;
     Params.ObjectFlags = RF_Transient;
     PreviewActor =
         GetWorld()->SpawnActor<AActor>(PreviewActorClass, GetActorTransform(),
                                        Params);
+=======
+  if (PreviewActorClasses.Num() > 0 && PreviewActorClasses[0]) {
+    FActorSpawnParameters Params;
+    Params.ObjectFlags = RF_Transient;
+    PreviewActor = GetWorld()->SpawnActor<AActor>(PreviewActorClasses[0],
+                                                  GetActorTransform(), Params);
+>>>>>>> parent of f53abd6 (Merge pull request #51 from lowey1212/codex/fix-spawner-to-spawn-only-one-actor)
 =======
   if (PreviewActorClasses.Num() > 0 && PreviewActorClasses[0]) {
     FActorSpawnParameters Params;
