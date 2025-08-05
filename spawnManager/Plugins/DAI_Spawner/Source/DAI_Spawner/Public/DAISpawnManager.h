@@ -26,19 +26,23 @@ UENUM(BlueprintType)
 enum class ESpawnAreaShape : uint8 {
   /** Spawn points are chosen within a square of side length 2*Radius centred on
      the actor. */
-  Square UMETA(DisplayName = "Square"),
+  Square UMETA(DisplayName = "Square",
+               ToolTip = "Choose a random point inside a square centred on the spawner"),
 
   /** Spawn points are chosen within a circle of radius Radius centred on the
      actor. */
-  Circle UMETA(DisplayName = "Circle"),
+  Circle UMETA(DisplayName = "Circle",
+               ToolTip = "Choose a random point inside a circle centred on the spawner"),
 
   /** Spawn points use a user provided curve (0..1 input) to bias the radial
      distribution. */
-  Curve UMETA(DisplayName = "Curve"),
+  Curve UMETA(DisplayName = "Curve",
+              ToolTip = "Sample a curve to bias radial spawn distribution"),
 
   /** Spawn points are chosen using Perlin noise to produce more natural
      scatter. */
-  Noise UMETA(DisplayName = "Noise")
+  Noise UMETA(DisplayName = "Noise",
+              ToolTip = "Scatter spawn points using Perlin noise")
 };
 
 /**
@@ -57,83 +61,105 @@ struct FSpawnEntry {
   GENERATED_BODY()
 
   /** The actor class to spawn. */
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn",
+            meta = (ToolTip = "Class to spawn"))
   TSubclassOf<AActor> ActorClass = nullptr;
 
   /** Weight used for weighted random selection.  Must be positive to be
    * considered. */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn",
-            meta = (ClampMin = "0.0"))
+            meta = (ClampMin = "0.0", ToolTip =
+                           "Relative probability weight for selecting this entry"))
   float Weight = 1.0f;
 
   /** If true, only one instance of this ActorClass may exist at any given time.
    */
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn",
+            meta = (ToolTip =
+                         "Whether only a single instance may exist at once"))
   bool bUniqueInstance = false;
 
   /** Minimum cooldown in seconds before this entry may spawn again when unique.
    */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn",
-            meta = (EditCondition = "bUniqueInstance", ClampMin = "0.0"))
+            meta = (EditCondition = "bUniqueInstance", ClampMin = "0.0",
+                     ToolTip =
+                         "Lowest delay before another unique actor may spawn"))
   float CooldownMin = 5.0f;
 
   /** Maximum cooldown in seconds before this entry may spawn again when unique.
    */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn",
-            meta = (EditCondition = "bUniqueInstance", ClampMin = "0.0"))
+            meta = (EditCondition = "bUniqueInstance", ClampMin = "0.0",
+                     ToolTip =
+                         "Highest delay before another unique actor may spawn"))
   float CooldownMax = 10.0f;
 
   /** If true, choose a random cooldown between CooldownMin and CooldownMax.  If
    * false, CooldownMin is used as a fixed delay. */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn",
-            meta = (EditCondition = "bUniqueInstance"))
+            meta = (EditCondition = "bUniqueInstance", ToolTip =
+                           "Use random value between min and max cooldown"))
   bool bUseRandomCooldown = false;
 
   /** Optional static mesh to place at the spawn location along with the actor.
    */
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn",
+            meta = (ToolTip = "Companion mesh to spawn beside the actor"))
   UStaticMesh *StaticMesh = nullptr;
 
   /** If true, the static mesh instance will persist after the actor is
    * destroyed. */
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn",
+            meta = (ToolTip =
+                         "Keep the companion mesh even after the actor despawns"))
   bool bStaticMeshPermanent = false;
 
   /** A list of tags that must be present on the first player pawn for this
    * spawn to occur. */
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn",
+            meta = (ToolTip =
+                         "All of these gameplay tags must exist on the player to allow spawning"))
   TArray<FName> RequiredTags;
 
   /** Additional probability check (0.0–1.0).  Even if this entry is selected by
    * weight, it may still not spawn. */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn",
-            meta = (ClampMin = "0.0", ClampMax = "1.0"))
+            meta = (ClampMin = "0.0", ClampMax = "1.0", ToolTip =
+                           "Chance that a chosen entry actually spawns"))
   float SpawnChance = 1.0f;
 
   /** How many actors to spawn each time this entry is selected. */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn",
-            meta = (ClampMin = "1"))
+            meta = (ClampMin = "1", ToolTip =
+                           "Number of actors spawned when this entry is picked"))
   int32 Amount = 1;
 
   /** Max number of active actors of this entry allowed at once (0 = unlimited).
    */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn",
-            meta = (ClampMin = "0"))
+            meta = (ClampMin = "0", ToolTip =
+                           "Upper limit on simultaneously active actors"))
   int32 MaxActive = 0;
 
   /** Optional offset applied to the actor spawn location.  When using a marker
    * this is relative to the marker's root. */
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement")
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement",
+            meta = (ToolTip =
+                         "Offset from the marker or spawner for the actor"))
   FVector ActorOffset = FVector::ZeroVector;
 
   /** Optional offset applied to the static mesh location.  When using a marker
    * this is relative to the marker's spawn point. */
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement")
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement",
+            meta = (ToolTip =
+                         "Offset for the companion mesh relative to the spawn point"))
   FVector MeshOffset = FVector::ZeroVector;
 
   /** If true, spawn using the specified marker rather than a random location.
    */
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Marker")
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Marker",
+            meta = (ToolTip = "Use marker transforms instead of random points"))
   bool bUseMarker = false;
 
   /** Marker providing spawn transforms when bUseMarker is enabled.  The actor
@@ -142,7 +168,8 @@ struct FSpawnEntry {
    * for both.
    */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Marker",
-            meta = (EditCondition = "bUseMarker"))
+            meta = (EditCondition = "bUseMarker", ToolTip =
+                           "Marker actor supplying spawn transforms"))
   AActor *MarkerActor = nullptr;
 
   /** Cached world transform of the marker's root, captured in the editor so
@@ -191,39 +218,47 @@ public:
   ADAISpawnManager();
 
   /** The shape of the volume within which spawn points will be generated. */
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn",
+            meta = (ToolTip = "Geometric shape used when selecting spawn locations"))
   ESpawnAreaShape SpawnAreaShape = ESpawnAreaShape::Circle;
 
   /** Maximum distance from the spawner at which actors may spawn. */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn",
-            meta = (ClampMin = "0.0"))
+            meta = (ClampMin = "0.0", ToolTip =
+                           "Extent of the spawn area from the manager"))
   float Radius = 500.0f;
 
   /** List of entries from which a random selection will be made when spawning.
    */
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn",
+            meta = (ToolTip = "Weighted table of potential spawns"))
   TArray<FSpawnEntry> SpawnEntries;
 
   /** Whether to automatically spawn one actor on BeginPlay. */
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn",
+            meta = (ToolTip = "Spawn a single actor when play begins"))
   bool bSpawnOnBeginPlay = true;
 
   /** Whether to automatically continue spawning at random intervals. */
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn",
+            meta = (ToolTip = "Keep spawning repeatedly over time"))
   bool bLoopSpawning = false;
 
   /** Minimum interval between automatic spawns when bLoopSpawning is true. */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn",
-            meta = (EditCondition = "bLoopSpawning", ClampMin = "0.0"))
+            meta = (EditCondition = "bLoopSpawning", ClampMin = "0.0",
+                     ToolTip = "Shortest delay between automatic spawns"))
   float SpawnIntervalMin = 30.0f;
 
   /** Maximum interval between automatic spawns when bLoopSpawning is true. */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn",
-            meta = (EditCondition = "bLoopSpawning", ClampMin = "0.0"))
+            meta = (EditCondition = "bLoopSpawning", ClampMin = "0.0",
+                     ToolTip = "Longest delay between automatic spawns"))
   float SpawnIntervalMax = 60.0f;
 
   /** Global async batch size: maximum actors to spawn per tick. */
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn",
+            meta = (ToolTip = "Cap on number of actors spawned in a single tick"))
   int32 MaxSpawnPerTick = 50;
   /**
    * Optional curve used when SpawnAreaShape is Curve.  The curve is sampled
@@ -231,7 +266,8 @@ public:
    * distance from the spawner.  This allows designers to bias where in the
    * volume spawns occur (e.g. close to centre or around the edges).
    */
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Curve")
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Curve",
+            meta = (ToolTip = "Curve used to bias radial spawn distance"))
   UCurveFloat *RadiusCurve = nullptr;
 
   /**
@@ -242,52 +278,65 @@ public:
   USceneComponent *SceneRoot;
 
   /** If true, spawn locations are projected onto the navigation mesh. */
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement")
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement",
+            meta = (ToolTip = "Snap spawn points to the navigation mesh"))
   bool bProjectToNavMesh = true;
 
   /** Radius used when validating safe placement.  Zero disables the overlap
    * check. */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement",
-            meta = (ClampMin = "0.0"))
+            meta = (ClampMin = "0.0",
+                     ToolTip = "Radius for overlap checks when spawning"))
   float SafePlacementRadius = 0.0f;
 
   /** Minimum distance required between newly spawned actors. */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement",
-            meta = (ClampMin = "0.0"))
+            meta = (ClampMin = "0.0", ToolTip =
+                           "Ensure new actors are at least this far apart"))
   float MinDistanceBetweenSpawns = 0.0f;
 
   /** Volumes that spawns must be inside (empty = any location). */
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement")
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement",
+            meta = (ToolTip = "Restrict spawning to within these volumes"))
   TArray<AVolume *> InclusionVolumes;
 
   /** Volumes that spawns must avoid. */
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement")
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement",
+            meta = (ToolTip = "Prevent spawning inside these volumes"))
   TArray<AVolume *> ExclusionVolumes;
 
   /** Actor tags considered forbidden when detected beneath the spawn point. */
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement")
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement",
+            meta = (ToolTip = "Ground actors with these tags block spawning"))
   TArray<FName> ForbiddenActorTags;
 
   /** Physical materials that disallow spawning when detected on the ground. */
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement")
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement",
+            meta = (ToolTip = "Do not spawn on surfaces using these materials"))
   TArray<UPhysicalMaterial *> ForbiddenPhysMaterials;
 
   /** Align spawn rotation to ground normal. */
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement")
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement",
+            meta = (ToolTip = "Rotate actors so their up vector matches the ground"))
   bool bAlignToGround = true;
 
   /** When aligning to ground, optionally face the marker's forward direction.
    */
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement")
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement",
+            meta = (ToolTip =
+                         "When aligning to ground, also face marker forward"))
   bool bFaceMarkerForward = false;
 
   /** If true and RequiredLevelName is set, spawning will wait until that
    * streaming level is loaded. */
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|LevelStreaming")
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|LevelStreaming",
+            meta = (ToolTip =
+                         "Delay spawns until the specified level is fully loaded"))
   bool bWaitForLevelToLoad = false;
 
   /** Name of the streaming level that must be loaded before spawning. */
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|LevelStreaming")
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|LevelStreaming",
+            meta = (ToolTip = "Streaming level to wait on before spawning"))
   FName RequiredLevelName;
 
   /** Spawn one actor according to the configured rules.  If multiple entries
