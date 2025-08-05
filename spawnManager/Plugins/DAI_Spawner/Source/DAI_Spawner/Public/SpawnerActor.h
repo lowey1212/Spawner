@@ -25,8 +25,7 @@ protected:
 #if WITH_EDITORONLY_DATA
   /** Actor class used for in-editor visualization. Not cooked into builds. */
   UPROPERTY(EditAnywhere, Category = "Visualization",
-            meta = (ToolTip = "In-editor only actor class for preview; not "
-                              "cooked into builds"))
+            meta = (ToolTip = "In-editor only actor class for preview; not cooked into builds"))
   TSubclassOf<AActor> PreviewActorClass = nullptr;
 
   /** Editor-only preview actor spawned for visualization. Not cooked into
