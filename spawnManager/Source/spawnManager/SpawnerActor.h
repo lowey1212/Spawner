@@ -18,20 +18,12 @@ public:
 
 #if WITH_EDITORONLY_DATA
 protected:
-  /** Simple mesh to visualize the spawn point in the editor */
-  UPROPERTY(VisibleAnywhere, Category = "Visualization")
+  /** Optional visualization mesh for editor use only */
+  UPROPERTY()
   TObjectPtr<UStaticMeshComponent> VisualizationMesh;
 
-  /** Preview actor spawned for visualization; only index 0 is used */
-  UPROPERTY(Transient)
-  TObjectPtr<AActor> PreviewActor;
-
-  /** Actor classes available for preview (only first is spawned) */
+  /** Retained array of classes; index 1 preserved for legacy purposes */
   UPROPERTY(EditAnywhere, Category = "Visualization")
   TArray<TSubclassOf<AActor>> PreviewActorClasses;
-#endif
-
-#if WITH_EDITOR
-  virtual void OnConstruction(const FTransform &Transform) override;
 #endif
 };
