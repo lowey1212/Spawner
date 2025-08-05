@@ -21,22 +21,22 @@ void ASpawnerActor::OnConstruction(const FTransform &Transform) {
   Super::OnConstruction(Transform);
 
   UWorld *World = GetWorld();
-  if (!World || World->WorldType != EWorldType::Editor) {
+  if (World == nullptr || World->WorldType != EWorldType::Editor) {
     return;
   }
 
 #if WITH_EDITORONLY_DATA
-  if (PreviewActor) {
+  if (PreviewActor != nullptr) {
     PreviewActor->Destroy();
     PreviewActor = nullptr;
   }
 
-  if (PreviewActorClass) {
+  if (PreviewActorClass != nullptr) {
     FActorSpawnParameters Params;
     Params.ObjectFlags = RF_Transient;
     PreviewActor = World->SpawnActor<AActor>(PreviewActorClass,
                                              GetActorTransform(), Params);
-    if (PreviewActor) {
+    if (PreviewActor != nullptr) {
       PreviewActor->bIsEditorOnlyActor = true;
     }
   }

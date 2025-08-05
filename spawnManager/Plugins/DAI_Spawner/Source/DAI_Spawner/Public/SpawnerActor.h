@@ -11,7 +11,7 @@ class UStaticMeshComponent;
  * is spawned at the marker's location for easy visualization.
  */
 UCLASS()
-class SPAWNMANAGER_API ASpawnerActor : public AActor {
+class DAI_SPAWNER_API ASpawnerActor : public AActor {
   GENERATED_BODY()
 
 public:

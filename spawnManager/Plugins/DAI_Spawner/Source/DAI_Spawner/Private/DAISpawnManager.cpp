@@ -111,7 +111,7 @@ void ADAISpawnManager::OnConstruction(const FTransform &Transform) {
         }
       }
 
-      if (Entry.ActorClass) {
+      if (Entry.ActorClass != nullptr) {
         FActorSpawnParameters Params;
         Params.Owner = this;
         Params.SpawnCollisionHandlingOverride =
@@ -183,7 +183,7 @@ void ADAISpawnManager::SpawnActorsInternal() {
   for (int32 i = 0; i < SpawnEntries.Num(); ++i) {
     const FSpawnEntry &Entry = SpawnEntries[i];
     // Skip invalid or zero weight entries
-    if (!Entry.ActorClass || Entry.Weight <= 0.0f) {
+    if (Entry.ActorClass == nullptr || Entry.Weight <= 0.0f) {
       continue;
     }
     // Check custom conditions
@@ -681,9 +681,9 @@ void ADAISpawnManager::Tick(float DeltaSeconds) {
         UHierarchicalInstancedStaticMeshComponent *HISM =
             GetOrCreateHISM(Entry.StaticMesh);
         if (HISM) {
-          // Convert world-space mesh location into the HISM's local space so the
-          // instance appears at the expected world position instead of relative
-          // to the spawner actor.
+          // Convert world-space mesh location into the HISM's local space so
+          // the instance appears at the expected world position instead of
+          // relative to the spawner actor.
           const FVector RelativeLocation =
               HISM->GetComponentTransform().InverseTransformPosition(
                   MeshLocation);
