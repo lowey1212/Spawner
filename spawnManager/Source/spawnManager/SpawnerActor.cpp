@@ -7,17 +7,14 @@
 ASpawnerActor::ASpawnerActor() {
   bIsEditorOnlyActor = true;
   PrimaryActorTick.bCanEverTick = false;
-#if WITH_EDITORONLY_DATA
-  PreviewActor = nullptr;
-  PreviewActorClass = nullptr;
-#endif
 }
 
 #if WITH_EDITOR
 void ASpawnerActor::OnConstruction(const FTransform &Transform) {
   Super::OnConstruction(Transform);
 
-  if (!GetWorld() || GetWorld()->WorldType != EWorldType::Editor) {
+  UWorld *World = GetWorld();
+  if (!World || World->WorldType != EWorldType::Editor) {
     return;
   }
 
@@ -30,9 +27,8 @@ void ASpawnerActor::OnConstruction(const FTransform &Transform) {
   if (PreviewActorClass) {
     FActorSpawnParameters Params;
     Params.ObjectFlags = RF_Transient;
-    PreviewActor =
-        GetWorld()->SpawnActor<AActor>(PreviewActorClass, GetActorTransform(),
-                                       Params);
+    PreviewActor = World->SpawnActor<AActor>(PreviewActorClass,
+                                             GetActorTransform(), Params);
     if (PreviewActor) {
       PreviewActor->bIsEditorOnlyActor = true;
     }
@@ -40,4 +36,3 @@ void ASpawnerActor::OnConstruction(const FTransform &Transform) {
 #endif // WITH_EDITORONLY_DATA
 }
 #endif
-
