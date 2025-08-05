@@ -334,9 +334,22 @@ void USpawnManagerComponent::SpawnCycle(const FSpawnContext &Context) {
       // Start from the owner's transform and apply offsets
       FTransform SpawnTransform =
           GetOwner() ? GetOwner()->GetActorTransform() : FTransform::Identity;
-      SpawnTransform.SetLocation(
+
+      // Base location offset specified on the entry
+      FVector AdjustedLocation =
           SpawnTransform.GetLocation() +
-          SpawnTransform.GetRotation().RotateVector(Entry.LocationOffset));
+          SpawnTransform.GetRotation().RotateVector(Entry.LocationOffset);
+
+      // Additional offsets per spawned index to distribute actors around
+      static const FVector Offsets[5] = {
+          FVector::ZeroVector, FVector(0.f, 100.f, 0.f),
+          FVector(0.f, -100.f, 0.f), FVector(100.f, 0.f, 0.f),
+          FVector(-100.f, 0.f, 0.f)};
+      const int32 OffsetIndex = i % UE_ARRAY_COUNT(Offsets);
+      AdjustedLocation +=
+          SpawnTransform.GetRotation().RotateVector(Offsets[OffsetIndex]);
+
+      SpawnTransform.SetLocation(AdjustedLocation);
 
       // Apply random rotation
       const FRotator SpawnRandomRot(
