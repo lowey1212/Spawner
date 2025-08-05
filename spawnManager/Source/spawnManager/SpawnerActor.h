@@ -5,8 +5,8 @@
 #include "SpawnerActor.generated.h"
 
 /**
- * Actor used to mark spawn locations. In the editor a preview actor
- * is spawned at the marker's location for easy visualization.
+ * Actor used to mark spawn locations. In the editor preview actors
+ * are spawned at the marker's location for easy visualization.
  */
 UCLASS()
 class SPAWNMANAGER_API ASpawnerActor : public AActor {
@@ -18,14 +18,14 @@ public:
 #if WITH_EDITORONLY_DATA
 
 protected:
-  /** Editor-only preview actor spawned for visualization. Not cooked into builds. */
+  /** Editor-only preview actors spawned for visualization. Not cooked into builds. */
   UPROPERTY(VisibleAnywhere, Transient, Category = "Visualization",
-            meta = (ToolTip = "Editor-only preview actor; not cooked into builds"))
-  TObjectPtr<AActor> PreviewActor;
+            meta = (ToolTip = "Editor-only preview actors; not cooked into builds"))
+  TArray<TObjectPtr<AActor>> PreviewActors;
 
-  /** Actor class whose instance is spawned for preview */
+  /** Actor classes whose instances are spawned for preview */
   UPROPERTY(EditAnywhere, Category = "Visualization")
-  TSubclassOf<AActor> PreviewActorClass;
+  TArray<TSubclassOf<AActor>> PreviewActorClasses;
 #endif
 
 #if WITH_EDITOR

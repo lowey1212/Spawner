@@ -8,7 +8,7 @@ ASpawnerActor::ASpawnerActor() {
   bIsEditorOnlyActor = true;
   PrimaryActorTick.bCanEverTick = false;
 #if WITH_EDITORONLY_DATA
-  PreviewActor = nullptr;
+  PreviewActors.Reset();
 #endif
 }
 
@@ -21,19 +21,36 @@ void ASpawnerActor::OnConstruction(const FTransform &Transform) {
   }
 
 #if WITH_EDITORONLY_DATA
-  if (PreviewActor) {
-    PreviewActor->Destroy();
-    PreviewActor = nullptr;
+  // Destroy any previously spawned preview actors
+  for (AActor *Actor : PreviewActors) {
+    if (Actor) {
+      Actor->Destroy();
+    }
   }
+  PreviewActors.Reset();
 
-  if (PreviewActorClass) {
+  static const FVector Offsets[5] = {FVector::ZeroVector, FVector(0.f, 100.f, 0.f),
+                                     FVector(0.f, -100.f, 0.f),
+                                     FVector(100.f, 0.f, 0.f),
+                                     FVector(-100.f, 0.f, 0.f)};
+
+  const int32 Count = FMath::Min(5, PreviewActorClasses.Num());
+  for (int32 Index = 0; Index < Count; ++Index) {
+    TSubclassOf<AActor> Class = PreviewActorClasses[Index];
+    if (!Class) {
+      continue;
+    }
+
+    FTransform SpawnTransform = GetActorTransform();
+    SpawnTransform.AddToTranslation(Offsets[Index]);
+
     FActorSpawnParameters Params;
     Params.ObjectFlags = RF_Transient;
-    PreviewActor =
-        GetWorld()->SpawnActor<AActor>(PreviewActorClass, GetActorTransform(),
-                                       Params);
-    if (PreviewActor) {
-      PreviewActor->bIsEditorOnlyActor = true;
+    AActor *Spawned =
+        GetWorld()->SpawnActor<AActor>(Class, SpawnTransform, Params);
+    if (Spawned) {
+      Spawned->bIsEditorOnlyActor = true;
+      PreviewActors.Add(Spawned);
     }
   }
 #endif
