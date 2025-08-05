@@ -79,8 +79,8 @@ void ADAISpawnManager::OnConstruction(const FTransform &Transform) {
     DrawDebugArea();
   }
 
-  // Spawn preview actors and meshes so designers can visualise placement in
-  // the editor.
+  // Spawn preview actors and meshes for marker-based entries so designers can
+  // visualise placement in the editor.
   for (AActor *Prev : EditorPreviewActors) {
     if (Prev) {
       Prev->Destroy();
@@ -96,22 +96,19 @@ void ADAISpawnManager::OnConstruction(const FTransform &Transform) {
 
   if (UWorld *W2 = GetWorld()) {
     for (const FSpawnEntry &Entry : SpawnEntries) {
-      FVector ActorLoc;
-      FVector MeshLoc;
+      if (!Entry.bUseMarker || !IsValid(Entry.MarkerActor)) {
+        continue;
+      }
 
-      if (Entry.bUseMarker && IsValid(Entry.MarkerActor)) {
-        ActorLoc = Entry.MarkerActor->GetActorLocation() + Entry.ActorOffset;
-        MeshLoc = ActorLoc + Entry.MeshOffset;
-        if (const ADAISpawnMarker *Marker =
-                Cast<ADAISpawnMarker>(Entry.MarkerActor)) {
-          if (Marker->SpawnPoint) {
-            MeshLoc =
-                Marker->SpawnPoint->GetComponentLocation() + Entry.MeshOffset;
-          }
+      FVector ActorLoc =
+          Entry.MarkerActor->GetActorLocation() + Entry.ActorOffset;
+      FVector MeshLoc = ActorLoc + Entry.MeshOffset;
+      if (const ADAISpawnMarker *Marker =
+              Cast<ADAISpawnMarker>(Entry.MarkerActor)) {
+        if (Marker->SpawnPoint) {
+          MeshLoc =
+              Marker->SpawnPoint->GetComponentLocation() + Entry.MeshOffset;
         }
-      } else {
-        ActorLoc = GetActorLocation() + Entry.ActorOffset;
-        MeshLoc = ActorLoc + Entry.MeshOffset;
       }
 
       if (Entry.ActorClass) {
