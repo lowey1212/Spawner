@@ -1,0 +1,14 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "f:\\plugintest\\spawnmanager\\plugins\\dai_spawner\\source\\dai_spawner\\private\\dai_spawner.cpp",
+        "ProvidedModule": "",
+        "PCH": "f:\\plugintest\\spawnmanager\\intermediate\\build\\win64\\x64\\spawnmanagereditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.inclorderunreal5_3.h.pch",
+        "Includes": [
+            "f:\\plugintest\\spawnmanager\\plugins\\dai_spawner\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\dai_spawner\\definitions.dai_spawner.h",
+            "f:\\plugintest\\spawnmanager\\plugins\\dai_spawner\\source\\dai_spawner\\public\\dai_spawner.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
