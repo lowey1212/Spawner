@@ -21,13 +21,11 @@
 
 class UArrowComponent;
 class USceneComponent;
-#if WITH_EDITORONLY_DATA
 class UWidgetComponent;
 class UUserWidget;
-#endif
 
 UCLASS(Blueprintable)
-class DAI_SPAWNER_API ADAISpawnMarker : public AActor
+class DAI_SPAWNEREDITOR_API ADAISpawnMarker : public AActor
 {
     GENERATED_BODY()
 
@@ -50,20 +48,15 @@ public:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Marker")
     USceneComponent* SpawnPoint;
 
-#if WITH_EDITORONLY_DATA
     /** Widget component that can host a user provided marker widget. */
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Marker")
     UWidgetComponent* WidgetComponent;
 
     /** Optional widget class used to represent the marker visually.  This
-     *  widget will be spawned on the WidgetComponent during construction.
-     */
+     *  widget will be spawned on the WidgetComponent during construction. */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Marker")
     TSubclassOf<UUserWidget> MarkerWidgetClass;
-#endif
 
 protected:
-#if WITH_EDITOR
     virtual void OnConstruction(const FTransform& Transform) override;
-#endif
 };

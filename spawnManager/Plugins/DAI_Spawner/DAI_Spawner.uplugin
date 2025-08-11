@@ -14,11 +14,16 @@
 	"IsBetaVersion": false,
 	"IsExperimentalVersion": false,
 	"Installed": false,
-	"Modules": [
-		{
-			"Name": "DAI_Spawner",
-			"Type": "Runtime",
-			"LoadingPhase": "Default"
-		}
-	]
+        "Modules": [
+                {
+                        "Name": "DAI_Spawner",
+                        "Type": "Runtime",
+                        "LoadingPhase": "Default"
+                },
+                {
+                        "Name": "DAI_SpawnerEditor",
+                        "Type": "Editor",
+                        "LoadingPhase": "Default"
+                }
+        ]
 }

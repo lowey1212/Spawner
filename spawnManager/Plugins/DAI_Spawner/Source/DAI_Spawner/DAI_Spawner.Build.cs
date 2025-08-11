@@ -36,9 +36,6 @@ public class DAI_Spawner : ModuleRules
                         {
                                 "CoreUObject",
                                 "Engine",
-                                "Slate",
-                                "SlateCore",
-                                "UMG",
                                 "NavigationSystem",
                                 "AIModule",
                                 "PhysicsCore",
