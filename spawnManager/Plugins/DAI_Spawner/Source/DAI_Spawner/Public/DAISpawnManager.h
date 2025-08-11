@@ -26,19 +26,23 @@ UENUM(BlueprintType)
 enum class ESpawnAreaShape : uint8 {
   /** Spawn points are chosen within a square of side length 2*Radius centred on
      the actor. */
-  Square UMETA(DisplayName = "Square"),
+  Square UMETA(DisplayName = "Square",
+               ToolTip = "Choose a random point inside a square centred on the spawner"),
 
   /** Spawn points are chosen within a circle of radius Radius centred on the
      actor. */
-  Circle UMETA(DisplayName = "Circle"),
+  Circle UMETA(DisplayName = "Circle",
+               ToolTip = "Choose a random point inside a circle centred on the spawner"),
 
   /** Spawn points use a user provided curve (0..1 input) to bias the radial
      distribution. */
-  Curve UMETA(DisplayName = "Curve"),
+  Curve UMETA(DisplayName = "Curve",
+              ToolTip = "Sample a curve to bias radial spawn distribution"),
 
   /** Spawn points are chosen using Perlin noise to produce more natural
      scatter. */
-  Noise UMETA(DisplayName = "Noise")
+  Noise UMETA(DisplayName = "Noise",
+              ToolTip = "Scatter spawn points using Perlin noise")
 };
 
 /**
