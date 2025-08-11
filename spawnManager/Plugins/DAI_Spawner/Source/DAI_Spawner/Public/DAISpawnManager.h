@@ -355,9 +355,6 @@ public:
 protected:
   virtual void BeginPlay() override;
   virtual void OnConstruction(const FTransform &Transform) override;
-#if WITH_EDITOR
-  void EditorOnConstruction();
-#endif
 
   /**
    * Override this in Blueprints or C++ to implement custom spawn conditions.

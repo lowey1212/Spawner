@@ -1,7 +1,10 @@
 #include "SpawnerActor.h"
 
 #include "Components/SceneComponent.h"
+
+#if WITH_EDITOR
 #include "Engine/World.h"
+#endif
 
 ASpawnerActor::ASpawnerActor() {
   bIsEditorOnlyActor = true;
@@ -11,6 +14,7 @@ ASpawnerActor::ASpawnerActor() {
   RootComponent->SetComponentTickEnabled(false);
 }
 
+#if WITH_EDITOR
 void ASpawnerActor::OnConstruction(const FTransform &Transform) {
   Super::OnConstruction(Transform);
 
@@ -19,6 +23,7 @@ void ASpawnerActor::OnConstruction(const FTransform &Transform) {
     return;
   }
 
+#if WITH_EDITORONLY_DATA
   if (PreviewActor != nullptr) {
     PreviewActor->Destroy();
     PreviewActor = nullptr;
@@ -33,4 +38,6 @@ void ASpawnerActor::OnConstruction(const FTransform &Transform) {
       PreviewActor->bIsEditorOnlyActor = true;
     }
   }
+#endif // WITH_EDITORONLY_DATA
 }
+#endif
