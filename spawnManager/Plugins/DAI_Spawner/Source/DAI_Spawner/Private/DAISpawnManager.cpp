@@ -559,7 +559,7 @@ void ADAISpawnManager::Tick(float DeltaSeconds) {
                                 Marker->SpawnPoint->GetComponentLocation() + Entry.MeshOffset;
                         }
                         else {
-                            MeshLocation =
+                        MeshLocation =
                                 Entry.MarkerActor->GetActorLocation() + Entry.MeshOffset;
                         }
                     }
@@ -596,47 +596,56 @@ void ADAISpawnManager::Tick(float DeltaSeconds) {
                 }
             }
 
+            const FVector OriginalActorLocation = ActorLocation;
+            const FVector OriginalMeshLocation = MeshLocation;
             FHitResult GroundHit;
             const FVector TraceStart = ActorLocation + FVector(0.f, 0.f, 500.f);
             const FVector TraceEnd = ActorLocation - FVector(0.f, 0.f, 500.f);
             World->LineTraceSingleByChannel(GroundHit, TraceStart, TraceEnd,
                 ECC_Visibility);
-            if (GroundHit.bBlockingHit) {
-                // Forbidden material or tags
-                if (GroundHit.PhysMaterial.IsValid() &&
-                    ForbiddenPhysMaterials.Contains(GroundHit.PhysMaterial.Get())) {
+            if (!GroundHit.bBlockingHit) {
+                // Require a valid ground hit; otherwise try again or skip this spawn
+                continue;
+            }
+            // Forbidden material or tags
+            if (GroundHit.PhysMaterial.IsValid() &&
+                ForbiddenPhysMaterials.Contains(GroundHit.PhysMaterial.Get())) {
+                continue;
+            }
+            if (AActor* HitActor = GroundHit.GetActor()) {
+                bool bHasForbidden = false;
+                for (const FName& Tag : ForbiddenActorTags) {
+                    if (HitActor->ActorHasTag(Tag)) {
+                        bHasForbidden = true;
+                        break;
+                    }
+                }
+                if (bHasForbidden) {
                     continue;
                 }
-                if (AActor* HitActor = GroundHit.GetActor()) {
-                    bool bHasForbidden = false;
-                    for (const FName& Tag : ForbiddenActorTags) {
-                        if (HitActor->ActorHasTag(Tag)) {
-                            bHasForbidden = true;
-                            break;
-                        }
-                    }
-                    if (bHasForbidden) {
-                        continue;
-                    }
+            }
+            if (bAlignToGround) {
+                if (bFaceMarkerForward && Entry.bUseMarker &&
+                    (bMarkerValid || bHasCached)) {
+                    const FVector Forward =
+                        bMarkerValid ? Entry.MarkerActor->GetActorForwardVector()
+                                     : Entry.CachedMarkerTransform.GetRotation()
+                                           .GetForwardVector();
+                    SpawnRot = UKismetMathLibrary::MakeRotFromXZ(
+                        Forward, GroundHit.ImpactNormal);
                 }
-                if (bAlignToGround) {
-                    if (bFaceMarkerForward && Entry.bUseMarker &&
-                        (bMarkerValid || bHasCached)) {
-                        const FVector Forward =
-                            bMarkerValid ? Entry.MarkerActor->GetActorForwardVector()
-                                         : Entry.CachedMarkerTransform.GetRotation()
-                                               .GetForwardVector();
-                        SpawnRot = UKismetMathLibrary::MakeRotFromXZ(
-                            Forward, GroundHit.ImpactNormal);
-                    }
-                    else {
-                        SpawnRot = UKismetMathLibrary::MakeRotFromZ(GroundHit.ImpactNormal);
-                    }
+                else {
+                    SpawnRot = UKismetMathLibrary::MakeRotFromZ(GroundHit.ImpactNormal);
                 }
+            }
 
-                // Move the spawn location to the ground hit point so actors and
-                // meshes appear on the surface rather than at the manager's height.
-                ActorLocation = GroundHit.Location;
+            // Move the spawn location to the ground hit point so actors and
+            // meshes appear on the surface rather than at the manager's height.
+            ActorLocation = GroundHit.Location;
+            if (bUsingMarker) {
+                // Preserve relative offset from marker root to spawn point when aligning to ground
+                MeshLocation = OriginalMeshLocation + (GroundHit.Location - OriginalActorLocation);
+            } else {
                 MeshLocation = ActorLocation + Entry.MeshOffset;
             }
 
