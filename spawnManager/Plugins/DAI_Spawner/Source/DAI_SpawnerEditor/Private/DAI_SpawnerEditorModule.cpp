@@ -1,4 +1,4 @@
-#include "DAI_SpawnerEditorModule.h"
+#include "DAI_SpawnerEditor.h"
 #include "DAISpawnerEditorStyle.h"
 #include "SDAISpawnerDocs.h"
 #include "ToolMenus.h"
