@@ -17,7 +17,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "UObject/ObjectPtr.h"
 #include "DAISpawnMarker.generated.h"
 
 class UArrowComponent;
@@ -36,31 +35,30 @@ public:
     ADAISpawnMarker();
 
     /** Root scene component so we can easily manipulate the marker in Blueprints. */
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Spawn|Marker")
-    TObjectPtr<USceneComponent> SceneRoot;
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Marker")
+    USceneComponent* SceneRoot;
 
     /** Arrow component used to visualise the marker location and direction in the editor. */
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Spawn|Marker")
-	TObjectPtr<UArrowComponent> ArrowComponent;
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Marker")
+    UArrowComponent* ArrowComponent;
 
     /** Spawn point component indicating where the optional static mesh should spawn relative to the marker.
      *  Designers can move this component in the editor to adjust the mesh placement (e.g. centre of a cave).
      *  When a spawn entry is configured to use this marker, the actor is placed at the marker's root while
      *  the static mesh uses the world location of this component.
      */
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Spawn|Marker")
-	TObjectPtr<USceneComponent> SpawnPoint;
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Marker")
+    USceneComponent* SpawnPoint;
 
 #if WITH_EDITORONLY_DATA
     /** Widget component that can host a user provided marker widget. */
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Spawn|Marker")
-	TObjectPtr<UWidgetComponent> WidgetComponent;
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Marker")
+    UWidgetComponent* WidgetComponent;
 
     /** Optional widget class used to represent the marker visually.  This
      *  widget will be spawned on the WidgetComponent during construction.
      */
-    UPROPERTY(EditAnywhere, Category = "Spawn|Marker",
-        meta = (ToolTip = "Widget class used to visualize the marker in the editor. Not cooked into builds."))
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Marker")
     TSubclassOf<UUserWidget> MarkerWidgetClass;
 #endif
 

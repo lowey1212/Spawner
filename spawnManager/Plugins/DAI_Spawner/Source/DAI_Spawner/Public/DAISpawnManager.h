@@ -1,12 +1,10 @@
+
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Math/RandomStream.h"
 #include "GameFramework/Actor.h"
 #include "UObject/WeakObjectPtr.h"
-#include "UObject/ObjectPtr.h"
 #include "DAISpawnManager.generated.h"
-
 
 class UHierarchicalInstancedStaticMeshComponent;
 class USceneComponent;
@@ -180,26 +178,15 @@ struct FSpawnEntry {
  */
  /** Pending spawn request item for async batching. */
 USTRUCT(BlueprintType)
-struct FPendingSpawn
-{
+struct FPendingSpawn {
     GENERATED_BODY()
-
-    // Class to spawn
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn",
-        meta = (ToolTip = "Actor class to spawn for this pending request."))
+    UPROPERTY()
     TSubclassOf<AActor> ActorClass = nullptr;
-
-    // How many to spawn
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn",
-        meta = (ToolTip = "Number of actors to spawn in this batch."))
+    UPROPERTY()
     int32 Count = 0;
-
-    // Internal index (read-only in BP)
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Spawn",
-        meta = (ToolTip = "Index into SpawnEntries for mesh/flags lookups."))
-    int32 PerEntryIndex = -1;
+    UPROPERTY()
+    int32 PerEntryIndex = -1; // index into SpawnEntries for mesh/flags lookups
 };
-
 
 UCLASS(Blueprintable, BlueprintType, ClassGroup = (Custom),
     meta = (BlueprintSpawnableComponent))
@@ -207,7 +194,6 @@ UCLASS(Blueprintable, BlueprintType, ClassGroup = (Custom),
     GENERATED_BODY()
 
     public:
-        virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
         /** Default constructor.  Sets sensible defaults and creates internal
          * components. */
         ADAISpawnManager();
@@ -270,7 +256,7 @@ UCLASS(Blueprintable, BlueprintType, ClassGroup = (Custom),
          * created on demand only when entries request a mesh.
          */
         UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Spawn")
-        TObjectPtr<USceneComponent> SceneRoot;
+        USceneComponent* SceneRoot;
 
         /** If true, spawn locations are projected onto the navigation mesh. */
         UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement",
@@ -336,22 +322,14 @@ UCLASS(Blueprintable, BlueprintType, ClassGroup = (Custom),
          *  exist they will be considered by weight.  This method is exposed to
          *  Blueprints so designers can trigger spawns manually.  It is safe to
          *  call this repeatedly; unique/cooldown rules will be observed. */
-        UFUNCTION(BlueprintCallable, Category = "Spawn",
-            meta = (DisplayName = "Spawn Now",
-                Keywords = "spawn emit create",
-                ToolTip = "Creates actors or instances based on the current spawn table."))
+        UFUNCTION(BlueprintCallable, Category = "Spawn")
         void SpawnActors();
-
 
         /** Destroy all dynamically spawned actors and clear any non‑permanent
          *  static meshes.  Persistent static meshes (bStaticMeshPermanent == true)
          *  remain and can be cleaned up manually if desired. */
-        UFUNCTION(BlueprintCallable, Category = "Spawn",
-            meta = (DisplayName = "Despawn All",
-                Keywords = "remove clear destroy despawn",
-                ToolTip = "Removes actors spawned by this system."))
+        UFUNCTION(BlueprintCallable, Category = "Spawn")
         void DespawnAll();
-
 
     protected:
         virtual void BeginPlay() override;
@@ -365,15 +343,9 @@ UCLASS(Blueprintable, BlueprintType, ClassGroup = (Custom),
          * up to quest systems, time‑of‑day logic and other complex conditions
          * without modifying the C++ class.
          */
-        UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Spawn",
-            meta = (DisplayName = "Can Spawn For Entry",
-                ToolTip = "Return true to allow this entry to spawn; false to block.",
-                Keywords = "allow block validate spawn",
-                NativeConst))
+        UFUNCTION(BlueprintNativeEvent, Category = "Spawn")
         bool CanSpawnForEntry(const FSpawnEntry& Entry);
-
         virtual bool CanSpawnForEntry_Implementation(const FSpawnEntry& Entry);
-
 
         /**
          * Compute a random spawn location within the configured volume.
@@ -382,24 +354,18 @@ UCLASS(Blueprintable, BlueprintType, ClassGroup = (Custom),
         FVector GetSpawnLocation() const;
 
     public:
-
         virtual void Tick(float DeltaSeconds) override;
 #if WITH_EDITOR
         virtual bool ShouldTickIfViewportsOnly() const override { return bDebug; }
 #endif
 
         /** Enable in-editor debug previews and radius. */
-        UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Debug",
-            meta = (ToolTip = "Enable in-editor debug previews and radius."))
+        UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Debug")
         bool bDebug = false;
 
         /** Optional ghost material to apply to preview meshes in editor. */
-#if WITH_EDITORONLY_DATA
-// Material used for ghosted mesh previews in the editor.
-        UPROPERTY(EditAnywhere, Category = "Spawn|Debug",
-            meta = (ToolTip = "Material used for ghosted mesh previews in the editor."))
-        TObjectPtr<UMaterialInterface> DebugGhostMaterial = nullptr;
-#endif
+        UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Debug")
+        UMaterialInterface* DebugGhostMaterial = nullptr;
 
     private:
         /** Queue of pending spawns to process in Tick. */
@@ -412,12 +378,11 @@ UCLASS(Blueprintable, BlueprintType, ClassGroup = (Custom),
         TMap<TSubclassOf<AActor>, TArray<TWeakObjectPtr<AActor>>> ActiveByClass;
 
         /** One HISM per unique mesh, all owned by this spawner. */
-        UPROPERTY(Transient)
+        UPROPERTY()
         TMap<UStaticMesh*, UHierarchicalInstancedStaticMeshComponent*> MeshToHISM;
 
         /** Get or create the HISM for a given mesh. */
         UHierarchicalInstancedStaticMeshComponent* GetOrCreateHISM(UStaticMesh* Mesh);
-
 
 #if WITH_EDITORONLY_DATA
         /** Redraws non-persistent debug shapes. */
@@ -431,10 +396,10 @@ UCLASS(Blueprintable, BlueprintType, ClassGroup = (Custom),
         TArray<TObjectPtr<AActor>> EditorPreviewActors;
 
         /** Mesh components spawned in the editor for previewing marker placements. */
-        UPROPERTY(Transient)
-        TArray<TObjectPtr<UPrimitiveComponent>> EditorPreviewMeshes;
-#endif
+        UPROPERTY()
+        TArray<UPrimitiveComponent*> EditorPreviewMeshes;
 
+#endif
 
     private:
         /** Internal function that performs the actual spawning and schedules the next
@@ -452,17 +417,4 @@ UCLASS(Blueprintable, BlueprintType, ClassGroup = (Custom),
          *  spawning additional ones when bUniqueInstance is set.  When the actor
          *  is destroyed the pointer becomes invalid. */
         TMap<TSubclassOf<AActor>, TWeakObjectPtr<AActor>> ActiveInstances;
-
-    public:
-
-        /** Enable deterministic random sequence for spawns (uses Seed). */
-        UPROPERTY(EditAnywhere, Category = "Spawn|Rules", meta = (ToolTip = "Enable deterministic random sequence for reproducible spawns."))
-        bool bDeterministic = false;
-
-        /** Seed used when bDeterministic is true. */
-        UPROPERTY(EditAnywhere, Category = "Spawn|Rules", meta = (ToolTip = "Seed for deterministic random sequence."))
-        int32 Seed = 12345;
-
-    private:
-        mutable FRandomStream SpawnRandStream;
 };

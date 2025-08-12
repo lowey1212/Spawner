@@ -2,9 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "UObject/ObjectPtr.h"
 #include "SpawnerActor.generated.h"
-
 
 /**
  * Actor used to mark spawn locations. In the editor a preview actor
