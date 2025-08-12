@@ -1,5 +1,10 @@
+#include "DAI_SpawnerEditorModule.h"
+#include "DAISpawnerEditorStyle.h"
+#include "SDAISpawnerDocs.h"
+#include "ToolMenus.h"
+#include "Styling/SlateIconFinder.h"
 #include "Framework/Docking/TabManager.h"
-#include "Widgets/Docking/SDockTab.h"     // <-- add this
+#include "Widgets/Docking/SDockTab.h"
 
 #define LOCTEXT_NAMESPACE "DAI_SpawnerEditor"
 const FName FDAI_SpawnerEditorModule::DocsTabName(TEXT("DAI_Spawner_Docs"));
@@ -22,7 +27,7 @@ void FDAI_SpawnerEditorModule::ShutdownModule()
 {
     if (UToolMenus* Menus = UToolMenus::Get())
     {
-        Menus->UnRegisterStartupCallback(this);   // <-- unregister, don’t register
+        Menus->UnRegisterStartupCallback(this);   // <-- unregister, don't register
         Menus->UnregisterOwner(this);
     }
 
