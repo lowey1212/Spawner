@@ -643,8 +643,9 @@ void ADAISpawnManager::Tick(float DeltaSeconds) {
             // meshes appear on the surface rather than at the manager's height.
             ActorLocation = GroundHit.Location;
             if (bUsingMarker) {
-                // Preserve relative offset from marker root to spawn point when aligning to ground
-                MeshLocation = OriginalMeshLocation + (GroundHit.Location - OriginalActorLocation);
+                // Keep the mesh at its original (cached) location when using a marker
+                // so it is not shifted vertically by ground alignment.
+                MeshLocation = OriginalMeshLocation;
             } else {
                 MeshLocation = ActorLocation + Entry.MeshOffset;
             }
