@@ -769,12 +769,6 @@ void ADAISpawnManager::Tick(float DeltaSeconds) {
                     PlacementShape = FCollisionShape::MakeSphere(SafePlacementRadius);
                     bHaveShape = true;
                 }
-                if (bPostSpawnSanityCheck && bHaveShape) {
-                    if (World->OverlapBlockingTestByChannel(ActorLocation, FQuat::Identity, ECC_WorldStatic, PlacementShape) ||
-                        World->OverlapBlockingTestByChannel(ActorLocation, FQuat::Identity, ECC_WorldDynamic, PlacementShape)) {
-                        continue;
-                    }
-                }
             }
 
             if (MinDistanceBetweenSpawns > 0.f) {
@@ -840,35 +834,6 @@ void ADAISpawnManager::Tick(float DeltaSeconds) {
             }
 
             RecentSpawnLocations.Add(ActorLocation);
-
-            if (bPostSpawnSanityCheck) {
-                // Post-spawn sanity overlap check: if somehow still intersecting geometry, destroy it.
-                {
-                    bool bHaveShape = false;
-                    FCollisionShape PostShape;
-                    if (UPrimitiveComponent* RootPrim = Cast<UPrimitiveComponent>(NewActor->GetRootComponent())) {
-                        if (const UCapsuleComponent* Cap = Cast<UCapsuleComponent>(RootPrim)) {
-                            PostShape = FCollisionShape::MakeCapsule(Cap->GetUnscaledCapsuleRadius(), Cap->GetUnscaledCapsuleHalfHeight());
-                            bHaveShape = true;
-                        }
-                        else if (const UBoxComponent* Box = Cast<UBoxComponent>(RootPrim)) {
-                            PostShape = FCollisionShape::MakeBox(Box->GetUnscaledBoxExtent());
-                            bHaveShape = true;
-                        }
-                        else if (const USphereComponent* Sphere = Cast<USphereComponent>(RootPrim)) {
-                            PostShape = FCollisionShape::MakeSphere(Sphere->GetUnscaledSphereRadius());
-                            bHaveShape = true;
-                        }
-                    }
-                    if (bPostSpawnSanityCheck && bHaveShape) {
-                        if (World->OverlapBlockingTestByChannel(ActorLocation, FQuat::Identity, ECC_WorldStatic, PostShape) ||
-                            World->OverlapBlockingTestByChannel(ActorLocation, FQuat::Identity, ECC_WorldDynamic, PostShape)) {
-                            NewActor->Destroy();
-                            // We still count the attempt to preserve scheduling semantics.
-                        }
-                    }
-                }
-            }
             SpawnedThisTick++;
             Item.Count--;
             if (Item.Count <= 0) {

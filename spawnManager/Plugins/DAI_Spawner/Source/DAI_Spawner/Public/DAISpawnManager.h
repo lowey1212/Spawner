@@ -302,11 +302,6 @@ UCLASS(Blueprintable, BlueprintType, ClassGroup = (Custom),
             meta = (ToolTip = "If true, pre-spawn overlap test uses the actor's collision shape"))
         bool bUseShapePlacementCheck = false;
 
-        /** Run a post-spawn sanity check and destroy actors if still intersecting. */
-        UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement",
-            meta = (ToolTip = "If true, after spawn we test for blocking overlap and destroy if intersecting"))
-        bool bPostSpawnSanityCheck = false;
-
         /** Automatically expand NavQueryExtent using the actor's collision. */
         UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement",
             meta = (ToolTip = "If true, navmesh projection extent is expanded based on the actor's collision"))
