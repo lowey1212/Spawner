@@ -139,7 +139,7 @@ void ADAISpawnManager::OnConstruction(const FTransform& Transform) {
             Cylinder->SetMobility(EComponentMobility::Movable);
             Cylinder->SetVisibility(true);
             Cylinder->SetHiddenInGame(true);
-			Cylinder->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+            Cylinder->SetCollisionEnabled(ECollisionEnabled::NoCollision);
             Cylinder->bIsEditorOnly = true;
 
             UMaterialInterface* RedMaterial = LoadObject<UMaterialInterface>(nullptr, TEXT("/AnimationSharing/AnimSharingRed"));
@@ -159,13 +159,15 @@ void ADAISpawnManager::OnConstruction(const FTransform& Transform) {
 void ADAISpawnManager::BeginPlay() {
     Super::BeginPlay();
 
+    if (bDeterministic) { SpawnRandStream.Initialize(Seed); }
+
     if (bSpawnOnBeginPlay) {
         SpawnActors();
     }
     if (bLoopSpawning) {
         // Schedule the first automatic spawn.  We randomise the delay so that
         // multiple spawners starting at the same time do not spawn in lockstep.
-        const float Delay = FMath::RandRange(SpawnIntervalMin, SpawnIntervalMax);
+        const float Delay = (bDeterministic ? SpawnRandStream.FRandRange(SpawnIntervalMin, SpawnIntervalMax) : FMath::FRandRange(SpawnIntervalMin, SpawnIntervalMax));
         GetWorldTimerManager().SetTimer(SpawnTimerHandle, this,
             &ADAISpawnManager::SpawnActorsInternal,
             Delay, false);
@@ -214,10 +216,7 @@ void ADAISpawnManager::SpawnActorsInternal() {
                 }
             }
             if (const float* LastTimePtr = LastSpawnTimeMap.Find(Entry.ActorClass)) {
-                const float Cooldown =
-                    Entry.bUseRandomCooldown
-                    ? FMath::RandRange(Entry.CooldownMin, Entry.CooldownMax)
-                    : Entry.CooldownMin;
+                const float Cooldown = Entry.bUseRandomCooldown ? (bDeterministic ? SpawnRandStream.FRandRange(Entry.CooldownMin, Entry.CooldownMax) : FMath::FRandRange(Entry.CooldownMin, Entry.CooldownMax)) : Entry.CooldownMin;
                 if (CurrentTime - *LastTimePtr < Cooldown) {
                     continue;
                 }
@@ -268,7 +267,7 @@ void ADAISpawnManager::SpawnActorsInternal() {
             break;
         }
         // Choose a candidate index based on weight
-        float Roll = FMath::FRand() * WeightedSum;
+        float Roll = (bDeterministic ? SpawnRandStream.FRand() : FMath::FRand()) * WeightedSum;
         int32 ChosenIndex = INDEX_NONE;
         for (int32 j = 0; j < CandidateIndices.Num(); ++j) {
             if (CandidateRemaining[j] <= 0) {
@@ -296,7 +295,7 @@ void ADAISpawnManager::SpawnActorsInternal() {
         const FSpawnEntry& ChosenEntry = SpawnEntries[EntryIndex];
         // Roll spawn chance per spawn
         if (ChosenEntry.SpawnChance < 1.0f &&
-            FMath::FRand() > ChosenEntry.SpawnChance) {
+            (bDeterministic ? SpawnRandStream.FRand() : FMath::FRand()) > ChosenEntry.SpawnChance) {
             // Skip this spawn without enqueuing but still decrement the remaining
             // count
             CandidateRemaining[ChosenIndex]--;
@@ -321,7 +320,7 @@ void ADAISpawnManager::SpawnActorsInternal() {
     // true.
     if (bLoopSpawning) {
         GetWorldTimerManager().ClearTimer(SpawnTimerHandle);
-        const float Delay = FMath::RandRange(SpawnIntervalMin, SpawnIntervalMax);
+        const float Delay = (bDeterministic ? SpawnRandStream.FRandRange(SpawnIntervalMin, SpawnIntervalMax) : FMath::FRandRange(SpawnIntervalMin, SpawnIntervalMax));
         GetWorldTimerManager().SetTimer(SpawnTimerHandle, this,
             &ADAISpawnManager::SpawnActorsInternal,
             Delay, false);
@@ -362,15 +361,15 @@ FVector ADAISpawnManager::GetSpawnLocation() const {
     case ESpawnAreaShape::Square: {
         // Uniform distribution within a square.  Z component is preserved.
         const float HalfSize = Radius;
-        const float X = FMath::FRandRange(-HalfSize, HalfSize);
-        const float Y = FMath::FRandRange(-HalfSize, HalfSize);
+        const float X = (bDeterministic ? SpawnRandStream.FRandRange(-HalfSize, HalfSize) : FMath::FRandRange(-HalfSize, HalfSize));
+        const float Y = (bDeterministic ? SpawnRandStream.FRandRange(-HalfSize, HalfSize) : FMath::FRandRange(-HalfSize, HalfSize));
         return Origin + FVector(X, Y, 0.0f);
     }
     case ESpawnAreaShape::Circle: {
         // Uniform distribution within a circle.  Note the use of sqrt on
         // the radial component to ensure true uniformity.
-        const float Angle = FMath::FRandRange(0.0f, 2.0f * PI);
-        const float RadiusFactor = FMath::Sqrt(FMath::FRand()) * Radius;
+        const float Angle = (bDeterministic ? SpawnRandStream.FRandRange(0.0f, 2.0f * PI) : FMath::FRandRange(0.0f, 2.0f * PI));
+        const float RadiusFactor = FMath::Sqrt((bDeterministic ? SpawnRandStream.FRand() : FMath::FRand())) * Radius;
         const float X = RadiusFactor * FMath::Cos(Angle);
         const float Y = RadiusFactor * FMath::Sin(Angle);
         return Origin + FVector(X, Y, 0.0f);
@@ -379,12 +378,12 @@ FVector ADAISpawnManager::GetSpawnLocation() const {
         // Sample the user provided curve if available; otherwise fall back
         // to a uniform distribution like Circle.  The curve is sampled
         // with a random input in [0,1] and scaled by Radius.
-        float DistanceFactor = FMath::Sqrt(FMath::FRand());
+        float DistanceFactor = FMath::Sqrt((bDeterministic ? SpawnRandStream.FRand() : FMath::FRand()));
         if (RadiusCurve) {
-            const float CurveValue = RadiusCurve->GetFloatValue(FMath::FRand());
+            const float CurveValue = RadiusCurve->GetFloatValue((bDeterministic ? SpawnRandStream.FRand() : FMath::FRand()));
             DistanceFactor = FMath::Clamp(CurveValue, 0.0f, 1.0f);
         }
-        const float Angle = FMath::FRandRange(0.0f, 2.0f * PI);
+        const float Angle = (bDeterministic ? SpawnRandStream.FRandRange(0.0f, 2.0f * PI) : FMath::FRandRange(0.0f, 2.0f * PI));
         const float X = DistanceFactor * Radius * FMath::Cos(Angle);
         const float Y = DistanceFactor * Radius * FMath::Sin(Angle);
         return Origin + FVector(X, Y, 0.0f);
@@ -394,12 +393,12 @@ FVector ADAISpawnManager::GetSpawnLocation() const {
         // random seeds and feed them into FMath::PerlinNoise2D to obtain a
         // value in [-1,1].  Absolute value of that determines radial
         // distance while the other seed provides an additional angle offset.
-        const FVector2D Seed1(FMath::FRand(), FMath::FRand());
-        const FVector2D Seed2(FMath::FRand(), FMath::FRand());
+        const FVector2D Seed1((bDeterministic ? SpawnRandStream.FRand() : FMath::FRand()), (bDeterministic ? SpawnRandStream.FRand() : FMath::FRand()));
+        const FVector2D Seed2((bDeterministic ? SpawnRandStream.FRand() : FMath::FRand()), (bDeterministic ? SpawnRandStream.FRand() : FMath::FRand()));
         const float NoiseVal1 = FMath::PerlinNoise2D(Seed1);
         const float NoiseVal2 = FMath::PerlinNoise2D(Seed2);
         const float DistanceFactor = FMath::Abs(NoiseVal1);
-        const float Angle = FMath::FRandRange(0.0f, 2.0f * PI) + NoiseVal2 * PI;
+        const float Angle = (bDeterministic ? SpawnRandStream.FRandRange(0.0f, 2.0f * PI) : FMath::FRandRange(0.0f, 2.0f * PI)) + NoiseVal2 * PI;
         const float X = DistanceFactor * Radius * FMath::Cos(Angle);
         const float Y = DistanceFactor * Radius * FMath::Sin(Angle);
         return Origin + FVector(X, Y, 0.0f);
@@ -733,4 +732,15 @@ void ADAISpawnManager::Tick(float DeltaSeconds) {
         DrawDebugArea();
     }
 #endif
+}
+
+
+void ADAISpawnManager::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+    // Clear all timers we may have scheduled
+    if (UWorld* World = GetWorld())
+    {
+        World->GetTimerManager().ClearAllTimersForObject(this);
+    }
+    Super::EndPlay(EndPlayReason);
 }

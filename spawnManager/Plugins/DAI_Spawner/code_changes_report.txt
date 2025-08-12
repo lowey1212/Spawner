@@ -1,0 +1,9 @@
+Source/DAI_Spawner/Public/DAISpawnManager.h: replaced raw U* pointers with TObjectPtr where applicable
+Source/DAI_Spawner/Public/DAISpawnMarker.h: replaced raw U* pointers with TObjectPtr where applicable
+Source/DAI_Spawner/Public/DAISpawnManager.h: added #include "UObject/ObjectPtr.h"
+Source/DAI_Spawner/Public/DAISpawnMarker.h: added #include "UObject/ObjectPtr.h"
+Source/DAI_Spawner/Public/SpawnerActor.h: added #include "UObject/ObjectPtr.h"
+Source/DAI_Spawner/Public/DAISpawnManager.h: normalized categories and added tooltips
+Source/DAI_Spawner/Public/DAISpawnMarker.h: normalized categories and added tooltips
+Source/DAI_Spawner/Public/DAISpawnManager.h: added bDeterministic/Seed/FRandomStream
+Source/DAI_Spawner/Private/DAISpawnManager.cpp: adjusted RandRange calls (manual review may be needed)
