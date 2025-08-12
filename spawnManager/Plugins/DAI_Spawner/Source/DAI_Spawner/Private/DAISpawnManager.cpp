@@ -12,6 +12,7 @@
 #include "DAISpawnManager.h"
 
 #include "CollisionShape.h"
+#include "CollisionQueryParams.h"
 #include "Components/HierarchicalInstancedStaticMeshComponent.h"
 #include "Components/SceneComponent.h"
 #include "Components/StaticMeshComponent.h"
@@ -601,8 +602,24 @@ void ADAISpawnManager::Tick(float DeltaSeconds) {
             FHitResult GroundHit;
             const FVector TraceStart = ActorLocation + FVector(0.f, 0.f, 500.f);
             const FVector TraceEnd = ActorLocation - FVector(0.f, 0.f, 500.f);
-            World->LineTraceSingleByChannel(GroundHit, TraceStart, TraceEnd,
-                ECC_Visibility);
+
+            FCollisionQueryParams TraceParams;
+            TraceParams.AddIgnoredActor(this);
+            if (Entry.bUseMarker && Entry.MarkerActor)
+            {
+                TraceParams.AddIgnoredActor(Entry.MarkerActor);
+            }
+
+            const float CapsuleRadius = FMath::Max(1.f, SafePlacementRadius);
+            const float CapsuleHalfHeight = CapsuleRadius;
+            World->SweepSingleByChannel(
+                GroundHit,
+                TraceStart,
+                TraceEnd,
+                FQuat::Identity,
+                ECC_Visibility,
+                FCollisionShape::MakeCapsule(CapsuleRadius, CapsuleHalfHeight),
+                TraceParams);
             if (!GroundHit.bBlockingHit) {
                 // Require a valid ground hit; otherwise try again or skip this spawn
                 continue;
@@ -675,9 +692,9 @@ void ADAISpawnManager::Tick(float DeltaSeconds) {
                 const FCollisionShape Sphere =
                     FCollisionShape::MakeSphere(SafePlacementRadius);
                 if (World->OverlapBlockingTestByChannel(ActorLocation, FQuat::Identity,
-                    ECC_WorldStatic, Sphere) ||
+                    ECC_WorldStatic, Sphere, TraceParams) ||
                     World->OverlapBlockingTestByChannel(ActorLocation, FQuat::Identity,
-                        ECC_WorldDynamic, Sphere)) {
+                        ECC_WorldDynamic, Sphere, TraceParams)) {
                     continue;
                 }
             }
