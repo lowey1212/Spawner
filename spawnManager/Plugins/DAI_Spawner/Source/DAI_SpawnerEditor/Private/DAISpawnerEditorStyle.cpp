@@ -1,3 +1,4 @@
+#include "DAI_SpawnerEditor.h"
 #include "DAISpawnerEditorStyle.h"
 #include "Styling/SlateStyle.h"
 #include "Styling/SlateStyleRegistry.h"
