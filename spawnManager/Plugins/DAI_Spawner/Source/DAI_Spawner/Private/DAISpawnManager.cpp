@@ -578,10 +578,20 @@ void ADAISpawnManager::Tick(float DeltaSeconds) {
                 if (bProjectToNavMesh) {
                     FNavLocation NavLoc;
                     if (UNavigationSystemV1* NavSys =
-                        FNavigationSystem::GetCurrent<UNavigationSystemV1>(World)) {
-                        if (NavSys->ProjectPointToNavigation(ActorLocation, NavLoc)) {
+                            FNavigationSystem::GetCurrent<UNavigationSystemV1>(World)) {
+                        // Provide a vertical search extent so points above the ground
+                        // can still project to the navigation mesh.  If the projection
+                        // fails we skip this spawn attempt.
+                        const FVector NavExtent(50.f, 50.f, 1000.f);
+                        if (NavSys->ProjectPointToNavigation(ActorLocation, NavLoc, NavExtent)) {
                             ActorLocation = NavLoc.Location;
                         }
+                        else {
+                            continue;
+                        }
+                    }
+                    else {
+                        continue;
                     }
                 }
             }
@@ -614,8 +624,8 @@ void ADAISpawnManager::Tick(float DeltaSeconds) {
                         (bMarkerValid || bHasCached)) {
                         const FVector Forward =
                             bMarkerValid ? Entry.MarkerActor->GetActorForwardVector()
-                            : Entry.CachedMarkerTransform.GetRotation()
-                            .GetForwardVector();
+                                         : Entry.CachedMarkerTransform.GetRotation()
+                                               .GetForwardVector();
                         SpawnRot = UKismetMathLibrary::MakeRotFromXZ(
                             Forward, GroundHit.ImpactNormal);
                     }
@@ -623,6 +633,11 @@ void ADAISpawnManager::Tick(float DeltaSeconds) {
                         SpawnRot = UKismetMathLibrary::MakeRotFromZ(GroundHit.ImpactNormal);
                     }
                 }
+
+                // Move the spawn location to the ground hit point so actors and
+                // meshes appear on the surface rather than at the manager's height.
+                ActorLocation = GroundHit.Location;
+                MeshLocation = ActorLocation + Entry.MeshOffset;
             }
 
             bool bInsideInclusion = InclusionVolumes.Num() == 0;
