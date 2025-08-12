@@ -1,5 +1,5 @@
-#include "DAI_SpawnerEditor.h"
 #include "SDAISpawnerDocs.h"
+#include "DAI_SpawnerEditor.h"
 #include "DAISpawnerEditorSettings.h"
 #include "Widgets/Layout/SScrollBox.h"
 #include "Widgets/Text/STextBlock.h"
