@@ -5,6 +5,7 @@
 #include "GameFramework/Actor.h"
 #include "UObject/WeakObjectPtr.h"
 #include "UObject/ObjectPtr.h"
+#include "Engine/EngineTypes.h"
 #include "DAISpawnManager.generated.h"
 
 
@@ -133,6 +134,13 @@ struct FSpawnEntry {
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement",
         meta = (ToolTip = "Offset from the marker or spawner for the actor"))
     FVector ActorOffset = FVector::ZeroVector;
+
+    /** Optional clearance added along the ground normal when snapping to ground.
+     *  If zero, we try to infer a sensible value from the actor's collision
+     *  (capsule half height, box Z extent, or sphere radius). */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement",
+        meta = (ToolTip = "Added height above the ground to place the actor bottom on the surface (0 = auto)"))
+    float GroundClearance = 0.0f;
 
     /** Optional offset applied to the static mesh location.  When using a marker
      * this is relative to the marker's spawn point. */
@@ -283,6 +291,42 @@ UCLASS(Blueprintable, BlueprintType, ClassGroup = (Custom),
             meta = (ClampMin = "0.0",
                 ToolTip = "Radius for overlap checks when spawning"))
         float SafePlacementRadius = 0.0f;
+
+        /** Collision channel used for ground traces (to find the surface). */
+        UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement",
+            meta = (ToolTip = "Collision channel for ground alignment traces"))
+        TEnumAsByte<ECollisionChannel> GroundTraceChannel = ECC_Visibility;
+
+        /** Enable shape-based safe placement checks (uses actor collision). */
+        UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement",
+            meta = (ToolTip = "If true, pre-spawn overlap test uses the actor's collision shape"))
+        bool bUseShapePlacementCheck = false;
+
+        /** Run a post-spawn sanity check and destroy actors if still intersecting. */
+        UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement",
+            meta = (ToolTip = "If true, after spawn we test for blocking overlap and destroy if intersecting"))
+        bool bPostSpawnSanityCheck = false;
+
+        /** Automatically expand NavQueryExtent using the actor's collision. */
+        UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement",
+            meta = (ToolTip = "If true, navmesh projection extent is expanded based on the actor's collision"))
+        bool bAutoExpandNavQueryExtent = false;
+
+        /** When true, use a multi-hit ground trace and pick the highest valid hit. */
+        UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement",
+            meta = (ToolTip = "Use multi-line trace and choose the highest walkable surface"))
+        bool bGroundTraceMultiHit = false;
+
+        /** Query extent used when projecting to the navigation mesh. */
+        UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement",
+            meta = (ToolTip = "Extent used when projecting spawn points to the navmesh"))
+        FVector NavQueryExtent = FVector(50.f, 50.f, 1000.f);
+
+        /** Collision handling when spawning actors. */
+        UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement",
+            meta = (ToolTip = "Engine collision handling method used during spawn"))
+        ESpawnActorCollisionHandlingMethod SpawnCollisionHandling = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+
 
         /** Minimum distance required between newly spawned actors. */
         UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement",

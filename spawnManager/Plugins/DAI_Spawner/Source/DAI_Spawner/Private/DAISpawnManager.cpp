@@ -12,7 +12,6 @@
 #include "DAISpawnManager.h"
 
 #include "CollisionShape.h"
-#include "CollisionQueryParams.h"
 #include "Components/HierarchicalInstancedStaticMeshComponent.h"
 #include "Components/SceneComponent.h"
 #include "Components/StaticMeshComponent.h"
@@ -26,6 +25,10 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "NavigationSystem.h"
 #include "PhysicalMaterials/PhysicalMaterial.h"
+#include <float.h>
+#include "Components/SphereComponent.h"
+#include "Components/BoxComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "TimerManager.h"
 
  // Sets default values
@@ -560,7 +563,7 @@ void ADAISpawnManager::Tick(float DeltaSeconds) {
                                 Marker->SpawnPoint->GetComponentLocation() + Entry.MeshOffset;
                         }
                         else {
-                        MeshLocation =
+                            MeshLocation =
                                 Entry.MarkerActor->GetActorLocation() + Entry.MeshOffset;
                         }
                     }
@@ -579,12 +582,33 @@ void ADAISpawnManager::Tick(float DeltaSeconds) {
                 if (bProjectToNavMesh) {
                     FNavLocation NavLoc;
                     if (UNavigationSystemV1* NavSys =
-                            FNavigationSystem::GetCurrent<UNavigationSystemV1>(World)) {
+                        FNavigationSystem::GetCurrent<UNavigationSystemV1>(World)) {
                         // Provide a vertical search extent so points above the ground
                         // can still project to the navigation mesh.  If the projection
                         // fails we skip this spawn attempt.
-                        const FVector NavExtent(50.f, 50.f, 1000.f);
-                        if (NavSys->ProjectPointToNavigation(ActorLocation, NavLoc, NavExtent)) {
+                        FVector QueryExtent = NavQueryExtent;
+                        if (bAutoExpandNavQueryExtent && Entry.ActorClass) {
+                            if (const AActor* CDO = Entry.ActorClass->GetDefaultObject<AActor>()) {
+                                if (const UCapsuleComponent* Cap = CDO->FindComponentByClass<UCapsuleComponent>()) {
+                                    QueryExtent.X = FMath::Max(QueryExtent.X, Cap->GetUnscaledCapsuleRadius());
+                                    QueryExtent.Y = FMath::Max(QueryExtent.Y, Cap->GetUnscaledCapsuleRadius());
+                                    QueryExtent.Z = FMath::Max(QueryExtent.Z, Cap->GetUnscaledCapsuleHalfHeight() * 2.f);
+                                }
+                                else if (const UBoxComponent* Box = CDO->FindComponentByClass<UBoxComponent>()) {
+                                    const FVector Ext = Box->GetUnscaledBoxExtent();
+                                    QueryExtent.X = FMath::Max(QueryExtent.X, Ext.X);
+                                    QueryExtent.Y = FMath::Max(QueryExtent.Y, Ext.Y);
+                                    QueryExtent.Z = FMath::Max(QueryExtent.Z, Ext.Z * 2.f);
+                                }
+                                else if (const USphereComponent* Sphere = CDO->FindComponentByClass<USphereComponent>()) {
+                                    const float R = Sphere->GetUnscaledSphereRadius();
+                                    QueryExtent.X = FMath::Max(QueryExtent.X, R);
+                                    QueryExtent.Y = FMath::Max(QueryExtent.Y, R);
+                                    QueryExtent.Z = FMath::Max(QueryExtent.Z, R * 2.f);
+                                }
+                            }
+                        }
+                        if (NavSys->ProjectPointToNavigation(ActorLocation, NavLoc, QueryExtent)) {
                             ActorLocation = NavLoc.Location;
                         }
                         else {
@@ -603,27 +627,44 @@ void ADAISpawnManager::Tick(float DeltaSeconds) {
             const FVector TraceStart = ActorLocation + FVector(0.f, 0.f, 500.f);
             const FVector TraceEnd = ActorLocation - FVector(0.f, 0.f, 500.f);
 
-            FCollisionQueryParams TraceParams;
-            TraceParams.AddIgnoredActor(this);
-            if (Entry.bUseMarker && Entry.MarkerActor)
-            {
-                TraceParams.AddIgnoredActor(Entry.MarkerActor);
+            bool bGotGround = false;
+            FHitResult SelectedHit;
+            if (bGroundTraceMultiHit) {
+                TArray<FHitResult> Hits;
+                World->LineTraceMultiByChannel(Hits, TraceStart, TraceEnd, GroundTraceChannel);
+                float MaxZ = -FLT_MAX;
+                for (const FHitResult& H : Hits) {
+                    if (!H.bBlockingHit) continue;
+                    // Skip forbidden physical materials
+                    if (H.PhysMaterial.IsValid() && ForbiddenPhysMaterials.Contains(H.PhysMaterial.Get())) {
+                        continue;
+                    }
+                    // Skip forbidden actor tags
+                    if (AActor* HitActor = H.GetActor()) {
+                        bool bHasForbidden = false;
+                        for (const FName& Tag : ForbiddenActorTags) {
+                            if (HitActor->ActorHasTag(Tag)) { bHasForbidden = true; break; }
+                        }
+                        if (bHasForbidden) continue;
+                    }
+                    if (H.Location.Z > MaxZ) {
+                        MaxZ = H.Location.Z;
+                        SelectedHit = H;
+                        bGotGround = true;
+                    }
+                }
+            }
+            else {
+                World->LineTraceSingleByChannel(SelectedHit, TraceStart, TraceEnd, GroundTraceChannel);
+                bGotGround = SelectedHit.bBlockingHit;
             }
 
-            const float CapsuleRadius = FMath::Max(1.f, SafePlacementRadius);
-            const float CapsuleHalfHeight = CapsuleRadius;
-            World->SweepSingleByChannel(
-                GroundHit,
-                TraceStart,
-                TraceEnd,
-                FQuat::Identity,
-                ECC_Visibility,
-                FCollisionShape::MakeCapsule(CapsuleRadius, CapsuleHalfHeight),
-                TraceParams);
-            if (!GroundHit.bBlockingHit) {
+            if (!bGotGround) {
                 // Require a valid ground hit; otherwise try again or skip this spawn
                 continue;
             }
+            GroundHit = SelectedHit;
+
             // Forbidden material or tags
             if (GroundHit.PhysMaterial.IsValid() &&
                 ForbiddenPhysMaterials.Contains(GroundHit.PhysMaterial.Get())) {
@@ -646,8 +687,8 @@ void ADAISpawnManager::Tick(float DeltaSeconds) {
                     (bMarkerValid || bHasCached)) {
                     const FVector Forward =
                         bMarkerValid ? Entry.MarkerActor->GetActorForwardVector()
-                                     : Entry.CachedMarkerTransform.GetRotation()
-                                           .GetForwardVector();
+                        : Entry.CachedMarkerTransform.GetRotation()
+                        .GetForwardVector();
                     SpawnRot = UKismetMathLibrary::MakeRotFromXZ(
                         Forward, GroundHit.ImpactNormal);
                 }
@@ -659,11 +700,28 @@ void ADAISpawnManager::Tick(float DeltaSeconds) {
             // Move the spawn location to the ground hit point so actors and
             // meshes appear on the surface rather than at the manager's height.
             ActorLocation = GroundHit.Location;
+            // Apply clearance so the actor's bottom sits on the ground, not the origin
+            float Clearance = Entry.GroundClearance;
+            if (Clearance <= 0.f && Entry.ActorClass) {
+                if (const AActor* CDO = Entry.ActorClass->GetDefaultObject<AActor>()) {
+                    if (const UCapsuleComponent* Cap = CDO->FindComponentByClass<UCapsuleComponent>()) {
+                        Clearance = Cap->GetUnscaledCapsuleHalfHeight();
+                    }
+                    else if (const UBoxComponent* Box = CDO->FindComponentByClass<UBoxComponent>()) {
+                        Clearance = Box->GetUnscaledBoxExtent().Z;
+                    }
+                    else if (const USphereComponent* Sphere = CDO->FindComponentByClass<USphereComponent>()) {
+                        Clearance = Sphere->GetUnscaledSphereRadius();
+                    }
+                }
+            }
+            ActorLocation += GroundHit.ImpactNormal * Clearance;
             if (bUsingMarker) {
                 // Keep the mesh at its original (cached) location when using a marker
                 // so it is not shifted vertically by ground alignment.
                 MeshLocation = OriginalMeshLocation;
-            } else {
+            }
+            else {
                 MeshLocation = ActorLocation + Entry.MeshOffset;
             }
 
@@ -688,14 +746,34 @@ void ADAISpawnManager::Tick(float DeltaSeconds) {
                 continue;
             }
 
-            if (SafePlacementRadius > 0.f) {
-                const FCollisionShape Sphere =
-                    FCollisionShape::MakeSphere(SafePlacementRadius);
-                if (World->OverlapBlockingTestByChannel(ActorLocation, FQuat::Identity,
-                    ECC_WorldStatic, Sphere, TraceParams) ||
-                    World->OverlapBlockingTestByChannel(ActorLocation, FQuat::Identity,
-                        ECC_WorldDynamic, Sphere, TraceParams)) {
-                    continue;
+            if (SafePlacementRadius > 0.f || bUseShapePlacementCheck) {
+                bool bHaveShape = false;
+                FCollisionShape PlacementShape;
+                if (Entry.ActorClass) {
+                    if (const AActor* CDO = Entry.ActorClass->GetDefaultObject<AActor>()) {
+                        if (const UCapsuleComponent* Cap = CDO->FindComponentByClass<UCapsuleComponent>()) {
+                            PlacementShape = FCollisionShape::MakeCapsule(Cap->GetUnscaledCapsuleRadius(), Cap->GetUnscaledCapsuleHalfHeight());
+                            bHaveShape = true;
+                        }
+                        else if (const UBoxComponent* Box = CDO->FindComponentByClass<UBoxComponent>()) {
+                            PlacementShape = FCollisionShape::MakeBox(Box->GetUnscaledBoxExtent());
+                            bHaveShape = true;
+                        }
+                        else if (const USphereComponent* Sphere = CDO->FindComponentByClass<USphereComponent>()) {
+                            PlacementShape = FCollisionShape::MakeSphere(Sphere->GetUnscaledSphereRadius());
+                            bHaveShape = true;
+                        }
+                    }
+                }
+                if (!bHaveShape && SafePlacementRadius > 0.f) {
+                    PlacementShape = FCollisionShape::MakeSphere(SafePlacementRadius);
+                    bHaveShape = true;
+                }
+                if (bPostSpawnSanityCheck && bHaveShape) {
+                    if (World->OverlapBlockingTestByChannel(ActorLocation, FQuat::Identity, ECC_WorldStatic, PlacementShape) ||
+                        World->OverlapBlockingTestByChannel(ActorLocation, FQuat::Identity, ECC_WorldDynamic, PlacementShape)) {
+                        continue;
+                    }
                 }
             }
 
@@ -725,7 +803,7 @@ void ADAISpawnManager::Tick(float DeltaSeconds) {
         FActorSpawnParameters Params;
         Params.Owner = this;
         Params.SpawnCollisionHandlingOverride =
-            ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+            SpawnCollisionHandling;
         AActor* NewActor = World->SpawnActor<AActor>(Item.ActorClass, ActorLocation,
             SpawnRot, Params);
         if (NewActor) {
@@ -762,18 +840,47 @@ void ADAISpawnManager::Tick(float DeltaSeconds) {
             }
 
             RecentSpawnLocations.Add(ActorLocation);
+
+            if (bPostSpawnSanityCheck) {
+                // Post-spawn sanity overlap check: if somehow still intersecting geometry, destroy it.
+                {
+                    bool bHaveShape = false;
+                    FCollisionShape PostShape;
+                    if (UPrimitiveComponent* RootPrim = Cast<UPrimitiveComponent>(NewActor->GetRootComponent())) {
+                        if (const UCapsuleComponent* Cap = Cast<UCapsuleComponent>(RootPrim)) {
+                            PostShape = FCollisionShape::MakeCapsule(Cap->GetUnscaledCapsuleRadius(), Cap->GetUnscaledCapsuleHalfHeight());
+                            bHaveShape = true;
+                        }
+                        else if (const UBoxComponent* Box = Cast<UBoxComponent>(RootPrim)) {
+                            PostShape = FCollisionShape::MakeBox(Box->GetUnscaledBoxExtent());
+                            bHaveShape = true;
+                        }
+                        else if (const USphereComponent* Sphere = Cast<USphereComponent>(RootPrim)) {
+                            PostShape = FCollisionShape::MakeSphere(Sphere->GetUnscaledSphereRadius());
+                            bHaveShape = true;
+                        }
+                    }
+                    if (bPostSpawnSanityCheck && bHaveShape) {
+                        if (World->OverlapBlockingTestByChannel(ActorLocation, FQuat::Identity, ECC_WorldStatic, PostShape) ||
+                            World->OverlapBlockingTestByChannel(ActorLocation, FQuat::Identity, ECC_WorldDynamic, PostShape)) {
+                            NewActor->Destroy();
+                            // We still count the attempt to preserve scheduling semantics.
+                        }
+                    }
+                }
+            }
+            SpawnedThisTick++;
+            Item.Count--;
+            if (Item.Count <= 0) {
+                PendingSpawns.RemoveAt(0);
+            }
         }
-        SpawnedThisTick++;
-        Item.Count--;
-        if (Item.Count <= 0) {
-            PendingSpawns.RemoveAt(0);
-        }
-    }
 #if WITH_EDITOR
-    if (bDebug) {
-        DrawDebugArea();
-    }
+        if (bDebug) {
+            DrawDebugArea();
+        }
 #endif
+    }
 }
 
 
