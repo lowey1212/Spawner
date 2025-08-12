@@ -11,11 +11,6 @@ const FName FDAI_SpawnerEditorModule::DocsTabName(TEXT("DAI_Spawner_Docs"));
 
 void FDAI_SpawnerEditorModule::StartupModule()
 {
-    if (IsRunningCommandlet())
-    {
-        return; // Skip editor-only init when running commandlets
-    }
-
     FDAISpawnerEditorStyle::Initialize();
 
     FGlobalTabmanager::Get()->RegisterNomadTabSpawner(
@@ -30,11 +25,6 @@ void FDAI_SpawnerEditorModule::StartupModule()
 
 void FDAI_SpawnerEditorModule::ShutdownModule()
 {
-    if (IsRunningCommandlet())
-    {
-        return;
-    }
-
     if (UToolMenus* Menus = UToolMenus::Get())
     {
         Menus->UnRegisterStartupCallback(this);   // <-- unregister, don't register
