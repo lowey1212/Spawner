@@ -9,7 +9,7 @@ class USoundBase;
 class ADAIUltraSkyActor;
 
 USTRUCT(BlueprintType)
-struct FUltraSkyEnvSoundEntry
+struct FDAIUltraSkyEnvSoundEntry
 {
     GENERATED_BODY()
 
@@ -20,24 +20,24 @@ struct FUltraSkyEnvSoundEntry
     TObjectPtr<USoundBase> Sound = nullptr;
 };
 
-UCLASS(ClassGroup = (Audio), meta = (BlueprintSpawnableComponent))
+UCLASS(BlueprintType, ClassGroup = (Audio), meta = (BlueprintSpawnableComponent))
 class DAI_ULTRASKY_API UDAIUltraSkyEnvironmentSoundComponent : public UActorComponent
 {
     GENERATED_BODY()
 public:
     UDAIUltraSkyEnvironmentSoundComponent();
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UltraSky|EnvSound", meta = (ToolTip = "If false the component does nothing (no updates, no playback)."))
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DAI_UltraSky|EnvSound", meta = (ToolTip = "If false the component does nothing (no updates, no playback)."))
     bool bEnabled = true;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UltraSky|EnvSound", meta = (ToolTip = "UltraSky actor providing current weather condition. Auto-found if not set at BeginPlay."))
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DAI_UltraSky|EnvSound", meta = (ToolTip = "UltraSky actor providing current weather condition. Auto-found if not set at BeginPlay."))
     TObjectPtr<ADAIUltraSkyActor> UltraSky;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UltraSky|EnvSound", meta = (ClampMin = "0.0", ToolTip = "Seconds to fade between old and new condition loop (0 = immediate switch)."))
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DAI_UltraSky|EnvSound", meta = (ClampMin = "0.0", ToolTip = "Seconds to fade between old and new condition loop (0 = immediate switch)."))
     float CrossfadeSeconds = 1.0f;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UltraSky|EnvSound", meta = (ToolTip = "Per-condition looping ambience entries. First match used."))
-    TArray<FUltraSkyEnvSoundEntry> Sounds;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DAI_UltraSky|EnvSound", meta = (ToolTip = "Per-condition looping ambience entries. First match used."))
+    TArray<FDAIUltraSkyEnvSoundEntry> Sounds;
 
 protected:
     virtual void BeginPlay() override;

@@ -24,27 +24,27 @@ public:
     UDAIUltraSkyAttributeSet() {}
 
     // Temperature in Celsius
-    UPROPERTY(BlueprintReadOnly, Category = "UltraSky|Attributes", ReplicatedUsing = OnRep_TemperatureC, meta = (ToolTip = "Ambient temperature in Celsius (replicated)."))
+    UPROPERTY(BlueprintReadOnly, Category = "DAI_UltraSky|Attributes", ReplicatedUsing = OnRep_TemperatureC, meta = (ToolTip = "Ambient temperature in Celsius (replicated)."))
     FGameplayAttributeData TemperatureC;
     ATTRIBUTE_ACCESSORS(UDAIUltraSkyAttributeSet, TemperatureC)
 
     // Relative humidity 0..1
-    UPROPERTY(BlueprintReadOnly, Category = "UltraSky|Attributes", ReplicatedUsing = OnRep_Humidity, meta = (ToolTip = "Relative humidity 0..1 (replicated)."))
+    UPROPERTY(BlueprintReadOnly, Category = "DAI_UltraSky|Attributes", ReplicatedUsing = OnRep_Humidity, meta = (ToolTip = "Relative humidity 0..1 (replicated)."))
     FGameplayAttributeData Humidity;
     ATTRIBUTE_ACCESSORS(UDAIUltraSkyAttributeSet, Humidity)
 
     // Wind speed in km/h
-    UPROPERTY(BlueprintReadOnly, Category = "UltraSky|Attributes", ReplicatedUsing = OnRep_WindSpeedKph, meta = (ToolTip = "Wind speed in km/h (replicated)."))
+    UPROPERTY(BlueprintReadOnly, Category = "DAI_UltraSky|Attributes", ReplicatedUsing = OnRep_WindSpeedKph, meta = (ToolTip = "Wind speed in km/h (replicated)."))
     FGameplayAttributeData WindSpeedKph;
     ATTRIBUTE_ACCESSORS(UDAIUltraSkyAttributeSet, WindSpeedKph)
 
     // Precipitation intensity 0..1 (0=none, 1=storm)
-    UPROPERTY(BlueprintReadOnly, Category = "UltraSky|Attributes", ReplicatedUsing = OnRep_Precipitation, meta = (ToolTip = "Precipitation intensity 0..1 (0 none, 1 storm)."))
+    UPROPERTY(BlueprintReadOnly, Category = "DAI_UltraSky|Attributes", ReplicatedUsing = OnRep_Precipitation, meta = (ToolTip = "Precipitation intensity 0..1 (0 none, 1 storm)."))
     FGameplayAttributeData Precipitation;
     ATTRIBUTE_ACCESSORS(UDAIUltraSkyAttributeSet, Precipitation)
 
     // Cloudiness 0..1
-    UPROPERTY(BlueprintReadOnly, Category = "UltraSky|Attributes", ReplicatedUsing = OnRep_Cloudiness, meta = (ToolTip = "Cloud coverage 0..1 proxy for gameplay/UI."))
+    UPROPERTY(BlueprintReadOnly, Category = "DAI_UltraSky|Attributes", ReplicatedUsing = OnRep_Cloudiness, meta = (ToolTip = "Cloud coverage 0..1 proxy for gameplay/UI."))
     FGameplayAttributeData Cloudiness;
     ATTRIBUTE_ACCESSORS(UDAIUltraSkyAttributeSet, Cloudiness)
 

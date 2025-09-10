@@ -16,7 +16,7 @@ static ADAIUltraSkyActor *GetUltraSkyActor(const UObject *WorldContext)
     return nullptr;
 }
 
-void UDAIUltraSkyBlueprintLibrary::SetUltraSkyTime(ADAIUltraSkyActor *UltraSky, float TimeOfDay)
+void UDAIUltraSkyBlueprintLibrary::DAI_SetUltraSkyTime(ADAIUltraSkyActor *UltraSky, float TimeOfDay)
 {
     if (UltraSky)
     {
@@ -24,7 +24,7 @@ void UDAIUltraSkyBlueprintLibrary::SetUltraSkyTime(ADAIUltraSkyActor *UltraSky, 
     }
 }
 
-void UDAIUltraSkyBlueprintLibrary::SetUltraSkyDayLength(ADAIUltraSkyActor *UltraSky, float DayLengthSeconds)
+void UDAIUltraSkyBlueprintLibrary::DAI_SetUltraSkyDayLength(ADAIUltraSkyActor *UltraSky, float DayLengthSeconds)
 {
     if (UltraSky)
     {
@@ -32,12 +32,12 @@ void UDAIUltraSkyBlueprintLibrary::SetUltraSkyDayLength(ADAIUltraSkyActor *Ultra
     }
 }
 
-ADAIUltraSkyActor *UDAIUltraSkyBlueprintLibrary::GetUltraSkyActorFromService(const UObject *WorldContextObject)
+ADAIUltraSkyActor *UDAIUltraSkyBlueprintLibrary::DAI_GetUltraSkyActorFromService(const UObject *WorldContextObject)
 {
     return GetUltraSkyActor(WorldContextObject);
 }
 
-float UDAIUltraSkyBlueprintLibrary::GetUltraSkyTimeOfDay(const UObject *WorldContextObject)
+float UDAIUltraSkyBlueprintLibrary::DAI_GetUltraSkyTimeOfDay(const UObject *WorldContextObject)
 {
     if (ADAIUltraSkyActor *Actor = GetUltraSkyActor(WorldContextObject))
     {
@@ -46,7 +46,7 @@ float UDAIUltraSkyBlueprintLibrary::GetUltraSkyTimeOfDay(const UObject *WorldCon
     return 0.f;
 }
 
-FName UDAIUltraSkyBlueprintLibrary::GetUltraSkyCondition(const UObject *WorldContextObject)
+FName UDAIUltraSkyBlueprintLibrary::DAI_GetUltraSkyCondition(const UObject *WorldContextObject)
 {
     if (ADAIUltraSkyActor *Actor = GetUltraSkyActor(WorldContextObject))
     {
@@ -55,7 +55,7 @@ FName UDAIUltraSkyBlueprintLibrary::GetUltraSkyCondition(const UObject *WorldCon
     return NAME_None;
 }
 
-float UDAIUltraSkyBlueprintLibrary::GetUltraSkySnowAccum(const UObject *WorldContextObject)
+float UDAIUltraSkyBlueprintLibrary::DAI_GetUltraSkySnowAccum(const UObject *WorldContextObject)
 {
     if (ADAIUltraSkyActor *Actor = GetUltraSkyActor(WorldContextObject))
     {
@@ -64,7 +64,7 @@ float UDAIUltraSkyBlueprintLibrary::GetUltraSkySnowAccum(const UObject *WorldCon
     return 0.f;
 }
 
-float UDAIUltraSkyBlueprintLibrary::GetUltraSkyWindIntensity(const UObject *WorldContextObject)
+float UDAIUltraSkyBlueprintLibrary::DAI_GetUltraSkyWindIntensity(const UObject *WorldContextObject)
 {
     if (ADAIUltraSkyActor *Actor = GetUltraSkyActor(WorldContextObject))
     {
@@ -73,7 +73,7 @@ float UDAIUltraSkyBlueprintLibrary::GetUltraSkyWindIntensity(const UObject *Worl
     return 0.f;
 }
 
-void UDAIUltraSkyBlueprintLibrary::ForceUltraSkyCondition(const UObject *WorldContextObject, FName ConditionName)
+void UDAIUltraSkyBlueprintLibrary::DAI_ForceUltraSkyCondition(const UObject *WorldContextObject, FName ConditionName)
 {
     if (ADAIUltraSkyActor *Actor = GetUltraSkyActor(WorldContextObject))
     {
@@ -81,7 +81,7 @@ void UDAIUltraSkyBlueprintLibrary::ForceUltraSkyCondition(const UObject *WorldCo
     }
 }
 
-float UDAIUltraSkyBlueprintLibrary::GetUltraSkyWetness(const UObject *WorldContextObject)
+float UDAIUltraSkyBlueprintLibrary::DAI_GetUltraSkyWetness(const UObject *WorldContextObject)
 {
     if (ADAIUltraSkyActor *Actor = GetUltraSkyActor(WorldContextObject))
     {
@@ -90,7 +90,7 @@ float UDAIUltraSkyBlueprintLibrary::GetUltraSkyWetness(const UObject *WorldConte
     return 0.f;
 }
 
-FName UDAIUltraSkyBlueprintLibrary::GetUltraSkyBiome(const UObject *WorldContextObject)
+FName UDAIUltraSkyBlueprintLibrary::DAI_GetUltraSkyBiome(const UObject *WorldContextObject)
 {
     if (ADAIUltraSkyActor *Actor = GetUltraSkyActor(WorldContextObject))
     {
@@ -99,7 +99,7 @@ FName UDAIUltraSkyBlueprintLibrary::GetUltraSkyBiome(const UObject *WorldContext
     return NAME_None;
 }
 
-bool UDAIUltraSkyBlueprintLibrary::GetUltraSkyIsPrecipitating(const UObject *WorldContextObject)
+bool UDAIUltraSkyBlueprintLibrary::DAI_GetUltraSkyIsPrecipitating(const UObject *WorldContextObject)
 {
     if (ADAIUltraSkyActor *Actor = GetUltraSkyActor(WorldContextObject))
     {
@@ -108,7 +108,7 @@ bool UDAIUltraSkyBlueprintLibrary::GetUltraSkyIsPrecipitating(const UObject *Wor
     return false;
 }
 
-bool UDAIUltraSkyBlueprintLibrary::GetUltraSkyIsStorming(const UObject *WorldContextObject)
+bool UDAIUltraSkyBlueprintLibrary::DAI_GetUltraSkyIsStorming(const UObject *WorldContextObject)
 {
     if (ADAIUltraSkyActor *Actor = GetUltraSkyActor(WorldContextObject))
     {
@@ -117,7 +117,7 @@ bool UDAIUltraSkyBlueprintLibrary::GetUltraSkyIsStorming(const UObject *WorldCon
     return false;
 }
 
-float UDAIUltraSkyBlueprintLibrary::GetUltraSkyWindDirection(const UObject *WorldContextObject)
+float UDAIUltraSkyBlueprintLibrary::DAI_GetUltraSkyWindDirection(const UObject *WorldContextObject)
 {
     if (ADAIUltraSkyActor *Actor = GetUltraSkyActor(WorldContextObject))
     {
@@ -126,7 +126,7 @@ float UDAIUltraSkyBlueprintLibrary::GetUltraSkyWindDirection(const UObject *Worl
     return 0.f;
 }
 
-void UDAIUltraSkyBlueprintLibrary::SetUltraSkySnowThresholds(const UObject *WorldContextObject, const TArray<float> &Thresholds)
+void UDAIUltraSkyBlueprintLibrary::DAI_SetUltraSkySnowThresholds(const UObject *WorldContextObject, const TArray<float> &Thresholds)
 {
     if (ADAIUltraSkyActor *Actor = GetUltraSkyActor(WorldContextObject))
     {
@@ -134,7 +134,7 @@ void UDAIUltraSkyBlueprintLibrary::SetUltraSkySnowThresholds(const UObject *Worl
     }
 }
 
-bool UDAIUltraSkyBlueprintLibrary::ForceUltraSkyBiomeByName(const UObject *WorldContextObject, FName BiomeAssetName, float BlendSeconds)
+bool UDAIUltraSkyBlueprintLibrary::DAI_ForceUltraSkyBiomeByName(const UObject *WorldContextObject, FName BiomeAssetName, float BlendSeconds)
 {
     if (ADAIUltraSkyActor *Actor = GetUltraSkyActor(WorldContextObject))
     {

@@ -14,11 +14,11 @@ public:
     ADAIUltraSkyBiomeVolume();
 
     // Assign the biome definition this volume represents
-    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UltraSky|Biome", meta = (ToolTip = "Biome data asset applied while actor inside volume."))
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "DAI_UltraSky|Biome", meta = (ToolTip = "Biome data asset applied while actor inside volume."))
     TObjectPtr<UDAIUltraSkyBiomeData> Biome;
 
     // Priority: higher takes precedence when volumes overlap
-    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UltraSky|Biome", meta = (ClampMin = "0", ToolTip = "Higher priority wins when volumes overlap."))
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "DAI_UltraSky|Biome", meta = (ClampMin = "0", ToolTip = "Higher priority wins when volumes overlap."))
     int32 Priority = 0;
 
     virtual void BeginPlay() override;
