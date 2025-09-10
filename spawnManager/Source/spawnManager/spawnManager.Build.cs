@@ -8,7 +8,7 @@ public class spawnManager : ModuleRules {
 
     // Core Unreal modules required by the project.
     PublicDependencyModuleNames.AddRange(new string[] {
-        "Core", "CoreUObject", "Engine", "InputCore", "GameplayTags", "Niagara"
+        "Core", "CoreUObject", "Engine", "InputCore", "GameplayTags"
     });
   }
 }
