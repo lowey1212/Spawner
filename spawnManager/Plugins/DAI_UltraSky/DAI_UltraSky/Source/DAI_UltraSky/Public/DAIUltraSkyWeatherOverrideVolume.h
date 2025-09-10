@@ -21,27 +21,27 @@ public:
     ADAIUltraSkyWeatherOverrideVolume();
 
     // Enable/disable effect of this volume
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UltraSky|Override", meta = (ToolTip = "Override mode; Disabled ignores volume, SinglePreset applies specified biome/condition."))
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DAI_UltraSky|Override", meta = (ToolTip = "Override mode; Disabled ignores volume, SinglePreset applies specified biome/condition."))
     EDAIUltraSkyOverrideMode Mode = EDAIUltraSkyOverrideMode::SinglePreset;
 
     // Priority: higher wins when overlapping
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UltraSky|Override", meta = (ToolTip = "Priority when multiple override volumes overlap (higher wins)."))
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DAI_UltraSky|Override", meta = (ToolTip = "Priority when multiple override volumes overlap (higher wins)."))
     int32 Priority = 0;
 
     // When Mode == SinglePreset
-    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UltraSky|Override", meta = (ToolTip = "Biome to force while inside (used when Mode=SinglePreset)."))
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "DAI_UltraSky|Override", meta = (ToolTip = "Biome to force while inside (used when Mode=SinglePreset)."))
     TObjectPtr<UDAIUltraSkyBiomeData> OverrideBiome;
 
     // Optional condition override applied while inside this volume (e.g., Rain, Snow)
-    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UltraSky|Override", meta = (ToolTip = "Weather condition name to force while inside (optional)."))
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "DAI_UltraSky|Override", meta = (ToolTip = "Weather condition name to force while inside (optional)."))
     FName OverrideCondition;
 
     // Blend seconds used when entering this volume
-    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UltraSky|Override", meta = (ClampMin = "0.0", ToolTip = "Seconds to blend in override on volume enter."))
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "DAI_UltraSky|Override", meta = (ClampMin = "0.0", ToolTip = "Seconds to blend in override on volume enter."))
     float EnterBlendSeconds = 1.5f;
 
     // Blend seconds used when leaving this volume
-    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UltraSky|Override", meta = (ClampMin = "0.0", ToolTip = "Seconds to blend out override on volume exit."))
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "DAI_UltraSky|Override", meta = (ClampMin = "0.0", ToolTip = "Seconds to blend out override on volume exit."))
     float ExitBlendSeconds = 1.5f;
 
     virtual void BeginPlay() override;

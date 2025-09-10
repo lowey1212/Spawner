@@ -7,7 +7,7 @@
 class UDAIUltraSkyBiomeData;
 
 USTRUCT(BlueprintType)
-struct FUltraSkyWeatherChoice
+struct FDAIUltraSkyWeatherChoice
 {
     GENERATED_BODY()
 
@@ -28,15 +28,15 @@ class DAI_ULTRASKY_API UDAIUltraSkyClimatePreset : public UDataAsset
     GENERATED_BODY()
 public:
     // Per season weighted choices
-    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UltraSky|Climate", meta = (ToolTip = "Spring season weighted weather choices (picked by Weight probability)."))
-    TArray<FUltraSkyWeatherChoice> SpringChoices;
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "DAI_UltraSky|Climate", meta = (ToolTip = "Spring season weighted weather choices (picked by Weight probability)."))
+    TArray<FDAIUltraSkyWeatherChoice> SpringChoices;
 
-    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UltraSky|Climate", meta = (ToolTip = "Summer season weather choices."))
-    TArray<FUltraSkyWeatherChoice> SummerChoices;
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "DAI_UltraSky|Climate", meta = (ToolTip = "Summer season weather choices."))
+    TArray<FDAIUltraSkyWeatherChoice> SummerChoices;
 
-    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UltraSky|Climate", meta = (ToolTip = "Autumn/Fall season weather choices."))
-    TArray<FUltraSkyWeatherChoice> AutumnChoices;
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "DAI_UltraSky|Climate", meta = (ToolTip = "Autumn/Fall season weather choices."))
+    TArray<FDAIUltraSkyWeatherChoice> AutumnChoices;
 
-    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UltraSky|Climate", meta = (ToolTip = "Winter season weather choices."))
-    TArray<FUltraSkyWeatherChoice> WinterChoices;
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "DAI_UltraSky|Climate", meta = (ToolTip = "Winter season weather choices."))
+    TArray<FDAIUltraSkyWeatherChoice> WinterChoices;
 };

@@ -14,33 +14,33 @@ class DAI_ULTRASKY_API ADAIUltraSkyTornado : public AActor
 public:
     ADAIUltraSkyTornado();
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UltraSky|Tornado", meta = (ToolTip = "Niagara system used to render tornado."))
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DAI_UltraSky|Tornado", meta = (ToolTip = "Niagara system used to render tornado."))
     TObjectPtr<UNiagaraSystem> TornadoSystem;
 
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UltraSky|Tornado", meta = (ToolTip = "Spawned Niagara component instance."))
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "DAI_UltraSky|Tornado", meta = (ToolTip = "Spawned Niagara component instance."))
     TObjectPtr<UNiagaraComponent> TornadoComponent;
 
     // Visual scale/size helpers
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UltraSky|Tornado", meta = (ClampMin = "0.1", ToolTip = "Uniform visual scale multiplier applied to system."))
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DAI_UltraSky|Tornado", meta = (ClampMin = "0.1", ToolTip = "Uniform visual scale multiplier applied to system."))
     float TornadoScale = 1.0f;
 
     // Movement
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UltraSky|Tornado", meta = (ToolTip = "World location the tornado moves toward each tick."))
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DAI_UltraSky|Tornado", meta = (ToolTip = "World location the tornado moves toward each tick."))
     FVector TargetLocation;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UltraSky|Tornado", meta = (ClampMin = "0.0", ToolTip = "Movement speed in cm/s toward TargetLocation."))
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DAI_UltraSky|Tornado", meta = (ClampMin = "0.0", ToolTip = "Movement speed in cm/s toward TargetLocation."))
     float MoveSpeed = 600.0f;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UltraSky|Tornado", meta = (ToolTip = "If true starts automatically at BeginPlay."))
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DAI_UltraSky|Tornado", meta = (ToolTip = "If true starts automatically at BeginPlay."))
     bool bAutoStart = true;
 
-    UFUNCTION(BlueprintCallable, Category = "UltraSky|Tornado")
+    UFUNCTION(BlueprintCallable, Category = "DAI_UltraSky|Tornado")
     void StartTornado();
 
-    UFUNCTION(BlueprintCallable, Category = "UltraSky|Tornado")
+    UFUNCTION(BlueprintCallable, Category = "DAI_UltraSky|Tornado")
     void StopTornado();
 
-    UFUNCTION(BlueprintCallable, Category = "UltraSky|Tornado")
+    UFUNCTION(BlueprintCallable, Category = "DAI_UltraSky|Tornado")
     void SetTargetLocation(const FVector &NewTarget);
 
 protected:

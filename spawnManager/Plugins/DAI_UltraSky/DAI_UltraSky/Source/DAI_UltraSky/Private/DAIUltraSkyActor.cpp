@@ -151,7 +151,7 @@ void ADAIUltraSkyActor::Tick(float DeltaSeconds)
             const int32 S1 = FMath::Clamp(S0 + 1, 0, 3);
             const float Alpha = FMath::Clamp(S - (float)S0, 0.0f, 1.0f);
 
-            auto ArrForIndex = [this](int32 Index) -> const TArray<FUltraSkyWeatherChoice> &
+            auto ArrForIndex = [this](int32 Index) -> const TArray<FDAIUltraSkyWeatherChoice> &
             {
                 switch (Index)
                 {
@@ -166,12 +166,12 @@ void ADAIUltraSkyActor::Tick(float DeltaSeconds)
                 }
             };
 
-            const TArray<FUltraSkyWeatherChoice> &A0 = ArrForIndex(S0);
-            const TArray<FUltraSkyWeatherChoice> &A1 = ArrForIndex(S1);
+            const TArray<FDAIUltraSkyWeatherChoice> &A0 = ArrForIndex(S0);
+            const TArray<FDAIUltraSkyWeatherChoice> &A1 = ArrForIndex(S1);
 
             // Pick from blended distributions (simple: pick list based on alpha threshold)
             const bool bPickFromSecond = RNG.FRand() < Alpha;
-            const TArray<FUltraSkyWeatherChoice> &Choices = bPickFromSecond ? A1 : A0;
+            const TArray<FDAIUltraSkyWeatherChoice> &Choices = bPickFromSecond ? A1 : A0;
 
             float TotalW = 0.0f;
             for (const auto &C : Choices)
@@ -181,7 +181,7 @@ void ADAIUltraSkyActor::Tick(float DeltaSeconds)
             if (TotalW > 0.0f && Choices.Num() > 0)
             {
                 float Pick = RNG.FRandRange(0.0f, TotalW);
-                const FUltraSkyWeatherChoice *Selected = nullptr;
+                const FDAIUltraSkyWeatherChoice *Selected = nullptr;
                 for (const auto &C : Choices)
                 {
                     const float W = FMath::Max(C.Weight, 0.0f);
@@ -834,11 +834,11 @@ void ADAIUltraSkyActor::EditorCreateUltraSkySamples()
     // 3) Create a climate preset referencing both
     if (UDAIUltraSkyClimatePreset *NewClimatePreset = Cast<UDAIUltraSkyClimatePreset>(DAIUltraSky_CreateAsset(UDAIUltraSkyClimatePreset::StaticClass(), BasePath, TEXT("Climate_Temperate"))))
     {
-        FUltraSkyWeatherChoice ClearSpring;
+        FDAIUltraSkyWeatherChoice ClearSpring;
         ClearSpring.Biome = BiomeClear;
         ClearSpring.Condition = FName("Clear");
         ClearSpring.Weight = 3.0f;
-        FUltraSkyWeatherChoice RainSpring;
+        FDAIUltraSkyWeatherChoice RainSpring;
         RainSpring.Biome = BiomeRain;
         RainSpring.Condition = FName("Rain");
         RainSpring.Weight = 1.0f;

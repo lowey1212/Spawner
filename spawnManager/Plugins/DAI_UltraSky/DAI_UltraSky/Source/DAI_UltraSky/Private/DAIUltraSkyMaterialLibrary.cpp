@@ -5,12 +5,12 @@
 #include "Components/MeshComponent.h"
 #include "Materials/MaterialInstanceDynamic.h"
 
-UTextureRenderTarget2D* UDAIUltraSkyMaterialLibrary::GetFootprintMaskRT(ADAIUltraSkyFootprintMask* Mask)
+UTextureRenderTarget2D* UDAIUltraSkyMaterialLibrary::DAI_GetFootprintMaskRT(ADAIUltraSkyFootprintMask* Mask)
 {
     return Mask ? Mask->MaskRT : nullptr;
 }
 
-static void UltraSky_ForEachMaterial(AActor* Target, TFunctionRef<void(UMeshComponent*, int32, UMaterialInstanceDynamic*)> Fn, bool bCreateMID)
+static void DAI_UltraSky_ForEachMaterial(AActor* Target, TFunctionRef<void(UMeshComponent*, int32, UMaterialInstanceDynamic*)> Fn, bool bCreateMID)
 {
     if (!Target) return;
     TArray<UMeshComponent*> Meshes;
@@ -34,25 +34,25 @@ static void UltraSky_ForEachMaterial(AActor* Target, TFunctionRef<void(UMeshComp
     }
 }
 
-void UDAIUltraSkyMaterialLibrary::ApplyFootprintMaskToActorMaterials(AActor* Target, FName TextureParamName, ADAIUltraSkyFootprintMask* Mask, bool bCreateMID)
+void UDAIUltraSkyMaterialLibrary::DAI_ApplyFootprintMaskToActorMaterials(AActor* Target, FName TextureParamName, ADAIUltraSkyFootprintMask* Mask, bool bCreateMID)
 {
     if (!Target || !Mask || !Mask->MaskRT || TextureParamName.IsNone())
     {
         return;
     }
-    UltraSky_ForEachMaterial(Target, [&](UMeshComponent*, int32, UMaterialInstanceDynamic* MID)
+    DAI_UltraSky_ForEachMaterial(Target, [&](UMeshComponent*, int32, UMaterialInstanceDynamic* MID)
     {
         MID->SetTextureParameterValue(TextureParamName, Mask->MaskRT);
     }, bCreateMID);
 }
 
-void UDAIUltraSkyMaterialLibrary::SetScalarOnActorMaterials(AActor* Target, FName ParamName, float Value, bool bCreateMID)
+void UDAIUltraSkyMaterialLibrary::DAI_SetScalarOnActorMaterials(AActor* Target, FName ParamName, float Value, bool bCreateMID)
 {
     if (!Target || ParamName.IsNone())
     {
         return;
     }
-    UltraSky_ForEachMaterial(Target, [&](UMeshComponent*, int32, UMaterialInstanceDynamic* MID)
+    DAI_UltraSky_ForEachMaterial(Target, [&](UMeshComponent*, int32, UMaterialInstanceDynamic* MID)
     {
         MID->SetScalarParameterValue(ParamName, Value);
     }, bCreateMID);
