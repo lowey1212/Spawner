@@ -18,6 +18,11 @@
 #include "DAISpawnMarker.h"
 #include "DrawDebugHelpers.h"
 #include "Engine/LevelStreaming.h"
+#if WITH_EDITOR
+#include "UObject/Package.h"
+#include "UObject/SavePackage.h"
+#include "UObject/ObjectSaveContext.h"
+#endif
 #include "Engine/World.h"
 #include "GameFramework/Volume.h"
 #include "Kismet/GameplayStatics.h"
@@ -25,10 +30,6 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "NavigationSystem.h"
 #include "PhysicalMaterials/PhysicalMaterial.h"
-#include <float.h>
-#include "Components/SphereComponent.h"
-#include "Components/BoxComponent.h"
-#include "Components/CapsuleComponent.h"
 #include "TimerManager.h"
 
  // Sets default values
@@ -44,7 +45,29 @@ ADAISpawnManager::ADAISpawnManager() {
 
 void ADAISpawnManager::OnConstruction(const FTransform& Transform) {
     Super::OnConstruction(Transform);
+
+#if WITH_EDITOR
     Modify(true);
+#endif
+
+    for (FSpawnEntry& Entry : SpawnEntries) {
+        if (Entry.bUseMarker && IsValid(Entry.MarkerActor)) {
+            Entry.CachedMarkerTransform = Entry.MarkerActor->GetActorTransform();
+            if (const ADAISpawnMarker* Marker = Cast<ADAISpawnMarker>(Entry.MarkerActor)) {
+                if (Marker->SpawnPoint) {
+                    Entry.CachedSpawnPointTransform =
+                        Marker->SpawnPoint->GetComponentTransform();
+                } else {
+                    Entry.CachedSpawnPointTransform = Entry.CachedMarkerTransform;
+                }
+            } else {
+                Entry.CachedSpawnPointTransform = Entry.CachedMarkerTransform;
+            }
+            Entry.bCachedTransformsValid = true;
+        } else if (!Entry.bUseMarker) {
+            Entry.bCachedTransformsValid = false;
+        }
+    }
 
 #if WITH_EDITOR
     // Clear previous preview actors/meshes
@@ -159,9 +182,52 @@ void ADAISpawnManager::OnConstruction(const FTransform& Transform) {
 #endif
 }
 
+#if WITH_EDITOR
+void ADAISpawnManager::RebuildMarkerCache() {
+    Modify();
+    UWorld* World = GetWorld();
+    for (FSpawnEntry& Entry : SpawnEntries) {
+        if (Entry.bUseMarker && IsValid(Entry.MarkerActor) &&
+            Entry.MarkerActor->GetWorld() == World) {
+            Entry.CachedMarkerTransform = Entry.MarkerActor->GetActorTransform();
+            if (const ADAISpawnMarker* Marker =
+                    Cast<ADAISpawnMarker>(Entry.MarkerActor)) {
+                Entry.CachedSpawnPointTransform = Marker->SpawnPoint
+                    ? Marker->SpawnPoint->GetComponentTransform()
+                    : Entry.CachedMarkerTransform;
+            } else {
+                Entry.CachedSpawnPointTransform = Entry.CachedMarkerTransform;
+            }
+            Entry.bCachedTransformsValid = true;
+        }
+    }
+    MarkPackageDirty();
+}
+
+void ADAISpawnManager::PostEditChangeProperty(FPropertyChangedEvent& E) {
+    Super::PostEditChangeProperty(E);
+    RebuildMarkerCache();
+}
+
+void ADAISpawnManager::BakeMarkerTransforms() { RebuildMarkerCache(); }
+
+void ADAISpawnManager::PreSave(FObjectPreSaveContext SaveContext) {
+    Super::PreSave(SaveContext);
+    RebuildMarkerCache();
+}
+#endif
+
 // Called when the game starts or when spawned
 void ADAISpawnManager::BeginPlay() {
     Super::BeginPlay();
+
+    for (const FSpawnEntry& Entry : SpawnEntries) {
+        if (Entry.bUseMarker && !Entry.bCachedTransformsValid) {
+            UE_LOG(LogTemp, Warning,
+                TEXT("Spawner %s has bUseMarker but no cached marker data."),
+                *GetName());
+        }
+    }
 
     if (bDeterministic) { SpawnRandStream.Initialize(Seed); }
 
@@ -545,19 +611,24 @@ void ADAISpawnManager::Tick(float DeltaSeconds) {
             ++Attempt) {
             if (bUsingMarker) {
                 if (bHasCached) {
-                    ActorLocation =
-                        Entry.CachedMarkerTransform.GetLocation() + Entry.ActorOffset;
-                    MeshLocation =
-                        Entry.CachedSpawnPointTransform.GetLocation() + Entry.MeshOffset;
-                    SpawnRot = Entry.CachedMarkerTransform.GetRotation().Rotator();
+                    ActorLocation = Entry.CachedMarkerTransform.GetLocation() +
+                                    Entry.ActorOffset;
+                    // Ignore the cached Z value so we can project to the ground
+                    ActorLocation.Z = GetActorLocation().Z;
+                    MeshLocation = Entry.CachedSpawnPointTransform.GetLocation() +
+                                   Entry.MeshOffset;
+                    SpawnRot =
+                        Entry.CachedMarkerTransform.GetRotation().Rotator();
                 }
                 else if (bMarkerValid) {
                     if (const ADAISpawnMarker* Marker =
                         Cast<ADAISpawnMarker>(Entry.MarkerActor)) {
                         // Actor spawns at the marker's root while the static mesh uses the
                         // optional SpawnPoint.
-                        ActorLocation =
-                            Entry.MarkerActor->GetActorLocation() + Entry.ActorOffset;
+                        ActorLocation = Entry.MarkerActor->GetActorLocation() +
+                                        Entry.ActorOffset;
+                        // Discard marker Z; we'll project to ground instead
+                        ActorLocation.Z = GetActorLocation().Z;
                         if (Marker->SpawnPoint) {
                             MeshLocation =
                                 Marker->SpawnPoint->GetComponentLocation() + Entry.MeshOffset;
@@ -568,161 +639,67 @@ void ADAISpawnManager::Tick(float DeltaSeconds) {
                         }
                     }
                     else {
-                        ActorLocation =
-                            Entry.MarkerActor->GetActorLocation() + Entry.ActorOffset;
-                        MeshLocation =
-                            Entry.MarkerActor->GetActorLocation() + Entry.MeshOffset;
+                        ActorLocation = Entry.MarkerActor->GetActorLocation() +
+                                        Entry.ActorOffset;
+                        ActorLocation.Z = GetActorLocation().Z;
+                        MeshLocation = Entry.MarkerActor->GetActorLocation() +
+                                      Entry.MeshOffset;
                     }
                 }
             }
             else {
                 ActorLocation = GetSpawnLocation() + Entry.ActorOffset;
                 MeshLocation = ActorLocation + Entry.MeshOffset;
+            }
 
-                if (bProjectToNavMesh) {
-                    FNavLocation NavLoc;
-                    if (UNavigationSystemV1* NavSys =
+            // Project to navigation mesh for ground height if enabled
+            if (bProjectToNavMesh) {
+                FNavLocation NavLoc;
+                if (UNavigationSystemV1* NavSys =
                         FNavigationSystem::GetCurrent<UNavigationSystemV1>(World)) {
-                        // Provide a vertical search extent so points above the ground
-                        // can still project to the navigation mesh.  If the projection
-                        // fails we skip this spawn attempt.
-                        FVector QueryExtent = NavQueryExtent;
-                        if (bAutoExpandNavQueryExtent && Entry.ActorClass) {
-                            if (const AActor* CDO = Entry.ActorClass->GetDefaultObject<AActor>()) {
-                                if (const UCapsuleComponent* Cap = CDO->FindComponentByClass<UCapsuleComponent>()) {
-                                    QueryExtent.X = FMath::Max(QueryExtent.X, Cap->GetUnscaledCapsuleRadius());
-                                    QueryExtent.Y = FMath::Max(QueryExtent.Y, Cap->GetUnscaledCapsuleRadius());
-                                    QueryExtent.Z = FMath::Max(QueryExtent.Z, Cap->GetUnscaledCapsuleHalfHeight() * 2.f);
-                                }
-                                else if (const UBoxComponent* Box = CDO->FindComponentByClass<UBoxComponent>()) {
-                                    const FVector Ext = Box->GetUnscaledBoxExtent();
-                                    QueryExtent.X = FMath::Max(QueryExtent.X, Ext.X);
-                                    QueryExtent.Y = FMath::Max(QueryExtent.Y, Ext.Y);
-                                    QueryExtent.Z = FMath::Max(QueryExtent.Z, Ext.Z * 2.f);
-                                }
-                                else if (const USphereComponent* Sphere = CDO->FindComponentByClass<USphereComponent>()) {
-                                    const float R = Sphere->GetUnscaledSphereRadius();
-                                    QueryExtent.X = FMath::Max(QueryExtent.X, R);
-                                    QueryExtent.Y = FMath::Max(QueryExtent.Y, R);
-                                    QueryExtent.Z = FMath::Max(QueryExtent.Z, R * 2.f);
-                                }
-                            }
-                        }
-                        if (NavSys->ProjectPointToNavigation(ActorLocation, NavLoc, QueryExtent)) {
-                            ActorLocation = NavLoc.Location;
-                        }
-                        else {
-                            continue;
-                        }
-                    }
-                    else {
-                        continue;
+                    if (NavSys->ProjectPointToNavigation(ActorLocation, NavLoc)) {
+                        ActorLocation = NavLoc.Location;
                     }
                 }
             }
 
-            const FVector OriginalActorLocation = ActorLocation;
-            const FVector OriginalMeshLocation = MeshLocation;
             FHitResult GroundHit;
             const FVector TraceStart = ActorLocation + FVector(0.f, 0.f, 500.f);
             const FVector TraceEnd = ActorLocation - FVector(0.f, 0.f, 500.f);
-
-            bool bGotGround = false;
-            FHitResult SelectedHit;
-            if (bGroundTraceMultiHit) {
-                TArray<FHitResult> Hits;
-                World->LineTraceMultiByChannel(Hits, TraceStart, TraceEnd, GroundTraceChannel);
-                float MaxZ = -FLT_MAX;
-                for (const FHitResult& H : Hits) {
-                    if (!H.bBlockingHit) continue;
-                    // Skip forbidden physical materials
-                    if (H.PhysMaterial.IsValid() && ForbiddenPhysMaterials.Contains(H.PhysMaterial.Get())) {
-                        continue;
-                    }
-                    // Skip forbidden actor tags
-                    if (AActor* HitActor = H.GetActor()) {
-                        bool bHasForbidden = false;
-                        for (const FName& Tag : ForbiddenActorTags) {
-                            if (HitActor->ActorHasTag(Tag)) { bHasForbidden = true; break; }
-                        }
-                        if (bHasForbidden) continue;
-                    }
-                    if (H.Location.Z > MaxZ) {
-                        MaxZ = H.Location.Z;
-                        SelectedHit = H;
-                        bGotGround = true;
-                    }
-                }
-            }
-            else {
-                World->LineTraceSingleByChannel(SelectedHit, TraceStart, TraceEnd, GroundTraceChannel);
-                bGotGround = SelectedHit.bBlockingHit;
-            }
-
-            if (!bGotGround) {
-                // Require a valid ground hit; otherwise try again or skip this spawn
-                continue;
-            }
-            GroundHit = SelectedHit;
-
-            // Forbidden material or tags
-            if (GroundHit.PhysMaterial.IsValid() &&
-                ForbiddenPhysMaterials.Contains(GroundHit.PhysMaterial.Get())) {
-                continue;
-            }
-            if (AActor* HitActor = GroundHit.GetActor()) {
-                bool bHasForbidden = false;
-                for (const FName& Tag : ForbiddenActorTags) {
-                    if (HitActor->ActorHasTag(Tag)) {
-                        bHasForbidden = true;
-                        break;
-                    }
-                }
-                if (bHasForbidden) {
+            World->LineTraceSingleByChannel(GroundHit, TraceStart, TraceEnd,
+                ECC_Visibility);
+            if (GroundHit.bBlockingHit) {
+                // Forbidden material or tags
+                if (GroundHit.PhysMaterial.IsValid() &&
+                    ForbiddenPhysMaterials.Contains(GroundHit.PhysMaterial.Get())) {
                     continue;
                 }
-            }
-            if (bAlignToGround) {
-                if (bFaceMarkerForward && Entry.bUseMarker &&
-                    (bMarkerValid || bHasCached)) {
-                    const FVector Forward =
-                        bMarkerValid ? Entry.MarkerActor->GetActorForwardVector()
-                        : Entry.CachedMarkerTransform.GetRotation()
-                        .GetForwardVector();
-                    SpawnRot = UKismetMathLibrary::MakeRotFromXZ(
-                        Forward, GroundHit.ImpactNormal);
-                }
-                else {
-                    SpawnRot = UKismetMathLibrary::MakeRotFromZ(GroundHit.ImpactNormal);
-                }
-            }
-
-            // Move the spawn location to the ground hit point so actors and
-            // meshes appear on the surface rather than at the manager's height.
-            ActorLocation = GroundHit.Location;
-            // Apply clearance so the actor's bottom sits on the ground, not the origin
-            float Clearance = Entry.GroundClearance;
-            if (Clearance <= 0.f && Entry.ActorClass) {
-                if (const AActor* CDO = Entry.ActorClass->GetDefaultObject<AActor>()) {
-                    if (const UCapsuleComponent* Cap = CDO->FindComponentByClass<UCapsuleComponent>()) {
-                        Clearance = Cap->GetUnscaledCapsuleHalfHeight();
+                if (AActor* HitActor = GroundHit.GetActor()) {
+                    bool bHasForbidden = false;
+                    for (const FName& Tag : ForbiddenActorTags) {
+                        if (HitActor->ActorHasTag(Tag)) {
+                            bHasForbidden = true;
+                            break;
+                        }
                     }
-                    else if (const UBoxComponent* Box = CDO->FindComponentByClass<UBoxComponent>()) {
-                        Clearance = Box->GetUnscaledBoxExtent().Z;
-                    }
-                    else if (const USphereComponent* Sphere = CDO->FindComponentByClass<USphereComponent>()) {
-                        Clearance = Sphere->GetUnscaledSphereRadius();
+                    if (bHasForbidden) {
+                        continue;
                     }
                 }
-            }
-            ActorLocation += GroundHit.ImpactNormal * Clearance;
-            if (bUsingMarker) {
-                // Keep the mesh at its original (cached) location when using a marker
-                // so it is not shifted vertically by ground alignment.
-                MeshLocation = OriginalMeshLocation;
-            }
-            else {
-                MeshLocation = ActorLocation + Entry.MeshOffset;
+                if (bAlignToGround) {
+                    if (bFaceMarkerForward && Entry.bUseMarker &&
+                        (bMarkerValid || bHasCached)) {
+                        const FVector Forward =
+                            bMarkerValid ? Entry.MarkerActor->GetActorForwardVector()
+                            : Entry.CachedMarkerTransform.GetRotation()
+                            .GetForwardVector();
+                        SpawnRot = UKismetMathLibrary::MakeRotFromXZ(
+                            Forward, GroundHit.ImpactNormal);
+                    }
+                    else {
+                        SpawnRot = UKismetMathLibrary::MakeRotFromZ(GroundHit.ImpactNormal);
+                    }
+                }
             }
 
             bool bInsideInclusion = InclusionVolumes.Num() == 0;
@@ -746,28 +723,14 @@ void ADAISpawnManager::Tick(float DeltaSeconds) {
                 continue;
             }
 
-            if (SafePlacementRadius > 0.f || bUseShapePlacementCheck) {
-                bool bHaveShape = false;
-                FCollisionShape PlacementShape;
-                if (Entry.ActorClass) {
-                    if (const AActor* CDO = Entry.ActorClass->GetDefaultObject<AActor>()) {
-                        if (const UCapsuleComponent* Cap = CDO->FindComponentByClass<UCapsuleComponent>()) {
-                            PlacementShape = FCollisionShape::MakeCapsule(Cap->GetUnscaledCapsuleRadius(), Cap->GetUnscaledCapsuleHalfHeight());
-                            bHaveShape = true;
-                        }
-                        else if (const UBoxComponent* Box = CDO->FindComponentByClass<UBoxComponent>()) {
-                            PlacementShape = FCollisionShape::MakeBox(Box->GetUnscaledBoxExtent());
-                            bHaveShape = true;
-                        }
-                        else if (const USphereComponent* Sphere = CDO->FindComponentByClass<USphereComponent>()) {
-                            PlacementShape = FCollisionShape::MakeSphere(Sphere->GetUnscaledSphereRadius());
-                            bHaveShape = true;
-                        }
-                    }
-                }
-                if (!bHaveShape && SafePlacementRadius > 0.f) {
-                    PlacementShape = FCollisionShape::MakeSphere(SafePlacementRadius);
-                    bHaveShape = true;
+            if (SafePlacementRadius > 0.f) {
+                const FCollisionShape Sphere =
+                    FCollisionShape::MakeSphere(SafePlacementRadius);
+                if (World->OverlapBlockingTestByChannel(ActorLocation, FQuat::Identity,
+                    ECC_WorldStatic, Sphere) ||
+                    World->OverlapBlockingTestByChannel(ActorLocation, FQuat::Identity,
+                        ECC_WorldDynamic, Sphere)) {
+                    continue;
                 }
             }
 
@@ -797,7 +760,7 @@ void ADAISpawnManager::Tick(float DeltaSeconds) {
         FActorSpawnParameters Params;
         Params.Owner = this;
         Params.SpawnCollisionHandlingOverride =
-            SpawnCollisionHandling;
+            ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
         AActor* NewActor = World->SpawnActor<AActor>(Item.ActorClass, ActorLocation,
             SpawnRot, Params);
         if (NewActor) {
@@ -834,18 +797,18 @@ void ADAISpawnManager::Tick(float DeltaSeconds) {
             }
 
             RecentSpawnLocations.Add(ActorLocation);
-            SpawnedThisTick++;
-            Item.Count--;
-            if (Item.Count <= 0) {
-                PendingSpawns.RemoveAt(0);
-            }
         }
-#if WITH_EDITOR
-        if (bDebug) {
-            DrawDebugArea();
+        SpawnedThisTick++;
+        Item.Count--;
+        if (Item.Count <= 0) {
+            PendingSpawns.RemoveAt(0);
         }
-#endif
     }
+#if WITH_EDITOR
+    if (bDebug) {
+        DrawDebugArea();
+    }
+#endif
 }
 
 

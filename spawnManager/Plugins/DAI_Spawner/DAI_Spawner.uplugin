@@ -12,13 +12,14 @@
 	"SupportURL": "",
 	"CanContainContent": true,
 	"IsBetaVersion": false,
-	"IsExperimentalVersion": false,
-	"Installed": false,
-	"Modules": [
-		{
-			"Name": "DAI_Spawner",
-			"Type": "Runtime",
-			"LoadingPhase": "Default"
-		}
-	]
+        "IsExperimentalVersion": false,
+        "Installed": false,
+	"Plugins": [],
+        "Modules": [
+                {
+                        "Name": "DAI_Spawner",
+                        "Type": "Runtime",
+                        "LoadingPhase": "Default"
+                }
+        ]
 }

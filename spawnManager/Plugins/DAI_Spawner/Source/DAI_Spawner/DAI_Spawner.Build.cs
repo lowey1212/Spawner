@@ -4,33 +4,20 @@ using UnrealBuildTool;
 
 public class DAI_Spawner : ModuleRules
 {
-	public DAI_Spawner(ReadOnlyTargetRules Target) : base(Target)
-	{
-		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
-		
-		PublicIncludePaths.AddRange(
-			new string[] {
-				// ... add public include paths required here ...
-			}
-			);
-				
-		
-		PrivateIncludePaths.AddRange(
-			new string[] {
-				// ... add other private include paths required here ...
-			}
-			);
-			
-		
-		PublicDependencyModuleNames.AddRange(
-			new string[]
-			{
-				"Core",
-				// ... add other public dependencies that you statically link with here ...
-			}
-			);
-			
-		
+        public DAI_Spawner(ReadOnlyTargetRules Target) : base(Target)
+        {
+                PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+
+                PublicDependencyModuleNames.AddRange(
+                        new string[]
+                        {
+                                "Core",
+                                "GameplayTags",
+                                "Json"
+                        }
+                        );
+
+
                 PrivateDependencyModuleNames.AddRange(
                         new string[]
                         {
@@ -42,16 +29,15 @@ public class DAI_Spawner : ModuleRules
                                 "NavigationSystem",
                                 "AIModule",
                                 "PhysicsCore",
-                                // ... add private dependencies that you statically link with here ...
+                                "JsonUtilities"
                         }
                         );
-		
-		
-		DynamicallyLoadedModuleNames.AddRange(
-			new string[]
-			{
-				// ... add any modules that your module loads dynamically here ...
-			}
-			);
-	}
+
+
+                DynamicallyLoadedModuleNames.AddRange(
+                        new string[]
+                        {
+                        }
+                        );
+        }
 }

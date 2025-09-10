@@ -1,11 +1,14 @@
 #pragma once
 
+#if WITH_EDITOR
+#include "UObject/ObjectSaveContext.h"
+#include "UObject/UnrealType.h"
+#endif
 #include "CoreMinimal.h"
 #include "Math/RandomStream.h"
 #include "GameFramework/Actor.h"
 #include "UObject/WeakObjectPtr.h"
 #include "UObject/ObjectPtr.h"
-#include "Engine/EngineTypes.h"
 #include "DAISpawnManager.generated.h"
 
 
@@ -135,13 +138,6 @@ struct FSpawnEntry {
         meta = (ToolTip = "Offset from the marker or spawner for the actor"))
     FVector ActorOffset = FVector::ZeroVector;
 
-    /** Optional clearance added along the ground normal when snapping to ground.
-     *  If zero, we try to infer a sensible value from the actor's collision
-     *  (capsule half height, box Z extent, or sphere radius). */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement",
-        meta = (ToolTip = "Added height above the ground to place the actor bottom on the surface (0 = auto)"))
-    float GroundClearance = 0.0f;
-
     /** Optional offset applied to the static mesh location.  When using a marker
      * this is relative to the marker's spawn point. */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement",
@@ -165,16 +161,16 @@ struct FSpawnEntry {
 
     /** Cached world transform of the marker's root, captured in the editor so
      *  shipping builds can spawn without the marker actor present. */
-    UPROPERTY(VisibleAnywhere, Category = "Spawn|Marker")
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Spawn|Marker")
     FTransform CachedMarkerTransform;
 
     /** Cached world transform of the marker's spawn point component (or root if
      *  no spawn point exists). */
-    UPROPERTY(VisibleAnywhere, Category = "Spawn|Marker")
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Spawn|Marker")
     FTransform CachedSpawnPointTransform;
 
     /** True if the cached transforms above are valid. */
-    UPROPERTY(VisibleAnywhere, Category = "Spawn|Marker")
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Spawn|Marker")
     bool bCachedTransformsValid = false;
 };
 
@@ -292,37 +288,6 @@ UCLASS(Blueprintable, BlueprintType, ClassGroup = (Custom),
                 ToolTip = "Radius for overlap checks when spawning"))
         float SafePlacementRadius = 0.0f;
 
-        /** Collision channel used for ground traces (to find the surface). */
-        UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement",
-            meta = (ToolTip = "Collision channel for ground alignment traces"))
-        TEnumAsByte<ECollisionChannel> GroundTraceChannel = ECC_Visibility;
-
-        /** Enable shape-based safe placement checks (uses actor collision). */
-        UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement",
-            meta = (ToolTip = "If true, pre-spawn overlap test uses the actor's collision shape"))
-        bool bUseShapePlacementCheck = false;
-
-        /** Automatically expand NavQueryExtent using the actor's collision. */
-        UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement",
-            meta = (ToolTip = "If true, navmesh projection extent is expanded based on the actor's collision"))
-        bool bAutoExpandNavQueryExtent = false;
-
-        /** When true, use a multi-hit ground trace and pick the highest valid hit. */
-        UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement",
-            meta = (ToolTip = "Use multi-line trace and choose the highest walkable surface"))
-        bool bGroundTraceMultiHit = false;
-
-        /** Query extent used when projecting to the navigation mesh. */
-        UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement",
-            meta = (ToolTip = "Extent used when projecting spawn points to the navmesh"))
-        FVector NavQueryExtent = FVector(50.f, 50.f, 1000.f);
-
-        /** Collision handling when spawning actors. */
-        UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement",
-            meta = (ToolTip = "Engine collision handling method used during spawn"))
-        ESpawnActorCollisionHandlingMethod SpawnCollisionHandling = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
-
-
         /** Minimum distance required between newly spawned actors. */
         UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn|Placement",
             meta = (ClampMin = "0.0", ToolTip =
@@ -395,6 +360,9 @@ UCLASS(Blueprintable, BlueprintType, ClassGroup = (Custom),
     protected:
         virtual void BeginPlay() override;
         virtual void OnConstruction(const FTransform& Transform) override;
+#if WITH_EDITOR
+        virtual void PreSave(FObjectPreSaveContext SaveContext) override;
+#endif
 
         /**
          * Override this in Blueprints or C++ to implement custom spawn conditions.
@@ -425,6 +393,12 @@ UCLASS(Blueprintable, BlueprintType, ClassGroup = (Custom),
         virtual void Tick(float DeltaSeconds) override;
 #if WITH_EDITOR
         virtual bool ShouldTickIfViewportsOnly() const override { return bDebug; }
+
+        virtual void PostEditChangeProperty(
+            FPropertyChangedEvent& PropertyChangedEvent) override;
+
+        UFUNCTION(CallInEditor, Category = "Spawn|Marker")
+        void BakeMarkerTransforms();
 #endif
 
         /** Enable in-editor debug previews and radius. */
@@ -456,6 +430,10 @@ UCLASS(Blueprintable, BlueprintType, ClassGroup = (Custom),
 
         /** Get or create the HISM for a given mesh. */
         UHierarchicalInstancedStaticMeshComponent* GetOrCreateHISM(UStaticMesh* Mesh);
+
+#if WITH_EDITOR
+        void RebuildMarkerCache();
+#endif
 
 
 #if WITH_EDITORONLY_DATA
