@@ -30,7 +30,7 @@ enum class EPrecipitationType : uint8
 };
 
 USTRUCT(BlueprintType)
-struct FWeatherState
+struct DAI_ULTRASKY_API FWeatherState
 {
     GENERATED_BODY()
 
@@ -57,7 +57,7 @@ struct FWeatherState
  * Central actor responsible for controlling dynamic weather effects.
  */
 UCLASS(Blueprintable)
-class AWeatherManager : public AActor
+class DAI_ULTRASKY_API AWeatherManager : public AActor
 {
     GENERATED_BODY()
 public:
@@ -141,7 +141,7 @@ private:
 
 /** Volume carrying weather parameters. */
 UCLASS()
-class AWeatherVolume : public AVolume
+class DAI_ULTRASKY_API AWeatherVolume : public AVolume
 {
     GENERATED_BODY()
 public:

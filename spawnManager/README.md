@@ -1,7 +1,8 @@
 # Weather Manager Demo
 
-This Unreal Engine project contains a `WeatherManager` actor implemented in C++.
-It demonstrates how to drive Niagara systems for clouds, precipitation and lightning.
+This Unreal Engine project uses the `WeatherManager` actor provided by the
+`DAI_UltraSky` plugin. The actor is implemented in C++ and demonstrates how to
+drive Niagara systems for clouds, precipitation and lightning.
 
 ## Features
 
