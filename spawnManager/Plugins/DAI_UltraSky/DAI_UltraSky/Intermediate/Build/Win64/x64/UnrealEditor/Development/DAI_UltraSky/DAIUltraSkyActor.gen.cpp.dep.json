@@ -1,0 +1,17 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "f:\\githubdesktop\\spawner\\spawnmanager\\plugins\\dai_ultrasky\\dai_ultrasky\\intermediate\\build\\win64\\unrealeditor\\inc\\dai_ultrasky\\uht\\daiultraskyactor.gen.cpp",
+        "ProvidedModule": "",
+        "PCH": "f:\\githubdesktop\\spawner\\spawnmanager\\intermediate\\build\\win64\\x64\\spawnmanagereditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
+        "Includes": [
+            "f:\\githubdesktop\\spawner\\spawnmanager\\plugins\\dai_ultrasky\\dai_ultrasky\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\dai_ultrasky\\definitions.dai_ultrasky.h",
+            "f:\\githubdesktop\\spawner\\spawnmanager\\plugins\\dai_ultrasky\\dai_ultrasky\\source\\dai_ultrasky\\public\\daiultraskyactor.h",
+            "f:\\githubdesktop\\spawner\\spawnmanager\\plugins\\dai_ultrasky\\dai_ultrasky\\source\\dai_ultrasky\\public\\interfaces\\daiultraskyservice.h",
+            "f:\\githubdesktop\\spawner\\spawnmanager\\plugins\\dai_ultrasky\\dai_ultrasky\\intermediate\\build\\win64\\unrealeditor\\inc\\dai_ultrasky\\uht\\daiultraskyservice.generated.h",
+            "f:\\githubdesktop\\spawner\\spawnmanager\\plugins\\dai_ultrasky\\dai_ultrasky\\intermediate\\build\\win64\\unrealeditor\\inc\\dai_ultrasky\\uht\\daiultraskyactor.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

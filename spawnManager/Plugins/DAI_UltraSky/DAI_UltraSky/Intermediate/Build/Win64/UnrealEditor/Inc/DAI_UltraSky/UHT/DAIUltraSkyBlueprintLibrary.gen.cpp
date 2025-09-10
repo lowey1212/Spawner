@@ -147,11 +147,11 @@ struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyActorFromSe
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
 		{ "Category", "UltraSky|Service" },
 #if !UE_BUILD_SHIPPING
-		{ "Comment", "// Fetch the active Ultra Sky service (actor) via hub. Returns nullptr if not registered.\n" },
+		{ "Comment", "// Find the first Ultra Sky actor in the world.\n" },
 #endif
 		{ "ModuleRelativePath", "Public/DAIUltraSkyBlueprintLibrary.h" },
 #if !UE_BUILD_SHIPPING
-		{ "ToolTip", "Fetch the active Ultra Sky service (actor) via hub. Returns nullptr if not registered." },
+		{ "ToolTip", "Find the first Ultra Sky actor in the world." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_WorldContextObject_MetaData[] = {
@@ -844,7 +844,7 @@ struct Z_Construct_UClass_UDAIUltraSkyBlueprintLibrary_Statics
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
 		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyBiomeByName, "ForceUltraSkyBiomeByName" }, // 3423877237
 		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyCondition, "ForceUltraSkyCondition" }, // 2595898550
-		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyActorFromService, "GetUltraSkyActorFromService" }, // 4115496560
+		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyActorFromService, "GetUltraSkyActorFromService" }, // 3182488133
 		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyBiome, "GetUltraSkyBiome" }, // 1157760987
 		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyCondition, "GetUltraSkyCondition" }, // 20224665
 		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsPrecipitating, "GetUltraSkyIsPrecipitating" }, // 700911344
@@ -902,14 +902,14 @@ UDAIUltraSkyBlueprintLibrary::~UDAIUltraSkyBlueprintLibrary() {}
 // End Class UDAIUltraSkyBlueprintLibrary
 
 // Begin Registration
-struct Z_CompiledInDeferFile_FID_PluginTest_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyBlueprintLibrary_h_Statics
+struct Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyBlueprintLibrary_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UDAIUltraSkyBlueprintLibrary, UDAIUltraSkyBlueprintLibrary::StaticClass, TEXT("UDAIUltraSkyBlueprintLibrary"), &Z_Registration_Info_UClass_UDAIUltraSkyBlueprintLibrary, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UDAIUltraSkyBlueprintLibrary), 5474240U) },
+		{ Z_Construct_UClass_UDAIUltraSkyBlueprintLibrary, UDAIUltraSkyBlueprintLibrary::StaticClass, TEXT("UDAIUltraSkyBlueprintLibrary"), &Z_Registration_Info_UClass_UDAIUltraSkyBlueprintLibrary, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UDAIUltraSkyBlueprintLibrary), 3649864371U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_PluginTest_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyBlueprintLibrary_h_850745476(TEXT("/Script/DAI_UltraSky"),
-	Z_CompiledInDeferFile_FID_PluginTest_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyBlueprintLibrary_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_PluginTest_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyBlueprintLibrary_h_Statics::ClassInfo),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyBlueprintLibrary_h_4230622375(TEXT("/Script/DAI_UltraSky"),
+	Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyBlueprintLibrary_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyBlueprintLibrary_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);
 // End Registration

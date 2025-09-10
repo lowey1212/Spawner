@@ -1,0 +1,13 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-DAI_UltraSky.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"F:\githubdesktop\Spawner\spawnManager\Intermediate\Build\Win64\x64\spawnManagerEditor\Development\UnrealEd\SharedPCH.UnrealEd.Project.ValApi.Cpp20.h.obj"
+"F:\githubdesktop\Spawner\spawnManager\Plugins\DAI_UltraSky\DAI_UltraSky\Intermediate\Build\Win64\x64\UnrealEditor\Development\DAI_UltraSky\Module.DAI_UltraSky.cpp.obj"
+"F:\githubdesktop\Spawner\spawnManager\Plugins\DAI_UltraSky\DAI_UltraSky\Intermediate\Build\Win64\x64\UnrealEditor\Development\DAI_UltraSky\PerModuleInline.gen.cpp.obj"
+"F:\githubdesktop\Spawner\spawnManager\Plugins\DAI_UltraSky\DAI_UltraSky\Intermediate\Build\Win64\x64\UnrealEditor\Development\DAI_UltraSky\Default.rc2.res"
+/OUT:"F:\githubdesktop\Spawner\spawnManager\Plugins\DAI_UltraSky\DAI_UltraSky\Intermediate\Build\Win64\x64\UnrealEditor\Development\DAI_UltraSky\UnrealEditor-DAI_UltraSky.lib"

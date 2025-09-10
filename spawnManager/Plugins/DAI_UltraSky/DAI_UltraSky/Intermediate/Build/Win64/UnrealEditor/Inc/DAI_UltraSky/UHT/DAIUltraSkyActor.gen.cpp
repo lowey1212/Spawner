@@ -15,6 +15,7 @@ DAI_ULTRASKY_API UClass* Z_Construct_UClass_ADAIUltraSkyActor();
 DAI_ULTRASKY_API UClass* Z_Construct_UClass_ADAIUltraSkyActor_NoRegister();
 DAI_ULTRASKY_API UClass* Z_Construct_UClass_UDAIUltraSkyBiomeData_NoRegister();
 DAI_ULTRASKY_API UClass* Z_Construct_UClass_UDAIUltraSkyClimatePreset_NoRegister();
+DAI_ULTRASKY_API UClass* Z_Construct_UClass_UDAIUltraSkyService_NoRegister();
 DAI_ULTRASKY_API UFunction* Z_Construct_UDelegateFunction_ADAIUltraSkyActor_OnFootprintStamped__DelegateSignature();
 ENGINE_API UClass* Z_Construct_UClass_AActor();
 ENGINE_API UClass* Z_Construct_UClass_AActor_NoRegister();
@@ -1033,6 +1034,7 @@ struct Z_Construct_UClass_ADAIUltraSkyActor_Statics
 		{ &Z_Construct_UFunction_ADAIUltraSkyActor_StampFootprintAtLocation, "StampFootprintAtLocation" }, // 585254045
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
+	static const UECodeGen_Private::FImplementedInterfaceParams InterfaceParams[];
 	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
 		TCppClassTypeTraits<ADAIUltraSkyActor>::IsAbstract,
 	};
@@ -1174,6 +1176,9 @@ UObject* (*const Z_Construct_UClass_ADAIUltraSkyActor_Statics::DependentSingleto
 	(UObject* (*)())Z_Construct_UPackage__Script_DAI_UltraSky,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_ADAIUltraSkyActor_Statics::DependentSingletons) < 16);
+const UECodeGen_Private::FImplementedInterfaceParams Z_Construct_UClass_ADAIUltraSkyActor_Statics::InterfaceParams[] = {
+	{ Z_Construct_UClass_UDAIUltraSkyService_NoRegister, (int32)VTABLE_OFFSET(ADAIUltraSkyActor, IDAIUltraSkyService), false },  // 3264961282
+};
 const UECodeGen_Private::FClassParams Z_Construct_UClass_ADAIUltraSkyActor_Statics::ClassParams = {
 	&ADAIUltraSkyActor::StaticClass,
 	"Engine",
@@ -1181,11 +1186,11 @@ const UECodeGen_Private::FClassParams Z_Construct_UClass_ADAIUltraSkyActor_Stati
 	DependentSingletons,
 	FuncInfo,
 	Z_Construct_UClass_ADAIUltraSkyActor_Statics::PropPointers,
-	nullptr,
+	InterfaceParams,
 	UE_ARRAY_COUNT(DependentSingletons),
 	UE_ARRAY_COUNT(FuncInfo),
 	UE_ARRAY_COUNT(Z_Construct_UClass_ADAIUltraSkyActor_Statics::PropPointers),
-	0,
+	UE_ARRAY_COUNT(InterfaceParams),
 	0x009000A4u,
 	METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_ADAIUltraSkyActor_Statics::Class_MetaDataParams), Z_Construct_UClass_ADAIUltraSkyActor_Statics::Class_MetaDataParams)
 };
@@ -1206,14 +1211,14 @@ ADAIUltraSkyActor::~ADAIUltraSkyActor() {}
 // End Class ADAIUltraSkyActor
 
 // Begin Registration
-struct Z_CompiledInDeferFile_FID_PluginTest_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyActor_h_Statics
+struct Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyActor_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_ADAIUltraSkyActor, ADAIUltraSkyActor::StaticClass, TEXT("ADAIUltraSkyActor"), &Z_Registration_Info_UClass_ADAIUltraSkyActor, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ADAIUltraSkyActor), 920095549U) },
+		{ Z_Construct_UClass_ADAIUltraSkyActor, ADAIUltraSkyActor::StaticClass, TEXT("ADAIUltraSkyActor"), &Z_Registration_Info_UClass_ADAIUltraSkyActor, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ADAIUltraSkyActor), 28036945U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_PluginTest_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyActor_h_460026200(TEXT("/Script/DAI_UltraSky"),
-	Z_CompiledInDeferFile_FID_PluginTest_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyActor_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_PluginTest_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyActor_h_Statics::ClassInfo),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyActor_h_274144490(TEXT("/Script/DAI_UltraSky"),
+	Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyActor_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyActor_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);
 // End Registration

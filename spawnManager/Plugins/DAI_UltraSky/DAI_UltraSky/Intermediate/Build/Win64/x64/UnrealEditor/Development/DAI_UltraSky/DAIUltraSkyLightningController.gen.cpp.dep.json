@@ -1,0 +1,15 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "f:\\githubdesktop\\spawner\\spawnmanager\\plugins\\dai_ultrasky\\dai_ultrasky\\intermediate\\build\\win64\\unrealeditor\\inc\\dai_ultrasky\\uht\\daiultraskylightningcontroller.gen.cpp",
+        "ProvidedModule": "",
+        "PCH": "f:\\githubdesktop\\spawner\\spawnmanager\\intermediate\\build\\win64\\x64\\spawnmanagereditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
+        "Includes": [
+            "f:\\githubdesktop\\spawner\\spawnmanager\\plugins\\dai_ultrasky\\dai_ultrasky\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\dai_ultrasky\\definitions.dai_ultrasky.h",
+            "f:\\githubdesktop\\spawner\\spawnmanager\\plugins\\dai_ultrasky\\dai_ultrasky\\source\\dai_ultrasky\\public\\daiultraskylightningcontroller.h",
+            "f:\\githubdesktop\\spawner\\spawnmanager\\plugins\\dai_ultrasky\\dai_ultrasky\\intermediate\\build\\win64\\unrealeditor\\inc\\dai_ultrasky\\uht\\daiultraskylightningcontroller.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
