@@ -1,6 +1,8 @@
 #include "WeatherManager.h"
 #include "NiagaraComponent.h"
 #include "NiagaraFunctionLibrary.h"
+#include "Components/ExponentialHeightFogComponent.h"
+#include "Components/SkyLightComponent.h"
 
 AWeatherManager::AWeatherManager()
 {
@@ -31,6 +33,7 @@ void AWeatherManager::ApplyWeather(const FWeatherState& NewState)
 {
     UpdateClouds(NewState);
     UpdatePrecipitation(NewState);
+    UpdateEngineFog(NewState);
     SetWind(NewState.WindVelocity.GetSafeNormal(), NewState.WindVelocity.Size());
 }
 
@@ -39,6 +42,14 @@ void AWeatherManager::SpawnLightning(const FVector& Location)
     if (LightningSystem)
     {
         UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), LightningSystem, Location);
+    }
+}
+
+void AWeatherManager::SetSkyLightIntensity(float Intensity)
+{
+    if (SkyLight)
+    {
+        SkyLight->SetIntensity(Intensity);
     }
 }
 
@@ -136,6 +147,14 @@ void AWeatherManager::UpdatePrecipitation(const FWeatherState& NewState)
     }
 }
 
+void AWeatherManager::UpdateEngineFog(const FWeatherState& NewState)
+{
+    if (EngineFog)
+    {
+        EngineFog->SetFogDensity(NewState.FogDensity);
+    }
+}
+
 void AWeatherManager::UpdateFromVolumes()
 {
     if (ActiveVolumes.Num() == 0)
@@ -153,6 +172,7 @@ void AWeatherManager::UpdateFromVolumes()
         Blended.CloudDensity = FMath::Lerp(Blended.CloudDensity, V->Weather.CloudDensity, W);
         Blended.CloudSpeed = FMath::Lerp(Blended.CloudSpeed, V->Weather.CloudSpeed, W);
         Blended.WindVelocity = FMath::Lerp(Blended.WindVelocity, V->Weather.WindVelocity, W);
+        Blended.FogDensity = FMath::Lerp(Blended.FogDensity, V->Weather.FogDensity, W);
         if (W > 0.5f)
         {
             Blended.CloudType = V->Weather.CloudType;

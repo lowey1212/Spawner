@@ -8,6 +8,8 @@
 class UNiagaraSystem;
 class UNiagaraComponent;
 class AWeatherVolume;
+class UExponentialHeightFogComponent;
+class USkyLightComponent;
 
 UENUM(BlueprintType)
 enum class ECloudType : uint8
@@ -46,6 +48,9 @@ struct FWeatherState
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weather")
     FVector WindVelocity = FVector::ZeroVector;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weather")
+    float FogDensity = 0.f;
 };
 
 /**
@@ -91,6 +96,13 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Lightning")
     UNiagaraSystem* LightningSystem;
 
+    // Engine sky components
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Sky")
+    UExponentialHeightFogComponent* EngineFog;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Sky")
+    USkyLightComponent* SkyLight;
+
     // Apply complete weather state
     UFUNCTION(BlueprintCallable, Category="Weather")
     void ApplyWeather(const FWeatherState& NewState);
@@ -102,6 +114,10 @@ public:
     // Spawn a lightning strike
     UFUNCTION(BlueprintCallable, Category="Lightning")
     void SpawnLightning(const FVector& Location);
+
+    // Sky adjustments
+    UFUNCTION(BlueprintCallable, Category="Sky")
+    void SetSkyLightIntensity(float Intensity);
 
     // Volume management
     UFUNCTION(BlueprintCallable, Category="WeatherVolume")
@@ -116,6 +132,7 @@ protected:
 private:
     void UpdateClouds(const FWeatherState& NewState);
     void UpdatePrecipitation(const FWeatherState& NewState);
+    void UpdateEngineFog(const FWeatherState& NewState);
     void UpdateFromVolumes();
 
     FVector CurrentWind;
