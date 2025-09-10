@@ -1,0 +1,38 @@
+{
+	"RemapUnityFiles": 
+	{
+		"Module.DAI_UltraSky.cpp.obj": [
+			"DAIUltraSkyActor.gen.cpp.obj",
+			"DAIUltraSkyAttributeSet.gen.cpp.obj",
+			"DAIUltraSkyBiomeData.gen.cpp.obj",
+			"DAIUltraSkyBiomeVolume.gen.cpp.obj",
+			"DAIUltraSkyBlueprintLibrary.gen.cpp.obj",
+			"DAIUltraSkyClimatePreset.gen.cpp.obj",
+			"DAIUltraSkyEnvironmentSoundComponent.gen.cpp.obj",
+			"DAIUltraSkyFootprintApplierComponent.gen.cpp.obj",
+			"DAIUltraSkyFootprintMask.gen.cpp.obj",
+			"DAIUltraSkyLightningController.gen.cpp.obj",
+			"DAIUltraSkyMaterialLibrary.gen.cpp.obj",
+			"DAIUltraSkyRadialStorm.gen.cpp.obj",
+			"DAIUltraSkyTornado.gen.cpp.obj",
+			"DAIUltraSkyWeatherOverrideVolume.gen.cpp.obj",
+			"DAI_UltraSky.init.gen.cpp.obj",
+			"GA_DAIUltraSky_TriggerWeather.gen.cpp.obj",
+			"PerModuleInline.gen.cpp.obj",
+			"DAIUltraSkyActor.cpp.obj",
+			"DAIUltraSkyAttributeSet.cpp.obj",
+			"DAIUltraSkyBiomeVolume.cpp.obj",
+			"DAIUltraSkyBlueprintLibrary.cpp.obj",
+			"DAIUltraSkyEnvironmentSoundComponent.cpp.obj",
+			"DAIUltraSkyFootprintApplierComponent.cpp.obj",
+			"DAIUltraSkyFootprintMask.cpp.obj",
+			"DAIUltraSkyLightningController.cpp.obj",
+			"DAIUltraSkyMaterialLibrary.cpp.obj",
+			"DAIUltraSkyRadialStorm.cpp.obj",
+			"DAIUltraSkyTornado.cpp.obj",
+			"DAIUltraSkyWeatherOverrideVolume.cpp.obj",
+			"DAI_UltraSky.cpp.obj",
+			"GA_DAIUltraSky_TriggerWeather.cpp.obj"
+		]
+	}
+}

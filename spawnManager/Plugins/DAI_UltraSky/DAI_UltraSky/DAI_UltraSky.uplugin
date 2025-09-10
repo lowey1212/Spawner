@@ -1,0 +1,31 @@
+{
+  "FileVersion": 3,
+  "Version": 1,
+  "VersionName": "0.1.0",
+  "FriendlyName": "DAI Ultra Sky",
+  "Description": "Lightweight, extensible dynamic sky/atmosphere actor using UE5 built-ins.",
+  "Category": "Rendering",
+  "CreatedBy": "DAI",
+  "CreatedByURL": "",
+  "DocsURL": "",
+  "MarketplaceURL": "",
+  "SupportURL": "",
+  "CanContainContent": false,
+  "IsBetaVersion": true,
+  "IsExperimentalVersion": true,
+  "Installed": false,
+  "RequiresBuildPlatform": false,
+  "Modules": [
+    {
+      "Name": "DAI_UltraSky",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    }
+  ],
+  "Plugins": [
+    { "Name": "Niagara", "Enabled": true },
+    { "Name": "GameplayAbilities", "Enabled": true }
+  ],
+  "EngineVersion": "5.5.0"
+}
+

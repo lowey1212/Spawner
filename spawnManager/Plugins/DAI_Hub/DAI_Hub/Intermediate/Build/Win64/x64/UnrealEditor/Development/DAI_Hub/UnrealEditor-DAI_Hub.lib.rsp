@@ -1,0 +1,12 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-DAI_Hub.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"F:\githubdesktop\DAI_Hub\DAI_HubProject\Intermediate\Build\Win64\x64\DAI_HubProjectEditor\Development\UnrealEd\SharedPCH.UnrealEd.Project.ValApi.Cpp20.h.obj"
+"F:\githubdesktop\DAI_Hub\DAI_HubProject\Plugins\DAI_Hub\Intermediate\Build\Win64\x64\UnrealEditor\Development\DAI_Hub\Module.DAI_Hub.cpp.obj"
+"F:\githubdesktop\DAI_Hub\DAI_HubProject\Plugins\DAI_Hub\Intermediate\Build\Win64\x64\UnrealEditor\Development\DAI_Hub\Default.rc2.res"
+/OUT:"F:\githubdesktop\DAI_Hub\DAI_HubProject\Plugins\DAI_Hub\Intermediate\Build\Win64\x64\UnrealEditor\Development\DAI_Hub\UnrealEditor-DAI_Hub.lib"

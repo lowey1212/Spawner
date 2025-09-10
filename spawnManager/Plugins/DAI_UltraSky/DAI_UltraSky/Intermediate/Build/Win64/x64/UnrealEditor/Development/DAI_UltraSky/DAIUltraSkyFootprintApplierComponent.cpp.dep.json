@@ -1,0 +1,18 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "f:\\plugintest\\spawnmanager\\plugins\\dai_ultrasky\\dai_ultrasky\\source\\dai_ultrasky\\private\\daiultraskyfootprintappliercomponent.cpp",
+        "ProvidedModule": "",
+        "PCH": "f:\\plugintest\\spawnmanager\\intermediate\\build\\win64\\x64\\spawnmanagereditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
+        "Includes": [
+            "f:\\plugintest\\spawnmanager\\plugins\\dai_ultrasky\\dai_ultrasky\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\dai_ultrasky\\definitions.dai_ultrasky.h",
+            "f:\\plugintest\\spawnmanager\\plugins\\dai_ultrasky\\dai_ultrasky\\source\\dai_ultrasky\\public\\daiultraskyfootprintappliercomponent.h",
+            "f:\\plugintest\\spawnmanager\\plugins\\dai_ultrasky\\dai_ultrasky\\intermediate\\build\\win64\\unrealeditor\\inc\\dai_ultrasky\\uht\\daiultraskyfootprintappliercomponent.generated.h",
+            "f:\\plugintest\\spawnmanager\\plugins\\dai_ultrasky\\dai_ultrasky\\source\\dai_ultrasky\\public\\daiultraskyfootprintmask.h",
+            "f:\\plugintest\\spawnmanager\\plugins\\dai_ultrasky\\dai_ultrasky\\intermediate\\build\\win64\\unrealeditor\\inc\\dai_ultrasky\\uht\\daiultraskyfootprintmask.generated.h",
+            "f:\\ue_5_versions\\ue_5.5\\engine\\source\\runtime\\engine\\public\\engineutils.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

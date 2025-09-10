@@ -1,0 +1,44 @@
+{
+	"RemapUnityFiles": 
+	{
+		"Module.DAI_Hub.cpp.obj": [
+			"DAIDismemberService.gen.cpp.obj",
+			"DAIEnums.gen.cpp.obj",
+			"DAIFactionService.gen.cpp.obj",
+			"DAIGameSubsystemBase.gen.cpp.obj",
+			"DAIHubBlueprintLibrary.gen.cpp.obj",
+			"DAIHubDeveloperSettings.gen.cpp.obj",
+			"DAIHubEventPayload.gen.cpp.obj",
+			"DAIHubServiceRegistry.gen.cpp.obj",
+			"DAIHubSubsystem.gen.cpp.obj",
+			"DAILoadDirectorService.gen.cpp.obj",
+			"DAIMapFogSettings.gen.cpp.obj",
+			"DAIMapTransform.gen.cpp.obj",
+			"DAIMapTypes.gen.cpp.obj",
+			"DAIPerfService.gen.cpp.obj",
+			"DAIQuestService.gen.cpp.obj",
+			"DAISaveFragmentProvider.gen.cpp.obj",
+			"DAISaveService.gen.cpp.obj",
+			"DAISpawnerService.gen.cpp.obj",
+			"DAIStructs.gen.cpp.obj",
+			"DAIWorldSubsystemBase.gen.cpp.obj",
+			"DAI_Hub.init.gen.cpp.obj",
+			"IDAIMapService.gen.cpp.obj",
+			"IDAI_FactionAware.gen.cpp.obj",
+			"IDAI_Persistable.gen.cpp.obj",
+			"IDAI_Provider.gen.cpp.obj",
+			"IDAI_Spawnable.gen.cpp.obj",
+			"PerModuleInline.gen.cpp.obj",
+			"DAIHubBlueprintLibrary.cpp.obj",
+			"DAIHubDeveloperSettings.cpp.obj",
+			"DAIHubEventBus.cpp.obj",
+			"DAIHubServiceRegistry.cpp.obj",
+			"DAIHubSubsystem.cpp.obj",
+			"DAILog.cpp.obj",
+			"DAI_Hub.cpp.obj",
+			"DAI_HubLogging.cpp.obj",
+			"HubGameplayTags.cpp.obj",
+			"SignificanceUtility.cpp.obj"
+		]
+	}
+}
