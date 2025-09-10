@@ -4,7 +4,6 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Interfaces/DAIUltraSkyService.h"
-#include "Services/DAI_WeatherService.h"
 #include "DAIUltraSkyActor.generated.h"
 
 class USceneComponent;
@@ -28,7 +27,7 @@ class UDAIUltraSkyAttributeSet;
 class UDAIUltraSkyBiomeData;
 
 UCLASS(BlueprintType, Blueprintable)
-class DAI_ULTRASKY_API ADAIUltraSkyActor : public AActor, public IDAIUltraSkyService, public IDAI_WeatherService
+class DAI_ULTRASKY_API ADAIUltraSkyActor : public AActor, public IDAIUltraSkyService
 {
     GENERATED_BODY()
 
@@ -143,7 +142,6 @@ public:
     void SetDayLengthSeconds(float NewLength);
 
     // IDAIUltraSkyService implementation
-    // Consolidated overrides (both services use same signatures except WeatherService adds GetTimeOfDayHours)
     virtual float GetTimeOfDay() const override { return TimeOfDay; }
     virtual FName GetActiveBiomeName() const override;
     virtual FName GetCurrentCondition() const override { return CurrentCondition; }
@@ -153,7 +151,6 @@ public:
     virtual bool IsStorming() const override { return bIsStorming; }
     virtual float GetWindIntensity() const override { return CachedWindIntensity; }
     virtual float GetWindDirectionDegrees() const override { return WindDirectionDegrees; }
-    virtual float GetTimeOfDayHours() const override { return TimeOfDay; }
     // CurrentCondition, Wetness, SnowAccumulation already covered by same-named methods
 
 protected:
@@ -264,8 +261,8 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UltraSky|RandomWeather", meta = (ToolTip = "Seed for deterministic random weather (0 = non-deterministic)."))
     int32 RandomSeed = 1337;
 
-    // Threshold crossings for snow depth will trigger hub events (TAG_DAI_UltraSky_SnowDepthThresholdCrossed).
-    // Positive Strength in event = upward crossing; negative Strength = downward crossing. Strength magnitude is current SnowAccumulation after crossing.
+    // Threshold crossings for snow depth can be used by gameplay systems.
+    // Positive value represents upward crossing; negative value represents downward crossing.
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UltraSky|Snow", meta = (ToolTip = "Normalized snow depth thresholds (0..1) that fire events when crossed up or down."))
     TArray<float> SnowDepthThresholds;
 
@@ -284,13 +281,8 @@ private:
     bool bIsPrecipitating = false;
     bool bIsStorming = false;
     float CachedWindIntensity = 0.0f;
-    float TimeOfDayEventAccumulator = 0.0f;
-    float WindEventAccumulator = 0.0f;
-    float LastWindEventIntensity = -1.f;
     float BiomeBlendDuration = 0.0f;
     float LastSnowAccumulation = 0.0f;
-    FName LastPublishedCondition;
-    FName LastPublishedBiomeName;
 
     // Cached FX component for current condition
     UPROPERTY(Transient, meta = (ToolTip = "Active Niagara component for current weather condition FX."))

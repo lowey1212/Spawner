@@ -19,54 +19,23 @@
 #include "DAIUltraSkyClimatePreset.h"
 #include "AbilitySystemComponent.h"
 #include "DAIUltraSkyAttributeSet.h"
-#include "DAIHubSubsystem.h"
-#include "DAI/Hub/DAIHubAccess.h"
-#include "HubGameplayTags.h"
-#include "Services/DAI_WeatherService.h"
 #include "HAL/IConsoleManager.h"
+#include "EngineUtils.h"
 
-// Local helper (placed early for forward reference)
-static void UltraSky_Publish(UWorld *World, const FGameplayTag &Tag, UObject *Sender)
-{
-    if (!World)
-        return;
-    if (UGameInstance *GI = World->GetGameInstance())
-        if (auto *Hub = DAI_HUB(GI))
-            Hub->Publish(FDAIHubEventPayload(Tag, Sender));
-}
-
-static void UltraSky_Publish_Condition(UWorld *World, const FGameplayTag &Tag, UObject *Sender, const FName &Condition)
-{
-    if (!World)
-        return;
-    if (UGameInstance *GI = World->GetGameInstance())
-        if (auto *Hub = DAI_HUB(GI))
-        {
-            FDAIHubEventPayload Payload(Tag, Sender);
-            if (!Condition.IsNone())
-            {
-                // Encode condition as a context tag if a tag with that name exists (optional)
-                // Otherwise stash in Reason via implicit conversion if user defines matching tag asset.
-                // For now just leave empty (Blueprint can query service for detail).
-            }
-            Hub->Publish(Payload);
-        }
-}
-
-static void UltraSky_Publish_SnowThreshold(UWorld *World, UObject *Sender, float Value, bool bUpward)
-{
-    if (!World)
-        return;
-    if (UGameInstance *GI = World->GetGameInstance())
-        if (auto *Hub = DAI_HUB(GI))
-        {
-            FDAIHubEventPayload Payload(TAG_DAI_UltraSky_SnowDepthThresholdCrossed, Sender);
-            Payload.Strength = bUpward ? Value : -Value; // sign encodes direction
-            Hub->Publish(Payload);
-        }
-}
 
 DEFINE_LOG_CATEGORY_STATIC(LogDAIUltraSky, Log, All);
+
+// Helper to locate the first UltraSky actor in the world
+static ADAIUltraSkyActor *FindUltraSky(UWorld *World)
+{
+    if (!World)
+        return nullptr;
+    for (TActorIterator<ADAIUltraSkyActor> It(World); It; ++It)
+    {
+        return *It;
+    }
+    return nullptr;
+}
 
 ADAIUltraSkyActor::ADAIUltraSkyActor()
 {
@@ -113,28 +82,6 @@ void ADAIUltraSkyActor::BeginPlay()
         ApplyBiomeInstant(DefaultBiome);
     }
 
-    // Register as UltraSky weather service with hub
-    if (UGameInstance *GI = GetGameInstance())
-    {
-        if (auto *Hub = DAI_HUB(GI))
-        {
-            // Temporarily treat the actor itself as weather service (implements inline adapter below)
-            TScriptInterface<IDAI_WeatherService> WeatherIface;
-            WeatherIface.SetObject(this);
-            WeatherIface.SetInterface(Cast<IDAI_WeatherService>(this));
-            if (WeatherIface.GetInterface())
-            {
-                Hub->RegisterService<IDAI_WeatherService>(WeatherIface);
-            }
-            // Also attach dependency info to registry (currently none) so it participates in readiness.
-            if (auto *Reg = GEngine->GetEngineSubsystem<UDAIHubServiceRegistry>())
-            {
-                TArray<TSubclassOf<UObject>> Deps; // e.g., add perf/map if required later
-                Reg->RegisterWithDependencies(this, Deps);
-            }
-        }
-    }
-
     if (bEnableWindDirectionalSource)
     {
         WindSource = NewObject<UWindDirectionalSourceComponent>(this, TEXT("UltraSkyWind"));
@@ -146,8 +93,6 @@ void ADAIUltraSkyActor::BeginPlay()
     }
 
     LastSnowAccumulation = SnowAccumulation;
-    LastPublishedCondition = CurrentCondition;
-    LastPublishedBiomeName = GetActiveBiomeName();
 }
 
 void ADAIUltraSkyActor::Tick(float DeltaSeconds)
@@ -330,49 +275,9 @@ void ADAIUltraSkyActor::Tick(float DeltaSeconds)
         }
     }
 
-    // Publish time-of-day tick every ~5 real seconds
-    TimeOfDayEventAccumulator += DeltaSeconds;
-    if (TimeOfDayEventAccumulator >= 5.0f)
-    {
-        UltraSky_Publish(GetWorld(), TAG_DAI_UltraSky_TimeOfDayTick, this);
-        TimeOfDayEventAccumulator = 0.0f;
-    }
-
-    // Publish wind update if change exceeds threshold or 10s elapsed
-    WindEventAccumulator += DeltaSeconds;
-    if (FMath::Abs(CachedWindIntensity - LastWindEventIntensity) > 0.05f || WindEventAccumulator >= 10.0f)
-    {
-        UltraSky_Publish(GetWorld(), TAG_DAI_UltraSky_WindUpdated, this);
-        LastWindEventIntensity = CachedWindIntensity;
-        WindEventAccumulator = 0.0f;
-    }
-
-    // Publish biome/condition change events if changed (after all logic modifications this frame)
-    const FName CurrentBiomeName = GetActiveBiomeName();
-    if (CurrentBiomeName != LastPublishedBiomeName && !CurrentBiomeName.IsNone())
-    {
-        UltraSky_Publish(GetWorld(), TAG_DAI_UltraSky_BiomeChanged, this);
-        LastPublishedBiomeName = CurrentBiomeName;
-    }
-    if (CurrentCondition != LastPublishedCondition && !CurrentCondition.IsNone())
-    {
-        UltraSky_Publish(GetWorld(), TAG_DAI_UltraSky_WeatherChanged, this);
-        // Precipitation detection: simple heuristic based on condition names (Rain/Snow)
-        const bool bWasPrecip = bIsPrecipitating;
-        bIsPrecipitating = (CurrentCondition == FName("Rain") || CurrentCondition == FName("Snow"));
-        if (bIsPrecipitating != bWasPrecip)
-        {
-            UltraSky_Publish(GetWorld(), bIsPrecipitating ? TAG_DAI_UltraSky_PrecipitationStarted : TAG_DAI_UltraSky_PrecipitationStopped, this);
-        }
-        // Storm heuristic: conditions containing "Storm" or named exactly "Storm"
-        const bool bPrevStorm = bIsStorming;
-        bIsStorming = CurrentCondition.ToString().Contains(TEXT("Storm"));
-        if (bIsStorming != bPrevStorm)
-        {
-            UltraSky_Publish(GetWorld(), bIsStorming ? TAG_DAI_UltraSky_StormStarted : TAG_DAI_UltraSky_StormEnded, this);
-        }
-        LastPublishedCondition = CurrentCondition;
-    }
+    // Update precipitation and storm flags based on current condition
+    bIsPrecipitating = (CurrentCondition == FName("Rain") || CurrentCondition == FName("Snow"));
+    bIsStorming = CurrentCondition.ToString().Contains(TEXT("Storm"));
 
     // Snow threshold crossings
     if (SnowAccumulation != LastSnowAccumulation)
@@ -798,11 +703,6 @@ void ADAIUltraSkyActor::ForceApplyBiome(UDAIUltraSkyBiomeData *Biome, float Blen
         BiomeBlendDuration = BlendSeconds;
         BiomeBlendTimeRemaining = BlendSeconds;
     }
-    // Biome change event will be published in Tick after state update; proactively update LastPublishedBiomeName to force event next tick.
-    if (Biome && Biome->BiomeName != LastPublishedBiomeName)
-    {
-        LastPublishedBiomeName = NAME_None; // ensures publish next tick
-    }
 }
 
 void ADAIUltraSkyActor::ForceCondition(FName ConditionName)
@@ -813,9 +713,6 @@ void ADAIUltraSkyActor::ForceCondition(FName ConditionName)
     }
     CurrentCondition = ConditionName;
     UpdateConditionFX(ActiveBiome ? ActiveBiome.Get() : (DefaultBiome ? DefaultBiome.Get() : nullptr));
-    // Force immediate publish (don't wait for tick) for user-invoked changes
-    UltraSky_Publish(GetWorld(), TAG_DAI_UltraSky_WeatherChanged, this);
-    LastPublishedCondition = CurrentCondition;
 }
 
 void ADAIUltraSkyActor::EditorRecaptureSkylight()
@@ -1018,8 +915,7 @@ void ADAIUltraSkyActor::CheckSnowThresholdCrossings(float OldValue, float NewVal
             continue;
         if (Thresh > MinVal && Thresh <= MaxVal)
         {
-            // crossing; publish using NewValue magnitude sign-coded for direction
-            UltraSky_Publish_SnowThreshold(GetWorld(), this, NewValue, bUp);
+            // crossing detected; plugin no longer broadcasts hub events
         }
     }
 }
@@ -1027,29 +923,24 @@ void ADAIUltraSkyActor::CheckSnowThresholdCrossings(float OldValue, float NewVal
 // ----------------- Console Commands -----------------
 static FAutoConsoleCommand CCmd_UltraSky_Status(
     TEXT("UltraSky.Status"),
-    TEXT("Print UltraSky service status (time, biome, condition, snow, wind)."),
+    TEXT("Print UltraSky status (time, biome, condition, snow, wind)."),
     FConsoleCommandDelegate::CreateStatic([]()
                                           {
                                               if (!GEngine)
                                                   return;
                                               if (UWorld *World = GEngine->GetCurrentPlayWorld())
                                               {
-                                                  if (UGameInstance *GI = World->GetGameInstance())
+                                                  if (ADAIUltraSkyActor *Actor = FindUltraSky(World))
                                                   {
-                                                      if (auto *Hub = DAI_HUB(GI))
-                                                      {
-                                                          if (TScriptInterface<IDAIUltraSkyService> Svc = Hub->GetService<IDAIUltraSkyService>())
-                                                          {
-                                                              UE_LOG(LogDAIUltraSky, Log, TEXT("[UltraSky] Time=%.2f Biome=%s Cond=%s Snow=%.2f Wet=%.2f Wind=%.2f Dir=%.1f"),
-                                                                     Svc->GetTimeOfDay(), *Svc->GetActiveBiomeName().ToString(), *Svc->GetCurrentCondition().ToString(), Svc->GetSnowAccumulation(), Svc->GetWetness(), Svc->GetWindIntensity(), Svc->GetWindDirectionDegrees());
-                                                          }
-                                                          else
-                                                          {
-                                                              UE_LOG(LogDAIUltraSky, Warning, TEXT("[UltraSky] Service not registered."));
-                                                          }
-                                                      }
+                                                      UE_LOG(LogDAIUltraSky, Log, TEXT("[UltraSky] Time=%.2f Biome=%s Cond=%s Snow=%.2f Wet=%.2f Wind=%.2f Dir=%.1f"),
+                                                             Actor->GetTimeOfDay(), *Actor->GetActiveBiomeName().ToString(), *Actor->GetCurrentCondition().ToString(), Actor->GetSnowAccumulation(), Actor->GetWetness(), Actor->GetWindIntensity(), Actor->GetWindDirectionDegrees());
                                                   }
-                                              } }),
+                                                  else
+                                                  {
+                                                      UE_LOG(LogDAIUltraSky, Warning, TEXT("[UltraSky] Actor not found."));
+                                                  }
+                                              }
+                                          }),
     ECVF_Default);
 
 static FAutoConsoleCommand CCmd_UltraSky_ForceCondition(
@@ -1066,20 +957,12 @@ static FAutoConsoleCommand CCmd_UltraSky_ForceCondition(
                                                           return;
                                                       if (UWorld *World = GEngine->GetCurrentPlayWorld())
                                                       {
-                                                          if (UGameInstance *GI = World->GetGameInstance())
+                                                          if (ADAIUltraSkyActor *Actor = FindUltraSky(World))
                                                           {
-                                                              if (auto *Hub = DAI_HUB(GI))
-                                                              {
-                                                                  if (TScriptInterface<IDAIUltraSkyService> Svc = Hub->GetService<IDAIUltraSkyService>())
-                                                                  {
-                                                                      if (ADAIUltraSkyActor *Actor = Cast<ADAIUltraSkyActor>(Svc.GetObject()))
-                                                                      {
-                                                                          Actor->ForceCondition(FName(*Args[0]));
-                                                                      }
-                                                                  }
-                                                              }
+                                                              Actor->ForceCondition(FName(*Args[0]));
                                                           }
-                                                      } }),
+                                                      }
+                                                  }),
     ECVF_Default);
 
 static FAutoConsoleCommand CCmd_UltraSky_ForceBiome(
@@ -1096,35 +979,26 @@ static FAutoConsoleCommand CCmd_UltraSky_ForceBiome(
                                                           return;
                                                       if (UWorld *World = GEngine->GetCurrentPlayWorld())
                                                       {
-                                                          if (UGameInstance *GI = World->GetGameInstance())
+                                                          if (ADAIUltraSkyActor *Actor = FindUltraSky(World))
                                                           {
-                                                              if (auto *Hub = DAI_HUB(GI))
+                                                              FName TargetName(*Args[0]);
+                                                              if (Actor->DefaultBiome && Actor->DefaultBiome->GetFName() == TargetName)
                                                               {
-                                                                  if (TScriptInterface<IDAIUltraSkyService> Svc = Hub->GetService<IDAIUltraSkyService>())
+                                                                  Actor->ForceApplyBiome(Actor->DefaultBiome, 0.0f);
+                                                                  return;
+                                                              }
+                                                              for (const TObjectPtr<UDAIUltraSkyBiomeData> &B : Actor->Presets)
+                                                              {
+                                                                  if (B && B->GetFName() == TargetName)
                                                                   {
-                                                                      if (ADAIUltraSkyActor *Actor = Cast<ADAIUltraSkyActor>(Svc.GetObject()))
-                                                                      {
-                                                                          // Find biome by asset name among actor presets and default list
-                                                                          FName TargetName(*Args[0]);
-                                                                          if (Actor->DefaultBiome && Actor->DefaultBiome->GetFName() == TargetName)
-                                                                          {
-                                                                              Actor->ForceApplyBiome(Actor->DefaultBiome, 0.0f);
-                                                                              return;
-                                                                          }
-                                                                          for (const TObjectPtr<UDAIUltraSkyBiomeData> &B : Actor->Presets)
-                                                                          {
-                                                                              if (B && B->GetFName() == TargetName)
-                                                                              {
-                                                                                  Actor->ForceApplyBiome(B.Get(), 0.0f);
-                                                                                  return;
-                                                                              }
-                                                                          }
-                                                                          UE_LOG(LogDAIUltraSky, Warning, TEXT("UltraSky.ForceBiome: Biome '%s' not found in actor presets/default."), *Args[0]);
-                                                                      }
+                                                                      Actor->ForceApplyBiome(B.Get(), 0.0f);
+                                                                      return;
                                                                   }
                                                               }
+                                                              UE_LOG(LogDAIUltraSky, Warning, TEXT("UltraSky.ForceBiome: Biome '%s' not found in actor presets/default."), *Args[0]);
                                                           }
-                                                      } }),
+                                                      }
+                                                  }),
     ECVF_Default);
 
 static FAutoConsoleCommand CCmd_UltraSky_SetSnowThresholds(
@@ -1136,26 +1010,18 @@ static FAutoConsoleCommand CCmd_UltraSky_SetSnowThresholds(
                                                           return;
                                                       if (UWorld *World = GEngine->GetCurrentPlayWorld())
                                                       {
-                                                          if (UGameInstance *GI = World->GetGameInstance())
+                                                          if (ADAIUltraSkyActor *Actor = FindUltraSky(World))
                                                           {
-                                                              if (auto *Hub = DAI_HUB(GI))
+                                                              TArray<float> NewThresh;
+                                                              for (const FString &S : Args)
                                                               {
-                                                                  if (TScriptInterface<IDAIUltraSkyService> Svc = Hub->GetService<IDAIUltraSkyService>())
-                                                                  {
-                                                                      if (ADAIUltraSkyActor *Actor = Cast<ADAIUltraSkyActor>(Svc.GetObject()))
-                                                                      {
-                                                                          TArray<float> NewThresh;
-                                                                          for (const FString &S : Args)
-                                                                          {
-                                                                              NewThresh.Add(FCString::Atof(*S));
-                                                                          }
-                                                                          Actor->SnowDepthThresholds = NewThresh;
-                                                                          UE_LOG(LogDAIUltraSky, Log, TEXT("UltraSky: Set %d snow thresholds."), NewThresh.Num());
-                                                                      }
-                                                                  }
+                                                                  NewThresh.Add(FCString::Atof(*S));
                                                               }
+                                                              Actor->SnowDepthThresholds = NewThresh;
+                                                              UE_LOG(LogDAIUltraSky, Log, TEXT("UltraSky: Set %d snow thresholds."), NewThresh.Num());
                                                           }
-                                                      } }),
+                                                      }
+                                                  }),
     ECVF_Default);
 
 static FAutoConsoleCommand CCmd_UltraSky_PrintSnowThresholds(
@@ -1167,27 +1033,19 @@ static FAutoConsoleCommand CCmd_UltraSky_PrintSnowThresholds(
                                                   return;
                                               if (UWorld *World = GEngine->GetCurrentPlayWorld())
                                               {
-                                                  if (UGameInstance *GI = World->GetGameInstance())
+                                                  if (ADAIUltraSkyActor *Actor = FindUltraSky(World))
                                                   {
-                                                      if (auto *Hub = DAI_HUB(GI))
+                                                      FString List;
+                                                      for (int32 i = 0; i < Actor->SnowDepthThresholds.Num(); ++i)
                                                       {
-                                                          if (TScriptInterface<IDAIUltraSkyService> Svc = Hub->GetService<IDAIUltraSkyService>())
-                                                          {
-                                                              if (ADAIUltraSkyActor *Actor = Cast<ADAIUltraSkyActor>(Svc.GetObject()))
-                                                              {
-                                                                  FString List;
-                                                                  for (int32 i = 0; i < Actor->SnowDepthThresholds.Num(); ++i)
-                                                                  {
-                                                                      List += FString::Printf(TEXT("%.3f"), Actor->SnowDepthThresholds[i]);
-                                                                      if (i + 1 < Actor->SnowDepthThresholds.Num())
-                                                                          List += TEXT(", ");
-                                                                  }
-                                                                  UE_LOG(LogDAIUltraSky, Log, TEXT("UltraSky: Snow Thresholds = [%s]"), *List);
-                                                              }
-                                                          }
+                                                          List += FString::Printf(TEXT("%.3f"), Actor->SnowDepthThresholds[i]);
+                                                          if (i + 1 < Actor->SnowDepthThresholds.Num())
+                                                              List += TEXT(", ");
                                                       }
+                                                      UE_LOG(LogDAIUltraSky, Log, TEXT("UltraSky: Snow Thresholds=[%s]"), *List);
                                                   }
-                                              } }),
+                                              }
+                                          }),
     ECVF_Default);
 
 static FAutoConsoleCommand CCmd_UltraSky_DumpConfig(
@@ -1199,27 +1057,19 @@ static FAutoConsoleCommand CCmd_UltraSky_DumpConfig(
                                                   return;
                                               if (UWorld *World = GEngine->GetCurrentPlayWorld())
                                               {
-                                                  if (UGameInstance *GI = World->GetGameInstance())
+                                                  if (ADAIUltraSkyActor *Actor = FindUltraSky(World))
                                                   {
-                                                      if (auto *Hub = DAI_HUB(GI))
-                                                      {
-                                                          if (TScriptInterface<IDAIUltraSkyService> Svc = Hub->GetService<IDAIUltraSkyService>())
-                                                          {
-                                                              if (ADAIUltraSkyActor *Actor = Cast<ADAIUltraSkyActor>(Svc.GetObject()))
-                                                              {
-                                                                  UE_LOG(LogDAIUltraSky, Log, TEXT("UltraSky Config: DayLength=%.1f AutoRun=%d SkyRecapture=%.1f WindBase=%.2f Gust=%.2f SnowRates(Add=%.3f Melt=%.3f) WetRates(Add=%.3f Dry=%.3f)"),
-                                                                         Actor->DayLengthSeconds,
-                                                                         Actor->bAutoRunDayNight ? 1 : 0,
-                                                                         Actor->SkyLightRecaptureInterval,
-                                                                         Actor->WindBaseIntensity,
-                                                                         Actor->WindGustStrength,
-                                                                         Actor->SnowAccumulationRate,
-                                                                         Actor->SnowMeltRate,
-                                                                         Actor->WetnessAccumulationRateRain,
-                                                                         Actor->WetnessDryRate);
-                                                              }
-                                                          }
-                                                      }
+                                                      UE_LOG(LogDAIUltraSky, Log, TEXT("UltraSky Config: DayLength=%.1f AutoRun=%d SkyRecapture=%.1f WindBase=%.2f Gust=%.2f SnowRates(Add=%.3f Melt=%.3f) WetRates(Add=%.3f Dry=%.3f)"),
+                                                             Actor->DayLengthSeconds,
+                                                             Actor->bAutoRunDayNight ? 1 : 0,
+                                                             Actor->SkyLightRecaptureInterval,
+                                                             Actor->WindBaseIntensity,
+                                                             Actor->WindGustStrength,
+                                                             Actor->SnowAccumulationRate,
+                                                             Actor->SnowMeltRate,
+                                                             Actor->WetnessAccumulationRateRain,
+                                                             Actor->WetnessDryRate);
                                                   }
-                                              } }),
+                                              }
+                                          }),
     ECVF_Default);

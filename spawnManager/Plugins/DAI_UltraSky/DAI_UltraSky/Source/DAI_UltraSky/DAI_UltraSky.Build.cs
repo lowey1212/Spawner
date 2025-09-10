@@ -17,7 +17,6 @@ public class DAI_UltraSky : ModuleRules
             "Projects",
             "Niagara",
             "GameplayAbilities",
-            "GameplayTags",
             "GameplayTasks"
             // Removed DAI_Hub dependency - UltraSky now standalone
         });
