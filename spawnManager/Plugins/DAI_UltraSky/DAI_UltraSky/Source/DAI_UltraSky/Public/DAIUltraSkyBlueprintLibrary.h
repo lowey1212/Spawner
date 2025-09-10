@@ -5,10 +5,6 @@
 
 class ADAIUltraSkyActor;
 class UWorld;
-class UDAIHubSubsystem;
-class UDAIUltraSkyBiomeData;
-class UDAIUltraSkyService;
-class UGameInstance;
 class UDAIUltraSkyBiomeData;
 class UDAIUltraSkyClimatePreset;
 class UDAIUltraSkyFootprintApplierComponent;
@@ -18,9 +14,7 @@ class UDAIUltraSkyRadialStorm;
 class UDAIUltraSkyTornado;
 class UDAIUltraSkyLightningController;
 class UDAIUltraSkyAttributeSet;
-class UDAIHubServiceRegistry;
 class UMaterialParameterCollectionInstance;
-struct FGameplayTag;
 
 UCLASS()
 class DAI_ULTRASKY_API UDAIUltraSkyBlueprintLibrary : public UBlueprintFunctionLibrary
@@ -33,7 +27,7 @@ public:
     UFUNCTION(BlueprintCallable, Category = "UltraSky")
     static void SetUltraSkyDayLength(ADAIUltraSkyActor *UltraSky, float DayLengthSeconds);
 
-    // Fetch the active Ultra Sky service (actor) via hub. Returns nullptr if not registered.
+    // Find the first Ultra Sky actor in the world.
     UFUNCTION(BlueprintPure, Category = "UltraSky|Service")
     static ADAIUltraSkyActor *GetUltraSkyActorFromService(const UObject *WorldContextObject);
 
