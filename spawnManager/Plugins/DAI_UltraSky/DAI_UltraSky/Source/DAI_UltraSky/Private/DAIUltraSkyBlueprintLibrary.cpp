@@ -3,7 +3,7 @@
 #include "EngineUtils.h"
 #include "Engine/World.h"
 #include "Engine/DirectionalLight.h"
-#include "Engine/SkyAtmosphere.h"
+#include "Atmosphere/SkyAtmosphere.h"
 #include "Engine/ExponentialHeightFog.h"
 #include "Engine/VolumetricCloud.h"
 #include "UObject/UnrealType.h"
