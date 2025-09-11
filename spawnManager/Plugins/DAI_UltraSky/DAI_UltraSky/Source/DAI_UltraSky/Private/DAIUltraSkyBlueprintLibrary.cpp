@@ -1,6 +1,12 @@
 #include "DAIUltraSkyBlueprintLibrary.h"
 #include "DAIUltraSkyActor.h"
 #include "EngineUtils.h"
+#include "Engine/World.h"
+#include "Engine/DirectionalLight.h"
+#include "Engine/SkyAtmosphere.h"
+#include "Engine/ExponentialHeightFog.h"
+#include "Engine/VolumetricCloud.h"
+#include "UObject/UnrealType.h"
 
 static ADAIUltraSkyActor *GetUltraSkyActor(const UObject *WorldContext)
 {
@@ -153,4 +159,42 @@ bool UDAIUltraSkyBlueprintLibrary::DAI_ForceUltraSkyBiomeByName(const UObject *W
         }
     }
     return false;
+}
+
+void UDAIUltraSkyBlueprintLibrary::DAI_SpawnDefaultSky(const UObject *WorldContextObject)
+{
+    if (!WorldContextObject)
+    {
+        return;
+    }
+    UWorld *World = WorldContextObject->GetWorld();
+    if (!World)
+    {
+        return;
+    }
+
+    FActorSpawnParameters Params;
+    Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+    ADirectionalLight *DirLight = World->SpawnActor<ADirectionalLight>(FVector::ZeroVector, FRotator::ZeroRotator, Params);
+    World->SpawnActor<AExponentialHeightFog>(FVector::ZeroVector, FRotator::ZeroRotator, Params);
+    World->SpawnActor<ASkyAtmosphere>(FVector::ZeroVector, FRotator::ZeroRotator, Params);
+    World->SpawnActor<AVolumetricCloud>(FVector::ZeroVector, FRotator::ZeroRotator, Params);
+
+    UClass *SkySphereClass = LoadClass<AActor>(nullptr, TEXT("/Engine/EngineSky/BP_Sky_Sphere.BP_Sky_Sphere_C"));
+    if (SkySphereClass)
+    {
+        AActor *SkySphere = World->SpawnActor<AActor>(SkySphereClass, FTransform::Identity, Params);
+        if (SkySphere && DirLight)
+        {
+            if (FObjectProperty *DirProp = FindFProperty<FObjectProperty>(SkySphere->GetClass(), TEXT("DirectionalLightActor")))
+            {
+                DirProp->SetObjectPropertyValue_InContainer(SkySphere, DirLight);
+            }
+            if (UFunction *RefreshFunc = SkySphere->FindFunction(TEXT("RefreshMaterial")))
+            {
+                SkySphere->ProcessEvent(RefreshFunc, nullptr);
+            }
+        }
+    }
 }
