@@ -53,6 +53,23 @@ void AWeatherManager::SetSkyLightIntensity(float Intensity)
     }
 }
 
+void AWeatherManager::ApplySkyConfiguration(const FSkyConfig& Config)
+{
+    if (SkyLight)
+    {
+        SkyLight->SetIntensity(Config.SkyLightIntensity);
+    }
+    if (EngineFog)
+    {
+        EngineFog->SetFogDensity(Config.FogDensity);
+    }
+}
+
+void AWeatherManager::ApplyWeatherConfiguration(const FWeatherConfig& Config)
+{
+    ApplyWeather(Config.Weather);
+}
+
 void AWeatherManager::RegisterVolume(AWeatherVolume* Volume)
 {
     if (Volume)

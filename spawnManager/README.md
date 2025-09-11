@@ -11,6 +11,7 @@ drive Niagara systems for clouds, precipitation and lightning.
 - Lightning spawning support.
 - Wind direction and velocity parameters.
 - Simple weighted blending of overlapping weather volumes.
+- Runtime sky and weather configuration application using `ApplySkyConfiguration` and `ApplyWeatherConfiguration`.
 
 All parameters are exposed to Blueprints so designers can tweak them at runtime or via scripted events.
 
