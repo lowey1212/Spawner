@@ -5,7 +5,15 @@
 #include "Engine/DirectionalLight.h"
 #include "Atmosphere/SkyAtmosphere.h"
 #include "Engine/ExponentialHeightFog.h"
+
+// UE 5.5 moved the VolumetricCloud actor out of the Engine folder. Use the
+// new path when available while remaining backward compatible with older
+// engine versions.
+#if __has_include("VolumetricCloud/VolumetricCloudActor.h")
+#include "VolumetricCloud/VolumetricCloudActor.h"
+#else
 #include "Engine/VolumetricCloud.h"
+#endif
 #include "UObject/UnrealType.h"
 
 static ADAIUltraSkyActor *GetUltraSkyActor(const UObject *WorldContext)
