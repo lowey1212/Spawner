@@ -66,4 +66,9 @@ public:
 
     UFUNCTION(BlueprintCallable, Category = "DAI_UltraSky|Service")
     static bool DAI_ForceUltraSkyBiomeByName(const UObject *WorldContextObject, FName BiomeAssetName, float BlendSeconds = 0.0f);
+
+    // Spawn default sky actors (DirectionalLight, ExponentialHeightFog, SkyAtmosphere,
+    // SkySphere and VolumetricCloud) into the world for quick setup.
+    UFUNCTION(BlueprintCallable, Category = "DAI_UltraSky", meta = (WorldContext = "WorldContextObject"))
+    static void DAI_SpawnDefaultSky(const UObject *WorldContextObject);
 };
