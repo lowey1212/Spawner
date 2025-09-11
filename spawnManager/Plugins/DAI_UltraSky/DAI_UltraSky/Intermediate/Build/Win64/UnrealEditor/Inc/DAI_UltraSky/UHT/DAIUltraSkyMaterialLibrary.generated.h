@@ -18,9 +18,9 @@ class UTextureRenderTarget2D;
 #define DAI_ULTRASKY_DAIUltraSkyMaterialLibrary_generated_h
 
 #define FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyMaterialLibrary_h_14_RPC_WRAPPERS_NO_PURE_DECLS \
-	DECLARE_FUNCTION(execSetScalarOnActorMaterials); \
-	DECLARE_FUNCTION(execApplyFootprintMaskToActorMaterials); \
-	DECLARE_FUNCTION(execGetFootprintMaskRT);
+	DECLARE_FUNCTION(execDAI_SetScalarOnActorMaterials); \
+	DECLARE_FUNCTION(execDAI_ApplyFootprintMaskToActorMaterials); \
+	DECLARE_FUNCTION(execDAI_GetFootprintMaskRT);
 
 
 #define FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyMaterialLibrary_h_14_INCLASS_NO_PURE_DECLS \

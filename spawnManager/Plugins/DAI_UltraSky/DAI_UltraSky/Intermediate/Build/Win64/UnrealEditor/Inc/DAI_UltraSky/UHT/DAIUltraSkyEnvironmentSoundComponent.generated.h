@@ -15,11 +15,11 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #define DAI_ULTRASKY_DAIUltraSkyEnvironmentSoundComponent_generated_h
 
 #define FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyEnvironmentSoundComponent_h_14_GENERATED_BODY \
-	friend struct Z_Construct_UScriptStruct_FUltraSkyEnvSoundEntry_Statics; \
+	friend struct Z_Construct_UScriptStruct_FDAIUltraSkyEnvSoundEntry_Statics; \
 	DAI_ULTRASKY_API static class UScriptStruct* StaticStruct();
 
 
-template<> DAI_ULTRASKY_API UScriptStruct* StaticStruct<struct FUltraSkyEnvSoundEntry>();
+template<> DAI_ULTRASKY_API UScriptStruct* StaticStruct<struct FDAIUltraSkyEnvSoundEntry>();
 
 #define FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyEnvironmentSoundComponent_h_26_INCLASS_NO_PURE_DECLS \
 private: \

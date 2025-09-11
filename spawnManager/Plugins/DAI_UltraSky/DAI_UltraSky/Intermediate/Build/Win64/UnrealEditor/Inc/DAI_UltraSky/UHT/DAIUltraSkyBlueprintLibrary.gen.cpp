@@ -18,10 +18,10 @@ ENGINE_API UClass* Z_Construct_UClass_UBlueprintFunctionLibrary();
 UPackage* Z_Construct_UPackage__Script_DAI_UltraSky();
 // End Cross Module References
 
-// Begin Class UDAIUltraSkyBlueprintLibrary Function ForceUltraSkyBiomeByName
-struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyBiomeByName_Statics
+// Begin Class UDAIUltraSkyBlueprintLibrary Function DAI_ForceUltraSkyBiomeByName
+struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyBiomeByName_Statics
 {
-	struct DAIUltraSkyBlueprintLibrary_eventForceUltraSkyBiomeByName_Parms
+	struct DAIUltraSkyBlueprintLibrary_eventDAI_ForceUltraSkyBiomeByName_Parms
 	{
 		const UObject* WorldContextObject;
 		FName BiomeAssetName;
@@ -30,7 +30,7 @@ struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyBiomeByNa
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "UltraSky|Service" },
+		{ "Category", "DAI_UltraSky|Service" },
 		{ "CPP_Default_BlendSeconds", "0.000000" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyBlueprintLibrary.h" },
 	};
@@ -46,55 +46,55 @@ struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyBiomeByNa
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyBiomeByName_Statics::NewProp_WorldContextObject = { "WorldContextObject", nullptr, (EPropertyFlags)0x0010000000000082, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventForceUltraSkyBiomeByName_Parms, WorldContextObject), Z_Construct_UClass_UObject_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_WorldContextObject_MetaData), NewProp_WorldContextObject_MetaData) };
-const UECodeGen_Private::FNamePropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyBiomeByName_Statics::NewProp_BiomeAssetName = { "BiomeAssetName", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventForceUltraSkyBiomeByName_Parms, BiomeAssetName), METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyBiomeByName_Statics::NewProp_BlendSeconds = { "BlendSeconds", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventForceUltraSkyBiomeByName_Parms, BlendSeconds), METADATA_PARAMS(0, nullptr) };
-void Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyBiomeByName_Statics::NewProp_ReturnValue_SetBit(void* Obj)
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyBiomeByName_Statics::NewProp_WorldContextObject = { "WorldContextObject", nullptr, (EPropertyFlags)0x0010000000000082, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventDAI_ForceUltraSkyBiomeByName_Parms, WorldContextObject), Z_Construct_UClass_UObject_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_WorldContextObject_MetaData), NewProp_WorldContextObject_MetaData) };
+const UECodeGen_Private::FNamePropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyBiomeByName_Statics::NewProp_BiomeAssetName = { "BiomeAssetName", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventDAI_ForceUltraSkyBiomeByName_Parms, BiomeAssetName), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyBiomeByName_Statics::NewProp_BlendSeconds = { "BlendSeconds", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventDAI_ForceUltraSkyBiomeByName_Parms, BlendSeconds), METADATA_PARAMS(0, nullptr) };
+void Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyBiomeByName_Statics::NewProp_ReturnValue_SetBit(void* Obj)
 {
-	((DAIUltraSkyBlueprintLibrary_eventForceUltraSkyBiomeByName_Parms*)Obj)->ReturnValue = 1;
+	((DAIUltraSkyBlueprintLibrary_eventDAI_ForceUltraSkyBiomeByName_Parms*)Obj)->ReturnValue = 1;
 }
-const UECodeGen_Private::FBoolPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyBiomeByName_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, sizeof(bool), sizeof(DAIUltraSkyBlueprintLibrary_eventForceUltraSkyBiomeByName_Parms), &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyBiomeByName_Statics::NewProp_ReturnValue_SetBit, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyBiomeByName_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyBiomeByName_Statics::NewProp_WorldContextObject,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyBiomeByName_Statics::NewProp_BiomeAssetName,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyBiomeByName_Statics::NewProp_BlendSeconds,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyBiomeByName_Statics::NewProp_ReturnValue,
+const UECodeGen_Private::FBoolPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyBiomeByName_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, sizeof(bool), sizeof(DAIUltraSkyBlueprintLibrary_eventDAI_ForceUltraSkyBiomeByName_Parms), &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyBiomeByName_Statics::NewProp_ReturnValue_SetBit, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyBiomeByName_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyBiomeByName_Statics::NewProp_WorldContextObject,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyBiomeByName_Statics::NewProp_BiomeAssetName,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyBiomeByName_Statics::NewProp_BlendSeconds,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyBiomeByName_Statics::NewProp_ReturnValue,
 };
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyBiomeByName_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyBiomeByName_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UDAIUltraSkyBlueprintLibrary, nullptr, "ForceUltraSkyBiomeByName", nullptr, nullptr, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyBiomeByName_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyBiomeByName_Statics::PropPointers), sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyBiomeByName_Statics::DAIUltraSkyBlueprintLibrary_eventForceUltraSkyBiomeByName_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04022401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyBiomeByName_Statics::Function_MetaDataParams), Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyBiomeByName_Statics::Function_MetaDataParams) };
-static_assert(sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyBiomeByName_Statics::DAIUltraSkyBlueprintLibrary_eventForceUltraSkyBiomeByName_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyBiomeByName()
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyBiomeByName_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyBiomeByName_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UDAIUltraSkyBlueprintLibrary, nullptr, "DAI_ForceUltraSkyBiomeByName", nullptr, nullptr, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyBiomeByName_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyBiomeByName_Statics::PropPointers), sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyBiomeByName_Statics::DAIUltraSkyBlueprintLibrary_eventDAI_ForceUltraSkyBiomeByName_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04022401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyBiomeByName_Statics::Function_MetaDataParams), Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyBiomeByName_Statics::Function_MetaDataParams) };
+static_assert(sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyBiomeByName_Statics::DAIUltraSkyBlueprintLibrary_eventDAI_ForceUltraSkyBiomeByName_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyBiomeByName()
 {
 	static UFunction* ReturnFunction = nullptr;
 	if (!ReturnFunction)
 	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyBiomeByName_Statics::FuncParams);
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyBiomeByName_Statics::FuncParams);
 	}
 	return ReturnFunction;
 }
-DEFINE_FUNCTION(UDAIUltraSkyBlueprintLibrary::execForceUltraSkyBiomeByName)
+DEFINE_FUNCTION(UDAIUltraSkyBlueprintLibrary::execDAI_ForceUltraSkyBiomeByName)
 {
 	P_GET_OBJECT(UObject,Z_Param_WorldContextObject);
 	P_GET_PROPERTY(FNameProperty,Z_Param_BiomeAssetName);
 	P_GET_PROPERTY(FFloatProperty,Z_Param_BlendSeconds);
 	P_FINISH;
 	P_NATIVE_BEGIN;
-	*(bool*)Z_Param__Result=UDAIUltraSkyBlueprintLibrary::ForceUltraSkyBiomeByName(Z_Param_WorldContextObject,Z_Param_BiomeAssetName,Z_Param_BlendSeconds);
+	*(bool*)Z_Param__Result=UDAIUltraSkyBlueprintLibrary::DAI_ForceUltraSkyBiomeByName(Z_Param_WorldContextObject,Z_Param_BiomeAssetName,Z_Param_BlendSeconds);
 	P_NATIVE_END;
 }
-// End Class UDAIUltraSkyBlueprintLibrary Function ForceUltraSkyBiomeByName
+// End Class UDAIUltraSkyBlueprintLibrary Function DAI_ForceUltraSkyBiomeByName
 
-// Begin Class UDAIUltraSkyBlueprintLibrary Function ForceUltraSkyCondition
-struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyCondition_Statics
+// Begin Class UDAIUltraSkyBlueprintLibrary Function DAI_ForceUltraSkyCondition
+struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyCondition_Statics
 {
-	struct DAIUltraSkyBlueprintLibrary_eventForceUltraSkyCondition_Parms
+	struct DAIUltraSkyBlueprintLibrary_eventDAI_ForceUltraSkyCondition_Parms
 	{
 		const UObject* WorldContextObject;
 		FName ConditionName;
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "UltraSky|Service" },
+		{ "Category", "DAI_UltraSky|Service" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyBlueprintLibrary.h" },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_WorldContextObject_MetaData[] = {
@@ -106,46 +106,46 @@ struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyCondition
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyCondition_Statics::NewProp_WorldContextObject = { "WorldContextObject", nullptr, (EPropertyFlags)0x0010000000000082, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventForceUltraSkyCondition_Parms, WorldContextObject), Z_Construct_UClass_UObject_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_WorldContextObject_MetaData), NewProp_WorldContextObject_MetaData) };
-const UECodeGen_Private::FNamePropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyCondition_Statics::NewProp_ConditionName = { "ConditionName", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventForceUltraSkyCondition_Parms, ConditionName), METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyCondition_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyCondition_Statics::NewProp_WorldContextObject,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyCondition_Statics::NewProp_ConditionName,
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyCondition_Statics::NewProp_WorldContextObject = { "WorldContextObject", nullptr, (EPropertyFlags)0x0010000000000082, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventDAI_ForceUltraSkyCondition_Parms, WorldContextObject), Z_Construct_UClass_UObject_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_WorldContextObject_MetaData), NewProp_WorldContextObject_MetaData) };
+const UECodeGen_Private::FNamePropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyCondition_Statics::NewProp_ConditionName = { "ConditionName", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventDAI_ForceUltraSkyCondition_Parms, ConditionName), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyCondition_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyCondition_Statics::NewProp_WorldContextObject,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyCondition_Statics::NewProp_ConditionName,
 };
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyCondition_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyCondition_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UDAIUltraSkyBlueprintLibrary, nullptr, "ForceUltraSkyCondition", nullptr, nullptr, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyCondition_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyCondition_Statics::PropPointers), sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyCondition_Statics::DAIUltraSkyBlueprintLibrary_eventForceUltraSkyCondition_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04022401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyCondition_Statics::Function_MetaDataParams), Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyCondition_Statics::Function_MetaDataParams) };
-static_assert(sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyCondition_Statics::DAIUltraSkyBlueprintLibrary_eventForceUltraSkyCondition_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyCondition()
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyCondition_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyCondition_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UDAIUltraSkyBlueprintLibrary, nullptr, "DAI_ForceUltraSkyCondition", nullptr, nullptr, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyCondition_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyCondition_Statics::PropPointers), sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyCondition_Statics::DAIUltraSkyBlueprintLibrary_eventDAI_ForceUltraSkyCondition_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04022401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyCondition_Statics::Function_MetaDataParams), Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyCondition_Statics::Function_MetaDataParams) };
+static_assert(sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyCondition_Statics::DAIUltraSkyBlueprintLibrary_eventDAI_ForceUltraSkyCondition_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyCondition()
 {
 	static UFunction* ReturnFunction = nullptr;
 	if (!ReturnFunction)
 	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyCondition_Statics::FuncParams);
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyCondition_Statics::FuncParams);
 	}
 	return ReturnFunction;
 }
-DEFINE_FUNCTION(UDAIUltraSkyBlueprintLibrary::execForceUltraSkyCondition)
+DEFINE_FUNCTION(UDAIUltraSkyBlueprintLibrary::execDAI_ForceUltraSkyCondition)
 {
 	P_GET_OBJECT(UObject,Z_Param_WorldContextObject);
 	P_GET_PROPERTY(FNameProperty,Z_Param_ConditionName);
 	P_FINISH;
 	P_NATIVE_BEGIN;
-	UDAIUltraSkyBlueprintLibrary::ForceUltraSkyCondition(Z_Param_WorldContextObject,Z_Param_ConditionName);
+	UDAIUltraSkyBlueprintLibrary::DAI_ForceUltraSkyCondition(Z_Param_WorldContextObject,Z_Param_ConditionName);
 	P_NATIVE_END;
 }
-// End Class UDAIUltraSkyBlueprintLibrary Function ForceUltraSkyCondition
+// End Class UDAIUltraSkyBlueprintLibrary Function DAI_ForceUltraSkyCondition
 
-// Begin Class UDAIUltraSkyBlueprintLibrary Function GetUltraSkyActorFromService
-struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyActorFromService_Statics
+// Begin Class UDAIUltraSkyBlueprintLibrary Function DAI_GetUltraSkyActorFromService
+struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyActorFromService_Statics
 {
-	struct DAIUltraSkyBlueprintLibrary_eventGetUltraSkyActorFromService_Parms
+	struct DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyActorFromService_Parms
 	{
 		const UObject* WorldContextObject;
 		ADAIUltraSkyActor* ReturnValue;
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "UltraSky|Service" },
+		{ "Category", "DAI_UltraSky|Service" },
 #if !UE_BUILD_SHIPPING
 		{ "Comment", "// Find the first Ultra Sky actor in the world.\n" },
 #endif
@@ -163,45 +163,45 @@ struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyActorFromSe
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyActorFromService_Statics::NewProp_WorldContextObject = { "WorldContextObject", nullptr, (EPropertyFlags)0x0010000000000082, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventGetUltraSkyActorFromService_Parms, WorldContextObject), Z_Construct_UClass_UObject_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_WorldContextObject_MetaData), NewProp_WorldContextObject_MetaData) };
-const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyActorFromService_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventGetUltraSkyActorFromService_Parms, ReturnValue), Z_Construct_UClass_ADAIUltraSkyActor_NoRegister, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyActorFromService_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyActorFromService_Statics::NewProp_WorldContextObject,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyActorFromService_Statics::NewProp_ReturnValue,
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyActorFromService_Statics::NewProp_WorldContextObject = { "WorldContextObject", nullptr, (EPropertyFlags)0x0010000000000082, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyActorFromService_Parms, WorldContextObject), Z_Construct_UClass_UObject_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_WorldContextObject_MetaData), NewProp_WorldContextObject_MetaData) };
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyActorFromService_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyActorFromService_Parms, ReturnValue), Z_Construct_UClass_ADAIUltraSkyActor_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyActorFromService_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyActorFromService_Statics::NewProp_WorldContextObject,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyActorFromService_Statics::NewProp_ReturnValue,
 };
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyActorFromService_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyActorFromService_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UDAIUltraSkyBlueprintLibrary, nullptr, "GetUltraSkyActorFromService", nullptr, nullptr, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyActorFromService_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyActorFromService_Statics::PropPointers), sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyActorFromService_Statics::DAIUltraSkyBlueprintLibrary_eventGetUltraSkyActorFromService_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14022401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyActorFromService_Statics::Function_MetaDataParams), Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyActorFromService_Statics::Function_MetaDataParams) };
-static_assert(sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyActorFromService_Statics::DAIUltraSkyBlueprintLibrary_eventGetUltraSkyActorFromService_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyActorFromService()
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyActorFromService_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyActorFromService_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UDAIUltraSkyBlueprintLibrary, nullptr, "DAI_GetUltraSkyActorFromService", nullptr, nullptr, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyActorFromService_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyActorFromService_Statics::PropPointers), sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyActorFromService_Statics::DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyActorFromService_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14022401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyActorFromService_Statics::Function_MetaDataParams), Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyActorFromService_Statics::Function_MetaDataParams) };
+static_assert(sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyActorFromService_Statics::DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyActorFromService_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyActorFromService()
 {
 	static UFunction* ReturnFunction = nullptr;
 	if (!ReturnFunction)
 	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyActorFromService_Statics::FuncParams);
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyActorFromService_Statics::FuncParams);
 	}
 	return ReturnFunction;
 }
-DEFINE_FUNCTION(UDAIUltraSkyBlueprintLibrary::execGetUltraSkyActorFromService)
+DEFINE_FUNCTION(UDAIUltraSkyBlueprintLibrary::execDAI_GetUltraSkyActorFromService)
 {
 	P_GET_OBJECT(UObject,Z_Param_WorldContextObject);
 	P_FINISH;
 	P_NATIVE_BEGIN;
-	*(ADAIUltraSkyActor**)Z_Param__Result=UDAIUltraSkyBlueprintLibrary::GetUltraSkyActorFromService(Z_Param_WorldContextObject);
+	*(ADAIUltraSkyActor**)Z_Param__Result=UDAIUltraSkyBlueprintLibrary::DAI_GetUltraSkyActorFromService(Z_Param_WorldContextObject);
 	P_NATIVE_END;
 }
-// End Class UDAIUltraSkyBlueprintLibrary Function GetUltraSkyActorFromService
+// End Class UDAIUltraSkyBlueprintLibrary Function DAI_GetUltraSkyActorFromService
 
-// Begin Class UDAIUltraSkyBlueprintLibrary Function GetUltraSkyBiome
-struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyBiome_Statics
+// Begin Class UDAIUltraSkyBlueprintLibrary Function DAI_GetUltraSkyBiome
+struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyBiome_Statics
 {
-	struct DAIUltraSkyBlueprintLibrary_eventGetUltraSkyBiome_Parms
+	struct DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyBiome_Parms
 	{
 		const UObject* WorldContextObject;
 		FName ReturnValue;
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "UltraSky|Service" },
+		{ "Category", "DAI_UltraSky|Service" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyBlueprintLibrary.h" },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_WorldContextObject_MetaData[] = {
@@ -213,45 +213,45 @@ struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyBiome_Stati
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyBiome_Statics::NewProp_WorldContextObject = { "WorldContextObject", nullptr, (EPropertyFlags)0x0010000000000082, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventGetUltraSkyBiome_Parms, WorldContextObject), Z_Construct_UClass_UObject_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_WorldContextObject_MetaData), NewProp_WorldContextObject_MetaData) };
-const UECodeGen_Private::FNamePropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyBiome_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventGetUltraSkyBiome_Parms, ReturnValue), METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyBiome_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyBiome_Statics::NewProp_WorldContextObject,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyBiome_Statics::NewProp_ReturnValue,
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyBiome_Statics::NewProp_WorldContextObject = { "WorldContextObject", nullptr, (EPropertyFlags)0x0010000000000082, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyBiome_Parms, WorldContextObject), Z_Construct_UClass_UObject_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_WorldContextObject_MetaData), NewProp_WorldContextObject_MetaData) };
+const UECodeGen_Private::FNamePropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyBiome_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyBiome_Parms, ReturnValue), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyBiome_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyBiome_Statics::NewProp_WorldContextObject,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyBiome_Statics::NewProp_ReturnValue,
 };
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyBiome_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyBiome_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UDAIUltraSkyBlueprintLibrary, nullptr, "GetUltraSkyBiome", nullptr, nullptr, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyBiome_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyBiome_Statics::PropPointers), sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyBiome_Statics::DAIUltraSkyBlueprintLibrary_eventGetUltraSkyBiome_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14022401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyBiome_Statics::Function_MetaDataParams), Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyBiome_Statics::Function_MetaDataParams) };
-static_assert(sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyBiome_Statics::DAIUltraSkyBlueprintLibrary_eventGetUltraSkyBiome_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyBiome()
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyBiome_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyBiome_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UDAIUltraSkyBlueprintLibrary, nullptr, "DAI_GetUltraSkyBiome", nullptr, nullptr, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyBiome_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyBiome_Statics::PropPointers), sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyBiome_Statics::DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyBiome_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14022401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyBiome_Statics::Function_MetaDataParams), Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyBiome_Statics::Function_MetaDataParams) };
+static_assert(sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyBiome_Statics::DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyBiome_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyBiome()
 {
 	static UFunction* ReturnFunction = nullptr;
 	if (!ReturnFunction)
 	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyBiome_Statics::FuncParams);
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyBiome_Statics::FuncParams);
 	}
 	return ReturnFunction;
 }
-DEFINE_FUNCTION(UDAIUltraSkyBlueprintLibrary::execGetUltraSkyBiome)
+DEFINE_FUNCTION(UDAIUltraSkyBlueprintLibrary::execDAI_GetUltraSkyBiome)
 {
 	P_GET_OBJECT(UObject,Z_Param_WorldContextObject);
 	P_FINISH;
 	P_NATIVE_BEGIN;
-	*(FName*)Z_Param__Result=UDAIUltraSkyBlueprintLibrary::GetUltraSkyBiome(Z_Param_WorldContextObject);
+	*(FName*)Z_Param__Result=UDAIUltraSkyBlueprintLibrary::DAI_GetUltraSkyBiome(Z_Param_WorldContextObject);
 	P_NATIVE_END;
 }
-// End Class UDAIUltraSkyBlueprintLibrary Function GetUltraSkyBiome
+// End Class UDAIUltraSkyBlueprintLibrary Function DAI_GetUltraSkyBiome
 
-// Begin Class UDAIUltraSkyBlueprintLibrary Function GetUltraSkyCondition
-struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyCondition_Statics
+// Begin Class UDAIUltraSkyBlueprintLibrary Function DAI_GetUltraSkyCondition
+struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyCondition_Statics
 {
-	struct DAIUltraSkyBlueprintLibrary_eventGetUltraSkyCondition_Parms
+	struct DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyCondition_Parms
 	{
 		const UObject* WorldContextObject;
 		FName ReturnValue;
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "UltraSky|Service" },
+		{ "Category", "DAI_UltraSky|Service" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyBlueprintLibrary.h" },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_WorldContextObject_MetaData[] = {
@@ -263,45 +263,45 @@ struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyCondition_S
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyCondition_Statics::NewProp_WorldContextObject = { "WorldContextObject", nullptr, (EPropertyFlags)0x0010000000000082, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventGetUltraSkyCondition_Parms, WorldContextObject), Z_Construct_UClass_UObject_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_WorldContextObject_MetaData), NewProp_WorldContextObject_MetaData) };
-const UECodeGen_Private::FNamePropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyCondition_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventGetUltraSkyCondition_Parms, ReturnValue), METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyCondition_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyCondition_Statics::NewProp_WorldContextObject,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyCondition_Statics::NewProp_ReturnValue,
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyCondition_Statics::NewProp_WorldContextObject = { "WorldContextObject", nullptr, (EPropertyFlags)0x0010000000000082, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyCondition_Parms, WorldContextObject), Z_Construct_UClass_UObject_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_WorldContextObject_MetaData), NewProp_WorldContextObject_MetaData) };
+const UECodeGen_Private::FNamePropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyCondition_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyCondition_Parms, ReturnValue), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyCondition_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyCondition_Statics::NewProp_WorldContextObject,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyCondition_Statics::NewProp_ReturnValue,
 };
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyCondition_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyCondition_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UDAIUltraSkyBlueprintLibrary, nullptr, "GetUltraSkyCondition", nullptr, nullptr, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyCondition_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyCondition_Statics::PropPointers), sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyCondition_Statics::DAIUltraSkyBlueprintLibrary_eventGetUltraSkyCondition_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14022401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyCondition_Statics::Function_MetaDataParams), Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyCondition_Statics::Function_MetaDataParams) };
-static_assert(sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyCondition_Statics::DAIUltraSkyBlueprintLibrary_eventGetUltraSkyCondition_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyCondition()
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyCondition_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyCondition_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UDAIUltraSkyBlueprintLibrary, nullptr, "DAI_GetUltraSkyCondition", nullptr, nullptr, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyCondition_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyCondition_Statics::PropPointers), sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyCondition_Statics::DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyCondition_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14022401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyCondition_Statics::Function_MetaDataParams), Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyCondition_Statics::Function_MetaDataParams) };
+static_assert(sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyCondition_Statics::DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyCondition_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyCondition()
 {
 	static UFunction* ReturnFunction = nullptr;
 	if (!ReturnFunction)
 	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyCondition_Statics::FuncParams);
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyCondition_Statics::FuncParams);
 	}
 	return ReturnFunction;
 }
-DEFINE_FUNCTION(UDAIUltraSkyBlueprintLibrary::execGetUltraSkyCondition)
+DEFINE_FUNCTION(UDAIUltraSkyBlueprintLibrary::execDAI_GetUltraSkyCondition)
 {
 	P_GET_OBJECT(UObject,Z_Param_WorldContextObject);
 	P_FINISH;
 	P_NATIVE_BEGIN;
-	*(FName*)Z_Param__Result=UDAIUltraSkyBlueprintLibrary::GetUltraSkyCondition(Z_Param_WorldContextObject);
+	*(FName*)Z_Param__Result=UDAIUltraSkyBlueprintLibrary::DAI_GetUltraSkyCondition(Z_Param_WorldContextObject);
 	P_NATIVE_END;
 }
-// End Class UDAIUltraSkyBlueprintLibrary Function GetUltraSkyCondition
+// End Class UDAIUltraSkyBlueprintLibrary Function DAI_GetUltraSkyCondition
 
-// Begin Class UDAIUltraSkyBlueprintLibrary Function GetUltraSkyIsPrecipitating
-struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsPrecipitating_Statics
+// Begin Class UDAIUltraSkyBlueprintLibrary Function DAI_GetUltraSkyIsPrecipitating
+struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsPrecipitating_Statics
 {
-	struct DAIUltraSkyBlueprintLibrary_eventGetUltraSkyIsPrecipitating_Parms
+	struct DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyIsPrecipitating_Parms
 	{
 		const UObject* WorldContextObject;
 		bool ReturnValue;
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "UltraSky|Service" },
+		{ "Category", "DAI_UltraSky|Service" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyBlueprintLibrary.h" },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_WorldContextObject_MetaData[] = {
@@ -314,49 +314,49 @@ struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsPrecipita
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsPrecipitating_Statics::NewProp_WorldContextObject = { "WorldContextObject", nullptr, (EPropertyFlags)0x0010000000000082, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventGetUltraSkyIsPrecipitating_Parms, WorldContextObject), Z_Construct_UClass_UObject_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_WorldContextObject_MetaData), NewProp_WorldContextObject_MetaData) };
-void Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsPrecipitating_Statics::NewProp_ReturnValue_SetBit(void* Obj)
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsPrecipitating_Statics::NewProp_WorldContextObject = { "WorldContextObject", nullptr, (EPropertyFlags)0x0010000000000082, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyIsPrecipitating_Parms, WorldContextObject), Z_Construct_UClass_UObject_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_WorldContextObject_MetaData), NewProp_WorldContextObject_MetaData) };
+void Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsPrecipitating_Statics::NewProp_ReturnValue_SetBit(void* Obj)
 {
-	((DAIUltraSkyBlueprintLibrary_eventGetUltraSkyIsPrecipitating_Parms*)Obj)->ReturnValue = 1;
+	((DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyIsPrecipitating_Parms*)Obj)->ReturnValue = 1;
 }
-const UECodeGen_Private::FBoolPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsPrecipitating_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, sizeof(bool), sizeof(DAIUltraSkyBlueprintLibrary_eventGetUltraSkyIsPrecipitating_Parms), &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsPrecipitating_Statics::NewProp_ReturnValue_SetBit, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsPrecipitating_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsPrecipitating_Statics::NewProp_WorldContextObject,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsPrecipitating_Statics::NewProp_ReturnValue,
+const UECodeGen_Private::FBoolPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsPrecipitating_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, sizeof(bool), sizeof(DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyIsPrecipitating_Parms), &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsPrecipitating_Statics::NewProp_ReturnValue_SetBit, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsPrecipitating_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsPrecipitating_Statics::NewProp_WorldContextObject,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsPrecipitating_Statics::NewProp_ReturnValue,
 };
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsPrecipitating_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsPrecipitating_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UDAIUltraSkyBlueprintLibrary, nullptr, "GetUltraSkyIsPrecipitating", nullptr, nullptr, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsPrecipitating_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsPrecipitating_Statics::PropPointers), sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsPrecipitating_Statics::DAIUltraSkyBlueprintLibrary_eventGetUltraSkyIsPrecipitating_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14022401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsPrecipitating_Statics::Function_MetaDataParams), Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsPrecipitating_Statics::Function_MetaDataParams) };
-static_assert(sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsPrecipitating_Statics::DAIUltraSkyBlueprintLibrary_eventGetUltraSkyIsPrecipitating_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsPrecipitating()
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsPrecipitating_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsPrecipitating_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UDAIUltraSkyBlueprintLibrary, nullptr, "DAI_GetUltraSkyIsPrecipitating", nullptr, nullptr, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsPrecipitating_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsPrecipitating_Statics::PropPointers), sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsPrecipitating_Statics::DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyIsPrecipitating_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14022401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsPrecipitating_Statics::Function_MetaDataParams), Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsPrecipitating_Statics::Function_MetaDataParams) };
+static_assert(sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsPrecipitating_Statics::DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyIsPrecipitating_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsPrecipitating()
 {
 	static UFunction* ReturnFunction = nullptr;
 	if (!ReturnFunction)
 	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsPrecipitating_Statics::FuncParams);
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsPrecipitating_Statics::FuncParams);
 	}
 	return ReturnFunction;
 }
-DEFINE_FUNCTION(UDAIUltraSkyBlueprintLibrary::execGetUltraSkyIsPrecipitating)
+DEFINE_FUNCTION(UDAIUltraSkyBlueprintLibrary::execDAI_GetUltraSkyIsPrecipitating)
 {
 	P_GET_OBJECT(UObject,Z_Param_WorldContextObject);
 	P_FINISH;
 	P_NATIVE_BEGIN;
-	*(bool*)Z_Param__Result=UDAIUltraSkyBlueprintLibrary::GetUltraSkyIsPrecipitating(Z_Param_WorldContextObject);
+	*(bool*)Z_Param__Result=UDAIUltraSkyBlueprintLibrary::DAI_GetUltraSkyIsPrecipitating(Z_Param_WorldContextObject);
 	P_NATIVE_END;
 }
-// End Class UDAIUltraSkyBlueprintLibrary Function GetUltraSkyIsPrecipitating
+// End Class UDAIUltraSkyBlueprintLibrary Function DAI_GetUltraSkyIsPrecipitating
 
-// Begin Class UDAIUltraSkyBlueprintLibrary Function GetUltraSkyIsStorming
-struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsStorming_Statics
+// Begin Class UDAIUltraSkyBlueprintLibrary Function DAI_GetUltraSkyIsStorming
+struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsStorming_Statics
 {
-	struct DAIUltraSkyBlueprintLibrary_eventGetUltraSkyIsStorming_Parms
+	struct DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyIsStorming_Parms
 	{
 		const UObject* WorldContextObject;
 		bool ReturnValue;
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "UltraSky|Service" },
+		{ "Category", "DAI_UltraSky|Service" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyBlueprintLibrary.h" },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_WorldContextObject_MetaData[] = {
@@ -369,49 +369,49 @@ struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsStorming_
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsStorming_Statics::NewProp_WorldContextObject = { "WorldContextObject", nullptr, (EPropertyFlags)0x0010000000000082, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventGetUltraSkyIsStorming_Parms, WorldContextObject), Z_Construct_UClass_UObject_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_WorldContextObject_MetaData), NewProp_WorldContextObject_MetaData) };
-void Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsStorming_Statics::NewProp_ReturnValue_SetBit(void* Obj)
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsStorming_Statics::NewProp_WorldContextObject = { "WorldContextObject", nullptr, (EPropertyFlags)0x0010000000000082, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyIsStorming_Parms, WorldContextObject), Z_Construct_UClass_UObject_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_WorldContextObject_MetaData), NewProp_WorldContextObject_MetaData) };
+void Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsStorming_Statics::NewProp_ReturnValue_SetBit(void* Obj)
 {
-	((DAIUltraSkyBlueprintLibrary_eventGetUltraSkyIsStorming_Parms*)Obj)->ReturnValue = 1;
+	((DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyIsStorming_Parms*)Obj)->ReturnValue = 1;
 }
-const UECodeGen_Private::FBoolPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsStorming_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, sizeof(bool), sizeof(DAIUltraSkyBlueprintLibrary_eventGetUltraSkyIsStorming_Parms), &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsStorming_Statics::NewProp_ReturnValue_SetBit, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsStorming_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsStorming_Statics::NewProp_WorldContextObject,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsStorming_Statics::NewProp_ReturnValue,
+const UECodeGen_Private::FBoolPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsStorming_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, sizeof(bool), sizeof(DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyIsStorming_Parms), &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsStorming_Statics::NewProp_ReturnValue_SetBit, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsStorming_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsStorming_Statics::NewProp_WorldContextObject,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsStorming_Statics::NewProp_ReturnValue,
 };
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsStorming_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsStorming_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UDAIUltraSkyBlueprintLibrary, nullptr, "GetUltraSkyIsStorming", nullptr, nullptr, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsStorming_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsStorming_Statics::PropPointers), sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsStorming_Statics::DAIUltraSkyBlueprintLibrary_eventGetUltraSkyIsStorming_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14022401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsStorming_Statics::Function_MetaDataParams), Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsStorming_Statics::Function_MetaDataParams) };
-static_assert(sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsStorming_Statics::DAIUltraSkyBlueprintLibrary_eventGetUltraSkyIsStorming_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsStorming()
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsStorming_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsStorming_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UDAIUltraSkyBlueprintLibrary, nullptr, "DAI_GetUltraSkyIsStorming", nullptr, nullptr, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsStorming_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsStorming_Statics::PropPointers), sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsStorming_Statics::DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyIsStorming_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14022401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsStorming_Statics::Function_MetaDataParams), Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsStorming_Statics::Function_MetaDataParams) };
+static_assert(sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsStorming_Statics::DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyIsStorming_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsStorming()
 {
 	static UFunction* ReturnFunction = nullptr;
 	if (!ReturnFunction)
 	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsStorming_Statics::FuncParams);
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsStorming_Statics::FuncParams);
 	}
 	return ReturnFunction;
 }
-DEFINE_FUNCTION(UDAIUltraSkyBlueprintLibrary::execGetUltraSkyIsStorming)
+DEFINE_FUNCTION(UDAIUltraSkyBlueprintLibrary::execDAI_GetUltraSkyIsStorming)
 {
 	P_GET_OBJECT(UObject,Z_Param_WorldContextObject);
 	P_FINISH;
 	P_NATIVE_BEGIN;
-	*(bool*)Z_Param__Result=UDAIUltraSkyBlueprintLibrary::GetUltraSkyIsStorming(Z_Param_WorldContextObject);
+	*(bool*)Z_Param__Result=UDAIUltraSkyBlueprintLibrary::DAI_GetUltraSkyIsStorming(Z_Param_WorldContextObject);
 	P_NATIVE_END;
 }
-// End Class UDAIUltraSkyBlueprintLibrary Function GetUltraSkyIsStorming
+// End Class UDAIUltraSkyBlueprintLibrary Function DAI_GetUltraSkyIsStorming
 
-// Begin Class UDAIUltraSkyBlueprintLibrary Function GetUltraSkySnowAccum
-struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkySnowAccum_Statics
+// Begin Class UDAIUltraSkyBlueprintLibrary Function DAI_GetUltraSkySnowAccum
+struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkySnowAccum_Statics
 {
-	struct DAIUltraSkyBlueprintLibrary_eventGetUltraSkySnowAccum_Parms
+	struct DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkySnowAccum_Parms
 	{
 		const UObject* WorldContextObject;
 		float ReturnValue;
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "UltraSky|Service" },
+		{ "Category", "DAI_UltraSky|Service" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyBlueprintLibrary.h" },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_WorldContextObject_MetaData[] = {
@@ -423,45 +423,45 @@ struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkySnowAccum_S
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkySnowAccum_Statics::NewProp_WorldContextObject = { "WorldContextObject", nullptr, (EPropertyFlags)0x0010000000000082, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventGetUltraSkySnowAccum_Parms, WorldContextObject), Z_Construct_UClass_UObject_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_WorldContextObject_MetaData), NewProp_WorldContextObject_MetaData) };
-const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkySnowAccum_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventGetUltraSkySnowAccum_Parms, ReturnValue), METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkySnowAccum_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkySnowAccum_Statics::NewProp_WorldContextObject,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkySnowAccum_Statics::NewProp_ReturnValue,
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkySnowAccum_Statics::NewProp_WorldContextObject = { "WorldContextObject", nullptr, (EPropertyFlags)0x0010000000000082, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkySnowAccum_Parms, WorldContextObject), Z_Construct_UClass_UObject_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_WorldContextObject_MetaData), NewProp_WorldContextObject_MetaData) };
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkySnowAccum_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkySnowAccum_Parms, ReturnValue), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkySnowAccum_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkySnowAccum_Statics::NewProp_WorldContextObject,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkySnowAccum_Statics::NewProp_ReturnValue,
 };
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkySnowAccum_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkySnowAccum_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UDAIUltraSkyBlueprintLibrary, nullptr, "GetUltraSkySnowAccum", nullptr, nullptr, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkySnowAccum_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkySnowAccum_Statics::PropPointers), sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkySnowAccum_Statics::DAIUltraSkyBlueprintLibrary_eventGetUltraSkySnowAccum_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14022401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkySnowAccum_Statics::Function_MetaDataParams), Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkySnowAccum_Statics::Function_MetaDataParams) };
-static_assert(sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkySnowAccum_Statics::DAIUltraSkyBlueprintLibrary_eventGetUltraSkySnowAccum_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkySnowAccum()
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkySnowAccum_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkySnowAccum_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UDAIUltraSkyBlueprintLibrary, nullptr, "DAI_GetUltraSkySnowAccum", nullptr, nullptr, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkySnowAccum_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkySnowAccum_Statics::PropPointers), sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkySnowAccum_Statics::DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkySnowAccum_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14022401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkySnowAccum_Statics::Function_MetaDataParams), Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkySnowAccum_Statics::Function_MetaDataParams) };
+static_assert(sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkySnowAccum_Statics::DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkySnowAccum_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkySnowAccum()
 {
 	static UFunction* ReturnFunction = nullptr;
 	if (!ReturnFunction)
 	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkySnowAccum_Statics::FuncParams);
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkySnowAccum_Statics::FuncParams);
 	}
 	return ReturnFunction;
 }
-DEFINE_FUNCTION(UDAIUltraSkyBlueprintLibrary::execGetUltraSkySnowAccum)
+DEFINE_FUNCTION(UDAIUltraSkyBlueprintLibrary::execDAI_GetUltraSkySnowAccum)
 {
 	P_GET_OBJECT(UObject,Z_Param_WorldContextObject);
 	P_FINISH;
 	P_NATIVE_BEGIN;
-	*(float*)Z_Param__Result=UDAIUltraSkyBlueprintLibrary::GetUltraSkySnowAccum(Z_Param_WorldContextObject);
+	*(float*)Z_Param__Result=UDAIUltraSkyBlueprintLibrary::DAI_GetUltraSkySnowAccum(Z_Param_WorldContextObject);
 	P_NATIVE_END;
 }
-// End Class UDAIUltraSkyBlueprintLibrary Function GetUltraSkySnowAccum
+// End Class UDAIUltraSkyBlueprintLibrary Function DAI_GetUltraSkySnowAccum
 
-// Begin Class UDAIUltraSkyBlueprintLibrary Function GetUltraSkyTimeOfDay
-struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyTimeOfDay_Statics
+// Begin Class UDAIUltraSkyBlueprintLibrary Function DAI_GetUltraSkyTimeOfDay
+struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyTimeOfDay_Statics
 {
-	struct DAIUltraSkyBlueprintLibrary_eventGetUltraSkyTimeOfDay_Parms
+	struct DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyTimeOfDay_Parms
 	{
 		const UObject* WorldContextObject;
 		float ReturnValue;
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "UltraSky|Service" },
+		{ "Category", "DAI_UltraSky|Service" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyBlueprintLibrary.h" },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_WorldContextObject_MetaData[] = {
@@ -473,45 +473,45 @@ struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyTimeOfDay_S
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyTimeOfDay_Statics::NewProp_WorldContextObject = { "WorldContextObject", nullptr, (EPropertyFlags)0x0010000000000082, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventGetUltraSkyTimeOfDay_Parms, WorldContextObject), Z_Construct_UClass_UObject_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_WorldContextObject_MetaData), NewProp_WorldContextObject_MetaData) };
-const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyTimeOfDay_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventGetUltraSkyTimeOfDay_Parms, ReturnValue), METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyTimeOfDay_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyTimeOfDay_Statics::NewProp_WorldContextObject,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyTimeOfDay_Statics::NewProp_ReturnValue,
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyTimeOfDay_Statics::NewProp_WorldContextObject = { "WorldContextObject", nullptr, (EPropertyFlags)0x0010000000000082, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyTimeOfDay_Parms, WorldContextObject), Z_Construct_UClass_UObject_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_WorldContextObject_MetaData), NewProp_WorldContextObject_MetaData) };
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyTimeOfDay_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyTimeOfDay_Parms, ReturnValue), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyTimeOfDay_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyTimeOfDay_Statics::NewProp_WorldContextObject,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyTimeOfDay_Statics::NewProp_ReturnValue,
 };
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyTimeOfDay_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyTimeOfDay_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UDAIUltraSkyBlueprintLibrary, nullptr, "GetUltraSkyTimeOfDay", nullptr, nullptr, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyTimeOfDay_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyTimeOfDay_Statics::PropPointers), sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyTimeOfDay_Statics::DAIUltraSkyBlueprintLibrary_eventGetUltraSkyTimeOfDay_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14022401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyTimeOfDay_Statics::Function_MetaDataParams), Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyTimeOfDay_Statics::Function_MetaDataParams) };
-static_assert(sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyTimeOfDay_Statics::DAIUltraSkyBlueprintLibrary_eventGetUltraSkyTimeOfDay_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyTimeOfDay()
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyTimeOfDay_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyTimeOfDay_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UDAIUltraSkyBlueprintLibrary, nullptr, "DAI_GetUltraSkyTimeOfDay", nullptr, nullptr, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyTimeOfDay_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyTimeOfDay_Statics::PropPointers), sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyTimeOfDay_Statics::DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyTimeOfDay_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14022401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyTimeOfDay_Statics::Function_MetaDataParams), Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyTimeOfDay_Statics::Function_MetaDataParams) };
+static_assert(sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyTimeOfDay_Statics::DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyTimeOfDay_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyTimeOfDay()
 {
 	static UFunction* ReturnFunction = nullptr;
 	if (!ReturnFunction)
 	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyTimeOfDay_Statics::FuncParams);
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyTimeOfDay_Statics::FuncParams);
 	}
 	return ReturnFunction;
 }
-DEFINE_FUNCTION(UDAIUltraSkyBlueprintLibrary::execGetUltraSkyTimeOfDay)
+DEFINE_FUNCTION(UDAIUltraSkyBlueprintLibrary::execDAI_GetUltraSkyTimeOfDay)
 {
 	P_GET_OBJECT(UObject,Z_Param_WorldContextObject);
 	P_FINISH;
 	P_NATIVE_BEGIN;
-	*(float*)Z_Param__Result=UDAIUltraSkyBlueprintLibrary::GetUltraSkyTimeOfDay(Z_Param_WorldContextObject);
+	*(float*)Z_Param__Result=UDAIUltraSkyBlueprintLibrary::DAI_GetUltraSkyTimeOfDay(Z_Param_WorldContextObject);
 	P_NATIVE_END;
 }
-// End Class UDAIUltraSkyBlueprintLibrary Function GetUltraSkyTimeOfDay
+// End Class UDAIUltraSkyBlueprintLibrary Function DAI_GetUltraSkyTimeOfDay
 
-// Begin Class UDAIUltraSkyBlueprintLibrary Function GetUltraSkyWetness
-struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWetness_Statics
+// Begin Class UDAIUltraSkyBlueprintLibrary Function DAI_GetUltraSkyWetness
+struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWetness_Statics
 {
-	struct DAIUltraSkyBlueprintLibrary_eventGetUltraSkyWetness_Parms
+	struct DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyWetness_Parms
 	{
 		const UObject* WorldContextObject;
 		float ReturnValue;
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "UltraSky|Service" },
+		{ "Category", "DAI_UltraSky|Service" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyBlueprintLibrary.h" },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_WorldContextObject_MetaData[] = {
@@ -523,45 +523,45 @@ struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWetness_Sta
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWetness_Statics::NewProp_WorldContextObject = { "WorldContextObject", nullptr, (EPropertyFlags)0x0010000000000082, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventGetUltraSkyWetness_Parms, WorldContextObject), Z_Construct_UClass_UObject_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_WorldContextObject_MetaData), NewProp_WorldContextObject_MetaData) };
-const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWetness_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventGetUltraSkyWetness_Parms, ReturnValue), METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWetness_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWetness_Statics::NewProp_WorldContextObject,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWetness_Statics::NewProp_ReturnValue,
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWetness_Statics::NewProp_WorldContextObject = { "WorldContextObject", nullptr, (EPropertyFlags)0x0010000000000082, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyWetness_Parms, WorldContextObject), Z_Construct_UClass_UObject_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_WorldContextObject_MetaData), NewProp_WorldContextObject_MetaData) };
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWetness_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyWetness_Parms, ReturnValue), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWetness_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWetness_Statics::NewProp_WorldContextObject,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWetness_Statics::NewProp_ReturnValue,
 };
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWetness_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWetness_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UDAIUltraSkyBlueprintLibrary, nullptr, "GetUltraSkyWetness", nullptr, nullptr, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWetness_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWetness_Statics::PropPointers), sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWetness_Statics::DAIUltraSkyBlueprintLibrary_eventGetUltraSkyWetness_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14022401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWetness_Statics::Function_MetaDataParams), Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWetness_Statics::Function_MetaDataParams) };
-static_assert(sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWetness_Statics::DAIUltraSkyBlueprintLibrary_eventGetUltraSkyWetness_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWetness()
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWetness_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWetness_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UDAIUltraSkyBlueprintLibrary, nullptr, "DAI_GetUltraSkyWetness", nullptr, nullptr, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWetness_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWetness_Statics::PropPointers), sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWetness_Statics::DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyWetness_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14022401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWetness_Statics::Function_MetaDataParams), Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWetness_Statics::Function_MetaDataParams) };
+static_assert(sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWetness_Statics::DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyWetness_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWetness()
 {
 	static UFunction* ReturnFunction = nullptr;
 	if (!ReturnFunction)
 	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWetness_Statics::FuncParams);
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWetness_Statics::FuncParams);
 	}
 	return ReturnFunction;
 }
-DEFINE_FUNCTION(UDAIUltraSkyBlueprintLibrary::execGetUltraSkyWetness)
+DEFINE_FUNCTION(UDAIUltraSkyBlueprintLibrary::execDAI_GetUltraSkyWetness)
 {
 	P_GET_OBJECT(UObject,Z_Param_WorldContextObject);
 	P_FINISH;
 	P_NATIVE_BEGIN;
-	*(float*)Z_Param__Result=UDAIUltraSkyBlueprintLibrary::GetUltraSkyWetness(Z_Param_WorldContextObject);
+	*(float*)Z_Param__Result=UDAIUltraSkyBlueprintLibrary::DAI_GetUltraSkyWetness(Z_Param_WorldContextObject);
 	P_NATIVE_END;
 }
-// End Class UDAIUltraSkyBlueprintLibrary Function GetUltraSkyWetness
+// End Class UDAIUltraSkyBlueprintLibrary Function DAI_GetUltraSkyWetness
 
-// Begin Class UDAIUltraSkyBlueprintLibrary Function GetUltraSkyWindDirection
-struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWindDirection_Statics
+// Begin Class UDAIUltraSkyBlueprintLibrary Function DAI_GetUltraSkyWindDirection
+struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWindDirection_Statics
 {
-	struct DAIUltraSkyBlueprintLibrary_eventGetUltraSkyWindDirection_Parms
+	struct DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyWindDirection_Parms
 	{
 		const UObject* WorldContextObject;
 		float ReturnValue;
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "UltraSky|Service" },
+		{ "Category", "DAI_UltraSky|Service" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyBlueprintLibrary.h" },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_WorldContextObject_MetaData[] = {
@@ -573,45 +573,45 @@ struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWindDirecti
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWindDirection_Statics::NewProp_WorldContextObject = { "WorldContextObject", nullptr, (EPropertyFlags)0x0010000000000082, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventGetUltraSkyWindDirection_Parms, WorldContextObject), Z_Construct_UClass_UObject_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_WorldContextObject_MetaData), NewProp_WorldContextObject_MetaData) };
-const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWindDirection_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventGetUltraSkyWindDirection_Parms, ReturnValue), METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWindDirection_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWindDirection_Statics::NewProp_WorldContextObject,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWindDirection_Statics::NewProp_ReturnValue,
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWindDirection_Statics::NewProp_WorldContextObject = { "WorldContextObject", nullptr, (EPropertyFlags)0x0010000000000082, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyWindDirection_Parms, WorldContextObject), Z_Construct_UClass_UObject_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_WorldContextObject_MetaData), NewProp_WorldContextObject_MetaData) };
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWindDirection_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyWindDirection_Parms, ReturnValue), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWindDirection_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWindDirection_Statics::NewProp_WorldContextObject,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWindDirection_Statics::NewProp_ReturnValue,
 };
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWindDirection_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWindDirection_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UDAIUltraSkyBlueprintLibrary, nullptr, "GetUltraSkyWindDirection", nullptr, nullptr, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWindDirection_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWindDirection_Statics::PropPointers), sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWindDirection_Statics::DAIUltraSkyBlueprintLibrary_eventGetUltraSkyWindDirection_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14022401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWindDirection_Statics::Function_MetaDataParams), Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWindDirection_Statics::Function_MetaDataParams) };
-static_assert(sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWindDirection_Statics::DAIUltraSkyBlueprintLibrary_eventGetUltraSkyWindDirection_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWindDirection()
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWindDirection_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWindDirection_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UDAIUltraSkyBlueprintLibrary, nullptr, "DAI_GetUltraSkyWindDirection", nullptr, nullptr, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWindDirection_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWindDirection_Statics::PropPointers), sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWindDirection_Statics::DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyWindDirection_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14022401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWindDirection_Statics::Function_MetaDataParams), Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWindDirection_Statics::Function_MetaDataParams) };
+static_assert(sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWindDirection_Statics::DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyWindDirection_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWindDirection()
 {
 	static UFunction* ReturnFunction = nullptr;
 	if (!ReturnFunction)
 	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWindDirection_Statics::FuncParams);
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWindDirection_Statics::FuncParams);
 	}
 	return ReturnFunction;
 }
-DEFINE_FUNCTION(UDAIUltraSkyBlueprintLibrary::execGetUltraSkyWindDirection)
+DEFINE_FUNCTION(UDAIUltraSkyBlueprintLibrary::execDAI_GetUltraSkyWindDirection)
 {
 	P_GET_OBJECT(UObject,Z_Param_WorldContextObject);
 	P_FINISH;
 	P_NATIVE_BEGIN;
-	*(float*)Z_Param__Result=UDAIUltraSkyBlueprintLibrary::GetUltraSkyWindDirection(Z_Param_WorldContextObject);
+	*(float*)Z_Param__Result=UDAIUltraSkyBlueprintLibrary::DAI_GetUltraSkyWindDirection(Z_Param_WorldContextObject);
 	P_NATIVE_END;
 }
-// End Class UDAIUltraSkyBlueprintLibrary Function GetUltraSkyWindDirection
+// End Class UDAIUltraSkyBlueprintLibrary Function DAI_GetUltraSkyWindDirection
 
-// Begin Class UDAIUltraSkyBlueprintLibrary Function GetUltraSkyWindIntensity
-struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWindIntensity_Statics
+// Begin Class UDAIUltraSkyBlueprintLibrary Function DAI_GetUltraSkyWindIntensity
+struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWindIntensity_Statics
 {
-	struct DAIUltraSkyBlueprintLibrary_eventGetUltraSkyWindIntensity_Parms
+	struct DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyWindIntensity_Parms
 	{
 		const UObject* WorldContextObject;
 		float ReturnValue;
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "UltraSky|Service" },
+		{ "Category", "DAI_UltraSky|Service" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyBlueprintLibrary.h" },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_WorldContextObject_MetaData[] = {
@@ -623,45 +623,45 @@ struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWindIntensi
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWindIntensity_Statics::NewProp_WorldContextObject = { "WorldContextObject", nullptr, (EPropertyFlags)0x0010000000000082, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventGetUltraSkyWindIntensity_Parms, WorldContextObject), Z_Construct_UClass_UObject_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_WorldContextObject_MetaData), NewProp_WorldContextObject_MetaData) };
-const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWindIntensity_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventGetUltraSkyWindIntensity_Parms, ReturnValue), METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWindIntensity_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWindIntensity_Statics::NewProp_WorldContextObject,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWindIntensity_Statics::NewProp_ReturnValue,
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWindIntensity_Statics::NewProp_WorldContextObject = { "WorldContextObject", nullptr, (EPropertyFlags)0x0010000000000082, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyWindIntensity_Parms, WorldContextObject), Z_Construct_UClass_UObject_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_WorldContextObject_MetaData), NewProp_WorldContextObject_MetaData) };
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWindIntensity_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyWindIntensity_Parms, ReturnValue), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWindIntensity_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWindIntensity_Statics::NewProp_WorldContextObject,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWindIntensity_Statics::NewProp_ReturnValue,
 };
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWindIntensity_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWindIntensity_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UDAIUltraSkyBlueprintLibrary, nullptr, "GetUltraSkyWindIntensity", nullptr, nullptr, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWindIntensity_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWindIntensity_Statics::PropPointers), sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWindIntensity_Statics::DAIUltraSkyBlueprintLibrary_eventGetUltraSkyWindIntensity_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14022401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWindIntensity_Statics::Function_MetaDataParams), Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWindIntensity_Statics::Function_MetaDataParams) };
-static_assert(sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWindIntensity_Statics::DAIUltraSkyBlueprintLibrary_eventGetUltraSkyWindIntensity_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWindIntensity()
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWindIntensity_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWindIntensity_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UDAIUltraSkyBlueprintLibrary, nullptr, "DAI_GetUltraSkyWindIntensity", nullptr, nullptr, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWindIntensity_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWindIntensity_Statics::PropPointers), sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWindIntensity_Statics::DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyWindIntensity_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14022401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWindIntensity_Statics::Function_MetaDataParams), Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWindIntensity_Statics::Function_MetaDataParams) };
+static_assert(sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWindIntensity_Statics::DAIUltraSkyBlueprintLibrary_eventDAI_GetUltraSkyWindIntensity_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWindIntensity()
 {
 	static UFunction* ReturnFunction = nullptr;
 	if (!ReturnFunction)
 	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWindIntensity_Statics::FuncParams);
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWindIntensity_Statics::FuncParams);
 	}
 	return ReturnFunction;
 }
-DEFINE_FUNCTION(UDAIUltraSkyBlueprintLibrary::execGetUltraSkyWindIntensity)
+DEFINE_FUNCTION(UDAIUltraSkyBlueprintLibrary::execDAI_GetUltraSkyWindIntensity)
 {
 	P_GET_OBJECT(UObject,Z_Param_WorldContextObject);
 	P_FINISH;
 	P_NATIVE_BEGIN;
-	*(float*)Z_Param__Result=UDAIUltraSkyBlueprintLibrary::GetUltraSkyWindIntensity(Z_Param_WorldContextObject);
+	*(float*)Z_Param__Result=UDAIUltraSkyBlueprintLibrary::DAI_GetUltraSkyWindIntensity(Z_Param_WorldContextObject);
 	P_NATIVE_END;
 }
-// End Class UDAIUltraSkyBlueprintLibrary Function GetUltraSkyWindIntensity
+// End Class UDAIUltraSkyBlueprintLibrary Function DAI_GetUltraSkyWindIntensity
 
-// Begin Class UDAIUltraSkyBlueprintLibrary Function SetUltraSkyDayLength
-struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkyDayLength_Statics
+// Begin Class UDAIUltraSkyBlueprintLibrary Function DAI_SetUltraSkyDayLength
+struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkyDayLength_Statics
 {
-	struct DAIUltraSkyBlueprintLibrary_eventSetUltraSkyDayLength_Parms
+	struct DAIUltraSkyBlueprintLibrary_eventDAI_SetUltraSkyDayLength_Parms
 	{
 		ADAIUltraSkyActor* UltraSky;
 		float DayLengthSeconds;
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "UltraSky" },
+		{ "Category", "DAI_UltraSky" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyBlueprintLibrary.h" },
 	};
 #endif // WITH_METADATA
@@ -670,46 +670,46 @@ struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkyDayLength_S
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkyDayLength_Statics::NewProp_UltraSky = { "UltraSky", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventSetUltraSkyDayLength_Parms, UltraSky), Z_Construct_UClass_ADAIUltraSkyActor_NoRegister, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkyDayLength_Statics::NewProp_DayLengthSeconds = { "DayLengthSeconds", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventSetUltraSkyDayLength_Parms, DayLengthSeconds), METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkyDayLength_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkyDayLength_Statics::NewProp_UltraSky,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkyDayLength_Statics::NewProp_DayLengthSeconds,
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkyDayLength_Statics::NewProp_UltraSky = { "UltraSky", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventDAI_SetUltraSkyDayLength_Parms, UltraSky), Z_Construct_UClass_ADAIUltraSkyActor_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkyDayLength_Statics::NewProp_DayLengthSeconds = { "DayLengthSeconds", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventDAI_SetUltraSkyDayLength_Parms, DayLengthSeconds), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkyDayLength_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkyDayLength_Statics::NewProp_UltraSky,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkyDayLength_Statics::NewProp_DayLengthSeconds,
 };
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkyDayLength_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkyDayLength_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UDAIUltraSkyBlueprintLibrary, nullptr, "SetUltraSkyDayLength", nullptr, nullptr, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkyDayLength_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkyDayLength_Statics::PropPointers), sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkyDayLength_Statics::DAIUltraSkyBlueprintLibrary_eventSetUltraSkyDayLength_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04022401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkyDayLength_Statics::Function_MetaDataParams), Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkyDayLength_Statics::Function_MetaDataParams) };
-static_assert(sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkyDayLength_Statics::DAIUltraSkyBlueprintLibrary_eventSetUltraSkyDayLength_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkyDayLength()
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkyDayLength_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkyDayLength_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UDAIUltraSkyBlueprintLibrary, nullptr, "DAI_SetUltraSkyDayLength", nullptr, nullptr, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkyDayLength_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkyDayLength_Statics::PropPointers), sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkyDayLength_Statics::DAIUltraSkyBlueprintLibrary_eventDAI_SetUltraSkyDayLength_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04022401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkyDayLength_Statics::Function_MetaDataParams), Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkyDayLength_Statics::Function_MetaDataParams) };
+static_assert(sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkyDayLength_Statics::DAIUltraSkyBlueprintLibrary_eventDAI_SetUltraSkyDayLength_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkyDayLength()
 {
 	static UFunction* ReturnFunction = nullptr;
 	if (!ReturnFunction)
 	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkyDayLength_Statics::FuncParams);
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkyDayLength_Statics::FuncParams);
 	}
 	return ReturnFunction;
 }
-DEFINE_FUNCTION(UDAIUltraSkyBlueprintLibrary::execSetUltraSkyDayLength)
+DEFINE_FUNCTION(UDAIUltraSkyBlueprintLibrary::execDAI_SetUltraSkyDayLength)
 {
 	P_GET_OBJECT(ADAIUltraSkyActor,Z_Param_UltraSky);
 	P_GET_PROPERTY(FFloatProperty,Z_Param_DayLengthSeconds);
 	P_FINISH;
 	P_NATIVE_BEGIN;
-	UDAIUltraSkyBlueprintLibrary::SetUltraSkyDayLength(Z_Param_UltraSky,Z_Param_DayLengthSeconds);
+	UDAIUltraSkyBlueprintLibrary::DAI_SetUltraSkyDayLength(Z_Param_UltraSky,Z_Param_DayLengthSeconds);
 	P_NATIVE_END;
 }
-// End Class UDAIUltraSkyBlueprintLibrary Function SetUltraSkyDayLength
+// End Class UDAIUltraSkyBlueprintLibrary Function DAI_SetUltraSkyDayLength
 
-// Begin Class UDAIUltraSkyBlueprintLibrary Function SetUltraSkySnowThresholds
-struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkySnowThresholds_Statics
+// Begin Class UDAIUltraSkyBlueprintLibrary Function DAI_SetUltraSkySnowThresholds
+struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkySnowThresholds_Statics
 {
-	struct DAIUltraSkyBlueprintLibrary_eventSetUltraSkySnowThresholds_Parms
+	struct DAIUltraSkyBlueprintLibrary_eventDAI_SetUltraSkySnowThresholds_Parms
 	{
 		const UObject* WorldContextObject;
 		TArray<float> Thresholds;
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "UltraSky|Service" },
+		{ "Category", "DAI_UltraSky|Service" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyBlueprintLibrary.h" },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_WorldContextObject_MetaData[] = {
@@ -725,48 +725,48 @@ struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkySnowThresho
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkySnowThresholds_Statics::NewProp_WorldContextObject = { "WorldContextObject", nullptr, (EPropertyFlags)0x0010000000000082, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventSetUltraSkySnowThresholds_Parms, WorldContextObject), Z_Construct_UClass_UObject_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_WorldContextObject_MetaData), NewProp_WorldContextObject_MetaData) };
-const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkySnowThresholds_Statics::NewProp_Thresholds_Inner = { "Thresholds", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FArrayPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkySnowThresholds_Statics::NewProp_Thresholds = { "Thresholds", nullptr, (EPropertyFlags)0x0010000008000182, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventSetUltraSkySnowThresholds_Parms, Thresholds), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Thresholds_MetaData), NewProp_Thresholds_MetaData) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkySnowThresholds_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkySnowThresholds_Statics::NewProp_WorldContextObject,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkySnowThresholds_Statics::NewProp_Thresholds_Inner,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkySnowThresholds_Statics::NewProp_Thresholds,
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkySnowThresholds_Statics::NewProp_WorldContextObject = { "WorldContextObject", nullptr, (EPropertyFlags)0x0010000000000082, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventDAI_SetUltraSkySnowThresholds_Parms, WorldContextObject), Z_Construct_UClass_UObject_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_WorldContextObject_MetaData), NewProp_WorldContextObject_MetaData) };
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkySnowThresholds_Statics::NewProp_Thresholds_Inner = { "Thresholds", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FArrayPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkySnowThresholds_Statics::NewProp_Thresholds = { "Thresholds", nullptr, (EPropertyFlags)0x0010000008000182, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventDAI_SetUltraSkySnowThresholds_Parms, Thresholds), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Thresholds_MetaData), NewProp_Thresholds_MetaData) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkySnowThresholds_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkySnowThresholds_Statics::NewProp_WorldContextObject,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkySnowThresholds_Statics::NewProp_Thresholds_Inner,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkySnowThresholds_Statics::NewProp_Thresholds,
 };
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkySnowThresholds_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkySnowThresholds_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UDAIUltraSkyBlueprintLibrary, nullptr, "SetUltraSkySnowThresholds", nullptr, nullptr, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkySnowThresholds_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkySnowThresholds_Statics::PropPointers), sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkySnowThresholds_Statics::DAIUltraSkyBlueprintLibrary_eventSetUltraSkySnowThresholds_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04422401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkySnowThresholds_Statics::Function_MetaDataParams), Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkySnowThresholds_Statics::Function_MetaDataParams) };
-static_assert(sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkySnowThresholds_Statics::DAIUltraSkyBlueprintLibrary_eventSetUltraSkySnowThresholds_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkySnowThresholds()
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkySnowThresholds_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkySnowThresholds_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UDAIUltraSkyBlueprintLibrary, nullptr, "DAI_SetUltraSkySnowThresholds", nullptr, nullptr, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkySnowThresholds_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkySnowThresholds_Statics::PropPointers), sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkySnowThresholds_Statics::DAIUltraSkyBlueprintLibrary_eventDAI_SetUltraSkySnowThresholds_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04422401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkySnowThresholds_Statics::Function_MetaDataParams), Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkySnowThresholds_Statics::Function_MetaDataParams) };
+static_assert(sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkySnowThresholds_Statics::DAIUltraSkyBlueprintLibrary_eventDAI_SetUltraSkySnowThresholds_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkySnowThresholds()
 {
 	static UFunction* ReturnFunction = nullptr;
 	if (!ReturnFunction)
 	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkySnowThresholds_Statics::FuncParams);
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkySnowThresholds_Statics::FuncParams);
 	}
 	return ReturnFunction;
 }
-DEFINE_FUNCTION(UDAIUltraSkyBlueprintLibrary::execSetUltraSkySnowThresholds)
+DEFINE_FUNCTION(UDAIUltraSkyBlueprintLibrary::execDAI_SetUltraSkySnowThresholds)
 {
 	P_GET_OBJECT(UObject,Z_Param_WorldContextObject);
 	P_GET_TARRAY_REF(float,Z_Param_Out_Thresholds);
 	P_FINISH;
 	P_NATIVE_BEGIN;
-	UDAIUltraSkyBlueprintLibrary::SetUltraSkySnowThresholds(Z_Param_WorldContextObject,Z_Param_Out_Thresholds);
+	UDAIUltraSkyBlueprintLibrary::DAI_SetUltraSkySnowThresholds(Z_Param_WorldContextObject,Z_Param_Out_Thresholds);
 	P_NATIVE_END;
 }
-// End Class UDAIUltraSkyBlueprintLibrary Function SetUltraSkySnowThresholds
+// End Class UDAIUltraSkyBlueprintLibrary Function DAI_SetUltraSkySnowThresholds
 
-// Begin Class UDAIUltraSkyBlueprintLibrary Function SetUltraSkyTime
-struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkyTime_Statics
+// Begin Class UDAIUltraSkyBlueprintLibrary Function DAI_SetUltraSkyTime
+struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkyTime_Statics
 {
-	struct DAIUltraSkyBlueprintLibrary_eventSetUltraSkyTime_Parms
+	struct DAIUltraSkyBlueprintLibrary_eventDAI_SetUltraSkyTime_Parms
 	{
 		ADAIUltraSkyActor* UltraSky;
 		float TimeOfDay;
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "UltraSky" },
+		{ "Category", "DAI_UltraSky" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyBlueprintLibrary.h" },
 	};
 #endif // WITH_METADATA
@@ -775,55 +775,55 @@ struct Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkyTime_Static
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkyTime_Statics::NewProp_UltraSky = { "UltraSky", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventSetUltraSkyTime_Parms, UltraSky), Z_Construct_UClass_ADAIUltraSkyActor_NoRegister, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkyTime_Statics::NewProp_TimeOfDay = { "TimeOfDay", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventSetUltraSkyTime_Parms, TimeOfDay), METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkyTime_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkyTime_Statics::NewProp_UltraSky,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkyTime_Statics::NewProp_TimeOfDay,
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkyTime_Statics::NewProp_UltraSky = { "UltraSky", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventDAI_SetUltraSkyTime_Parms, UltraSky), Z_Construct_UClass_ADAIUltraSkyActor_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkyTime_Statics::NewProp_TimeOfDay = { "TimeOfDay", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(DAIUltraSkyBlueprintLibrary_eventDAI_SetUltraSkyTime_Parms, TimeOfDay), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkyTime_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkyTime_Statics::NewProp_UltraSky,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkyTime_Statics::NewProp_TimeOfDay,
 };
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkyTime_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkyTime_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UDAIUltraSkyBlueprintLibrary, nullptr, "SetUltraSkyTime", nullptr, nullptr, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkyTime_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkyTime_Statics::PropPointers), sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkyTime_Statics::DAIUltraSkyBlueprintLibrary_eventSetUltraSkyTime_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04022401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkyTime_Statics::Function_MetaDataParams), Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkyTime_Statics::Function_MetaDataParams) };
-static_assert(sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkyTime_Statics::DAIUltraSkyBlueprintLibrary_eventSetUltraSkyTime_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkyTime()
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkyTime_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkyTime_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UDAIUltraSkyBlueprintLibrary, nullptr, "DAI_SetUltraSkyTime", nullptr, nullptr, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkyTime_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkyTime_Statics::PropPointers), sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkyTime_Statics::DAIUltraSkyBlueprintLibrary_eventDAI_SetUltraSkyTime_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04022401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkyTime_Statics::Function_MetaDataParams), Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkyTime_Statics::Function_MetaDataParams) };
+static_assert(sizeof(Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkyTime_Statics::DAIUltraSkyBlueprintLibrary_eventDAI_SetUltraSkyTime_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkyTime()
 {
 	static UFunction* ReturnFunction = nullptr;
 	if (!ReturnFunction)
 	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkyTime_Statics::FuncParams);
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkyTime_Statics::FuncParams);
 	}
 	return ReturnFunction;
 }
-DEFINE_FUNCTION(UDAIUltraSkyBlueprintLibrary::execSetUltraSkyTime)
+DEFINE_FUNCTION(UDAIUltraSkyBlueprintLibrary::execDAI_SetUltraSkyTime)
 {
 	P_GET_OBJECT(ADAIUltraSkyActor,Z_Param_UltraSky);
 	P_GET_PROPERTY(FFloatProperty,Z_Param_TimeOfDay);
 	P_FINISH;
 	P_NATIVE_BEGIN;
-	UDAIUltraSkyBlueprintLibrary::SetUltraSkyTime(Z_Param_UltraSky,Z_Param_TimeOfDay);
+	UDAIUltraSkyBlueprintLibrary::DAI_SetUltraSkyTime(Z_Param_UltraSky,Z_Param_TimeOfDay);
 	P_NATIVE_END;
 }
-// End Class UDAIUltraSkyBlueprintLibrary Function SetUltraSkyTime
+// End Class UDAIUltraSkyBlueprintLibrary Function DAI_SetUltraSkyTime
 
 // Begin Class UDAIUltraSkyBlueprintLibrary
 void UDAIUltraSkyBlueprintLibrary::StaticRegisterNativesUDAIUltraSkyBlueprintLibrary()
 {
 	UClass* Class = UDAIUltraSkyBlueprintLibrary::StaticClass();
 	static const FNameNativePtrPair Funcs[] = {
-		{ "ForceUltraSkyBiomeByName", &UDAIUltraSkyBlueprintLibrary::execForceUltraSkyBiomeByName },
-		{ "ForceUltraSkyCondition", &UDAIUltraSkyBlueprintLibrary::execForceUltraSkyCondition },
-		{ "GetUltraSkyActorFromService", &UDAIUltraSkyBlueprintLibrary::execGetUltraSkyActorFromService },
-		{ "GetUltraSkyBiome", &UDAIUltraSkyBlueprintLibrary::execGetUltraSkyBiome },
-		{ "GetUltraSkyCondition", &UDAIUltraSkyBlueprintLibrary::execGetUltraSkyCondition },
-		{ "GetUltraSkyIsPrecipitating", &UDAIUltraSkyBlueprintLibrary::execGetUltraSkyIsPrecipitating },
-		{ "GetUltraSkyIsStorming", &UDAIUltraSkyBlueprintLibrary::execGetUltraSkyIsStorming },
-		{ "GetUltraSkySnowAccum", &UDAIUltraSkyBlueprintLibrary::execGetUltraSkySnowAccum },
-		{ "GetUltraSkyTimeOfDay", &UDAIUltraSkyBlueprintLibrary::execGetUltraSkyTimeOfDay },
-		{ "GetUltraSkyWetness", &UDAIUltraSkyBlueprintLibrary::execGetUltraSkyWetness },
-		{ "GetUltraSkyWindDirection", &UDAIUltraSkyBlueprintLibrary::execGetUltraSkyWindDirection },
-		{ "GetUltraSkyWindIntensity", &UDAIUltraSkyBlueprintLibrary::execGetUltraSkyWindIntensity },
-		{ "SetUltraSkyDayLength", &UDAIUltraSkyBlueprintLibrary::execSetUltraSkyDayLength },
-		{ "SetUltraSkySnowThresholds", &UDAIUltraSkyBlueprintLibrary::execSetUltraSkySnowThresholds },
-		{ "SetUltraSkyTime", &UDAIUltraSkyBlueprintLibrary::execSetUltraSkyTime },
+		{ "DAI_ForceUltraSkyBiomeByName", &UDAIUltraSkyBlueprintLibrary::execDAI_ForceUltraSkyBiomeByName },
+		{ "DAI_ForceUltraSkyCondition", &UDAIUltraSkyBlueprintLibrary::execDAI_ForceUltraSkyCondition },
+		{ "DAI_GetUltraSkyActorFromService", &UDAIUltraSkyBlueprintLibrary::execDAI_GetUltraSkyActorFromService },
+		{ "DAI_GetUltraSkyBiome", &UDAIUltraSkyBlueprintLibrary::execDAI_GetUltraSkyBiome },
+		{ "DAI_GetUltraSkyCondition", &UDAIUltraSkyBlueprintLibrary::execDAI_GetUltraSkyCondition },
+		{ "DAI_GetUltraSkyIsPrecipitating", &UDAIUltraSkyBlueprintLibrary::execDAI_GetUltraSkyIsPrecipitating },
+		{ "DAI_GetUltraSkyIsStorming", &UDAIUltraSkyBlueprintLibrary::execDAI_GetUltraSkyIsStorming },
+		{ "DAI_GetUltraSkySnowAccum", &UDAIUltraSkyBlueprintLibrary::execDAI_GetUltraSkySnowAccum },
+		{ "DAI_GetUltraSkyTimeOfDay", &UDAIUltraSkyBlueprintLibrary::execDAI_GetUltraSkyTimeOfDay },
+		{ "DAI_GetUltraSkyWetness", &UDAIUltraSkyBlueprintLibrary::execDAI_GetUltraSkyWetness },
+		{ "DAI_GetUltraSkyWindDirection", &UDAIUltraSkyBlueprintLibrary::execDAI_GetUltraSkyWindDirection },
+		{ "DAI_GetUltraSkyWindIntensity", &UDAIUltraSkyBlueprintLibrary::execDAI_GetUltraSkyWindIntensity },
+		{ "DAI_SetUltraSkyDayLength", &UDAIUltraSkyBlueprintLibrary::execDAI_SetUltraSkyDayLength },
+		{ "DAI_SetUltraSkySnowThresholds", &UDAIUltraSkyBlueprintLibrary::execDAI_SetUltraSkySnowThresholds },
+		{ "DAI_SetUltraSkyTime", &UDAIUltraSkyBlueprintLibrary::execDAI_SetUltraSkyTime },
 	};
 	FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
 }
@@ -836,27 +836,28 @@ struct Z_Construct_UClass_UDAIUltraSkyBlueprintLibrary_Statics
 {
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Class_MetaDataParams[] = {
+		{ "BlueprintType", "true" },
 		{ "IncludePath", "DAIUltraSkyBlueprintLibrary.h" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyBlueprintLibrary.h" },
 	};
 #endif // WITH_METADATA
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
-		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyBiomeByName, "ForceUltraSkyBiomeByName" }, // 3423877237
-		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_ForceUltraSkyCondition, "ForceUltraSkyCondition" }, // 2595898550
-		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyActorFromService, "GetUltraSkyActorFromService" }, // 3182488133
-		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyBiome, "GetUltraSkyBiome" }, // 1157760987
-		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyCondition, "GetUltraSkyCondition" }, // 20224665
-		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsPrecipitating, "GetUltraSkyIsPrecipitating" }, // 700911344
-		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyIsStorming, "GetUltraSkyIsStorming" }, // 1335407031
-		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkySnowAccum, "GetUltraSkySnowAccum" }, // 18507859
-		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyTimeOfDay, "GetUltraSkyTimeOfDay" }, // 1223824397
-		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWetness, "GetUltraSkyWetness" }, // 1198204632
-		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWindDirection, "GetUltraSkyWindDirection" }, // 908878142
-		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_GetUltraSkyWindIntensity, "GetUltraSkyWindIntensity" }, // 3194400607
-		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkyDayLength, "SetUltraSkyDayLength" }, // 1764084600
-		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkySnowThresholds, "SetUltraSkySnowThresholds" }, // 2781131688
-		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_SetUltraSkyTime, "SetUltraSkyTime" }, // 303809733
+		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyBiomeByName, "DAI_ForceUltraSkyBiomeByName" }, // 2231164915
+		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_ForceUltraSkyCondition, "DAI_ForceUltraSkyCondition" }, // 2829920217
+		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyActorFromService, "DAI_GetUltraSkyActorFromService" }, // 686704413
+		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyBiome, "DAI_GetUltraSkyBiome" }, // 1446698658
+		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyCondition, "DAI_GetUltraSkyCondition" }, // 1533249747
+		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsPrecipitating, "DAI_GetUltraSkyIsPrecipitating" }, // 788613791
+		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyIsStorming, "DAI_GetUltraSkyIsStorming" }, // 2008813457
+		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkySnowAccum, "DAI_GetUltraSkySnowAccum" }, // 2521852138
+		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyTimeOfDay, "DAI_GetUltraSkyTimeOfDay" }, // 3473042975
+		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWetness, "DAI_GetUltraSkyWetness" }, // 1330398737
+		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWindDirection, "DAI_GetUltraSkyWindDirection" }, // 892885403
+		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_GetUltraSkyWindIntensity, "DAI_GetUltraSkyWindIntensity" }, // 1167253019
+		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkyDayLength, "DAI_SetUltraSkyDayLength" }, // 3109481276
+		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkySnowThresholds, "DAI_SetUltraSkySnowThresholds" }, // 1108038386
+		{ &Z_Construct_UFunction_UDAIUltraSkyBlueprintLibrary_DAI_SetUltraSkyTime, "DAI_SetUltraSkyTime" }, // 1648378333
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
 	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
@@ -905,10 +906,10 @@ UDAIUltraSkyBlueprintLibrary::~UDAIUltraSkyBlueprintLibrary() {}
 struct Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyBlueprintLibrary_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UDAIUltraSkyBlueprintLibrary, UDAIUltraSkyBlueprintLibrary::StaticClass, TEXT("UDAIUltraSkyBlueprintLibrary"), &Z_Registration_Info_UClass_UDAIUltraSkyBlueprintLibrary, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UDAIUltraSkyBlueprintLibrary), 3649864371U) },
+		{ Z_Construct_UClass_UDAIUltraSkyBlueprintLibrary, UDAIUltraSkyBlueprintLibrary::StaticClass, TEXT("UDAIUltraSkyBlueprintLibrary"), &Z_Registration_Info_UClass_UDAIUltraSkyBlueprintLibrary, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UDAIUltraSkyBlueprintLibrary), 2549715637U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyBlueprintLibrary_h_4230622375(TEXT("/Script/DAI_UltraSky"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyBlueprintLibrary_h_1968519490(TEXT("/Script/DAI_UltraSky"),
 	Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyBlueprintLibrary_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyBlueprintLibrary_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

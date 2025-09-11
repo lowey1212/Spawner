@@ -276,35 +276,35 @@ struct Z_Construct_UClass_UDAIUltraSkyAttributeSet_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_TemperatureC_MetaData[] = {
-		{ "Category", "UltraSky|Attributes" },
+		{ "Category", "DAI_UltraSky|Attributes" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyAttributeSet.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Ambient temperature in Celsius (replicated)." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_Humidity_MetaData[] = {
-		{ "Category", "UltraSky|Attributes" },
+		{ "Category", "DAI_UltraSky|Attributes" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyAttributeSet.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Relative humidity 0..1 (replicated)." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_WindSpeedKph_MetaData[] = {
-		{ "Category", "UltraSky|Attributes" },
+		{ "Category", "DAI_UltraSky|Attributes" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyAttributeSet.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Wind speed in km/h (replicated)." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_Precipitation_MetaData[] = {
-		{ "Category", "UltraSky|Attributes" },
+		{ "Category", "DAI_UltraSky|Attributes" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyAttributeSet.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Precipitation intensity 0..1 (0 none, 1 storm)." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_Cloudiness_MetaData[] = {
-		{ "Category", "UltraSky|Attributes" },
+		{ "Category", "DAI_UltraSky|Attributes" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyAttributeSet.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Cloud coverage 0..1 proxy for gameplay/UI." },
@@ -399,10 +399,10 @@ UDAIUltraSkyAttributeSet::~UDAIUltraSkyAttributeSet() {}
 struct Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyAttributeSet_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UDAIUltraSkyAttributeSet, UDAIUltraSkyAttributeSet::StaticClass, TEXT("UDAIUltraSkyAttributeSet"), &Z_Registration_Info_UClass_UDAIUltraSkyAttributeSet, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UDAIUltraSkyAttributeSet), 1931036919U) },
+		{ Z_Construct_UClass_UDAIUltraSkyAttributeSet, UDAIUltraSkyAttributeSet::StaticClass, TEXT("UDAIUltraSkyAttributeSet"), &Z_Registration_Info_UClass_UDAIUltraSkyAttributeSet, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UDAIUltraSkyAttributeSet), 2632519477U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyAttributeSet_h_2746679956(TEXT("/Script/DAI_UltraSky"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyAttributeSet_h_3367969776(TEXT("/Script/DAI_UltraSky"),
 	Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyAttributeSet_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyAttributeSet_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

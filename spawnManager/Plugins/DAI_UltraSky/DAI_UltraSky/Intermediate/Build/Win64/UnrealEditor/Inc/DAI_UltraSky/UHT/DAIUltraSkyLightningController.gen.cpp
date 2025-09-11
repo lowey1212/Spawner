@@ -25,7 +25,7 @@ struct Z_Construct_UFunction_ADAIUltraSkyLightningController_TriggerRandomStrike
 {
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "UltraSky|Lightning" },
+		{ "Category", "DAI_UltraSky|Lightning" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyLightningController.h" },
 	};
 #endif // WITH_METADATA
@@ -59,7 +59,7 @@ struct Z_Construct_UFunction_ADAIUltraSkyLightningController_TriggerStrikeAtLoca
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "UltraSky|Lightning" },
+		{ "Category", "DAI_UltraSky|Lightning" },
 #if !UE_BUILD_SHIPPING
 		{ "Comment", "// Immediate manual trigger\n" },
 #endif
@@ -126,14 +126,14 @@ struct Z_Construct_UClass_ADAIUltraSkyLightningController_Statics
 		{ "ModuleRelativePath", "Public/DAIUltraSkyLightningController.h" },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bEnabled_MetaData[] = {
-		{ "Category", "UltraSky|Lightning" },
+		{ "Category", "DAI_UltraSky|Lightning" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyLightningController.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Master enable for automatic lightning logic (manual trigger still works if false)." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_MinIntervalSeconds_MetaData[] = {
-		{ "Category", "UltraSky|Lightning" },
+		{ "Category", "DAI_UltraSky|Lightning" },
 		{ "ClampMin", "0.1" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyLightningController.h" },
 #if !UE_BUILD_SHIPPING
@@ -141,7 +141,7 @@ struct Z_Construct_UClass_ADAIUltraSkyLightningController_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_MaxIntervalSeconds_MetaData[] = {
-		{ "Category", "UltraSky|Lightning" },
+		{ "Category", "DAI_UltraSky|Lightning" },
 		{ "ClampMin", "0.1" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyLightningController.h" },
 #if !UE_BUILD_SHIPPING
@@ -149,7 +149,7 @@ struct Z_Construct_UClass_ADAIUltraSkyLightningController_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_StrikeRadius_MetaData[] = {
-		{ "Category", "UltraSky|Lightning" },
+		{ "Category", "DAI_UltraSky|Lightning" },
 		{ "ClampMin", "0.0" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyLightningController.h" },
 #if !UE_BUILD_SHIPPING
@@ -157,14 +157,14 @@ struct Z_Construct_UClass_ADAIUltraSkyLightningController_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_StrikeHeight_MetaData[] = {
-		{ "Category", "UltraSky|Lightning" },
+		{ "Category", "DAI_UltraSky|Lightning" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyLightningController.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Height above ground plane to spawn bolt start (world Z units)." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_ChanceNearAnchor_MetaData[] = {
-		{ "Category", "UltraSky|Lightning" },
+		{ "Category", "DAI_UltraSky|Lightning" },
 		{ "ClampMax", "1.0" },
 		{ "ClampMin", "0.0" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyLightningController.h" },
@@ -173,35 +173,35 @@ struct Z_Construct_UClass_ADAIUltraSkyLightningController_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_LightningSystem_MetaData[] = {
-		{ "Category", "UltraSky|Lightning" },
+		{ "Category", "DAI_UltraSky|Lightning" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyLightningController.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Niagara system for primary lightning bolt." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_LightningGlowSystem_MetaData[] = {
-		{ "Category", "UltraSky|Lightning" },
+		{ "Category", "DAI_UltraSky|Lightning" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyLightningController.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Optional Niagara system for glow/secondary effect." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_UltraSky_MetaData[] = {
-		{ "Category", "UltraSky|Lightning" },
+		{ "Category", "DAI_UltraSky|Lightning" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyLightningController.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "UltraSky actor used to fetch storm anchor / condition. Auto-found if null." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_ThunderSound_MetaData[] = {
-		{ "Category", "UltraSky|Lightning" },
+		{ "Category", "DAI_UltraSky|Lightning" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyLightningController.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Optional thunder sound played after distance-based delay." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_ThunderDelayPerKm_MetaData[] = {
-		{ "Category", "UltraSky|Lightning" },
+		{ "Category", "DAI_UltraSky|Lightning" },
 		{ "ClampMin", "0.0" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyLightningController.h" },
 #if !UE_BUILD_SHIPPING
@@ -224,8 +224,8 @@ struct Z_Construct_UClass_ADAIUltraSkyLightningController_Statics
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
-		{ &Z_Construct_UFunction_ADAIUltraSkyLightningController_TriggerRandomStrike, "TriggerRandomStrike" }, // 2298564
-		{ &Z_Construct_UFunction_ADAIUltraSkyLightningController_TriggerStrikeAtLocation, "TriggerStrikeAtLocation" }, // 1393056787
+		{ &Z_Construct_UFunction_ADAIUltraSkyLightningController_TriggerRandomStrike, "TriggerRandomStrike" }, // 3337058784
+		{ &Z_Construct_UFunction_ADAIUltraSkyLightningController_TriggerStrikeAtLocation, "TriggerStrikeAtLocation" }, // 643021030
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
 	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
@@ -302,10 +302,10 @@ ADAIUltraSkyLightningController::~ADAIUltraSkyLightningController() {}
 struct Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyLightningController_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_ADAIUltraSkyLightningController, ADAIUltraSkyLightningController::StaticClass, TEXT("ADAIUltraSkyLightningController"), &Z_Registration_Info_UClass_ADAIUltraSkyLightningController, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ADAIUltraSkyLightningController), 441898827U) },
+		{ Z_Construct_UClass_ADAIUltraSkyLightningController, ADAIUltraSkyLightningController::StaticClass, TEXT("ADAIUltraSkyLightningController"), &Z_Registration_Info_UClass_ADAIUltraSkyLightningController, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ADAIUltraSkyLightningController), 1954980477U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyLightningController_h_2707191146(TEXT("/Script/DAI_UltraSky"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyLightningController_h_846780881(TEXT("/Script/DAI_UltraSky"),
 	Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyLightningController_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyLightningController_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

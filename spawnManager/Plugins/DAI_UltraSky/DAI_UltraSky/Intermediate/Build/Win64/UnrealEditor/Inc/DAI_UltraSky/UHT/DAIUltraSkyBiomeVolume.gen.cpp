@@ -37,14 +37,14 @@ struct Z_Construct_UClass_ADAIUltraSkyBiomeVolume_Statics
 		{ "ShowCategories", "Input|MouseInput Input|TouchInput" },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_Biome_MetaData[] = {
-		{ "Category", "UltraSky|Biome" },
+		{ "Category", "DAI_UltraSky|Biome" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyBiomeVolume.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Biome data asset applied while actor inside volume." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_Priority_MetaData[] = {
-		{ "Category", "UltraSky|Biome" },
+		{ "Category", "DAI_UltraSky|Biome" },
 		{ "ClampMin", "0" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyBiomeVolume.h" },
 #if !UE_BUILD_SHIPPING
@@ -108,10 +108,10 @@ ADAIUltraSkyBiomeVolume::~ADAIUltraSkyBiomeVolume() {}
 struct Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyBiomeVolume_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_ADAIUltraSkyBiomeVolume, ADAIUltraSkyBiomeVolume::StaticClass, TEXT("ADAIUltraSkyBiomeVolume"), &Z_Registration_Info_UClass_ADAIUltraSkyBiomeVolume, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ADAIUltraSkyBiomeVolume), 974952903U) },
+		{ Z_Construct_UClass_ADAIUltraSkyBiomeVolume, ADAIUltraSkyBiomeVolume::StaticClass, TEXT("ADAIUltraSkyBiomeVolume"), &Z_Registration_Info_UClass_ADAIUltraSkyBiomeVolume, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ADAIUltraSkyBiomeVolume), 4253347632U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyBiomeVolume_h_1916394526(TEXT("/Script/DAI_UltraSky"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyBiomeVolume_h_529685891(TEXT("/Script/DAI_UltraSky"),
 	Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyBiomeVolume_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyBiomeVolume_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

@@ -2,7 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Engine/Volume.h"
+#include "GameFramework/Volume.h"
 #include "WeatherManager.generated.h"
 
 class UNiagaraSystem;

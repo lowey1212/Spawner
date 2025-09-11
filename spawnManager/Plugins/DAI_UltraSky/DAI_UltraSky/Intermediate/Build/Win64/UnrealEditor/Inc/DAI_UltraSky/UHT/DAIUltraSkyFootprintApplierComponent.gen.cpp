@@ -22,7 +22,7 @@ struct Z_Construct_UFunction_UDAIUltraSkyFootprintApplierComponent_ApplyNow_Stat
 {
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "UltraSky|Footprints" },
+		{ "Category", "DAI_UltraSky|Footprints" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyFootprintApplierComponent.h" },
 	};
 #endif // WITH_METADATA
@@ -66,40 +66,41 @@ struct Z_Construct_UClass_UDAIUltraSkyFootprintApplierComponent_Statics
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Class_MetaDataParams[] = {
 		{ "BlueprintSpawnableComponent", "" },
+		{ "BlueprintType", "true" },
 		{ "ClassGroupNames", "Rendering" },
 		{ "IncludePath", "DAIUltraSkyFootprintApplierComponent.h" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyFootprintApplierComponent.h" },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_TextureParamName_MetaData[] = {
-		{ "Category", "UltraSky|Footprints" },
+		{ "Category", "DAI_UltraSky|Footprints" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyFootprintApplierComponent.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Material parameter name that will receive the footprint mask render target." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_FootprintMask_MetaData[] = {
-		{ "Category", "UltraSky|Footprints" },
+		{ "Category", "DAI_UltraSky|Footprints" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyFootprintApplierComponent.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Explicit footprint mask actor to sample. If unset and AutoFind enabled a nearby one is searched each refresh." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bAutoFindNearestMask_MetaData[] = {
-		{ "Category", "UltraSky|Footprints" },
+		{ "Category", "DAI_UltraSky|Footprints" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyFootprintApplierComponent.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "If true and no FootprintMask assigned the component finds nearest mask actor periodically." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bCreateMID_MetaData[] = {
-		{ "Category", "UltraSky|Footprints" },
+		{ "Category", "DAI_UltraSky|Footprints" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyFootprintApplierComponent.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "If true create per-mesh MID so parameter assignment is isolated." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_RefreshInterval_MetaData[] = {
-		{ "Category", "UltraSky|Footprints" },
+		{ "Category", "DAI_UltraSky|Footprints" },
 		{ "ClampMin", "0.1" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyFootprintApplierComponent.h" },
 #if !UE_BUILD_SHIPPING
@@ -117,7 +118,7 @@ struct Z_Construct_UClass_UDAIUltraSkyFootprintApplierComponent_Statics
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
-		{ &Z_Construct_UFunction_UDAIUltraSkyFootprintApplierComponent_ApplyNow, "ApplyNow" }, // 683817582
+		{ &Z_Construct_UFunction_UDAIUltraSkyFootprintApplierComponent_ApplyNow, "ApplyNow" }, // 611508523
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
 	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
@@ -186,10 +187,10 @@ UDAIUltraSkyFootprintApplierComponent::~UDAIUltraSkyFootprintApplierComponent() 
 struct Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyFootprintApplierComponent_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UDAIUltraSkyFootprintApplierComponent, UDAIUltraSkyFootprintApplierComponent::StaticClass, TEXT("UDAIUltraSkyFootprintApplierComponent"), &Z_Registration_Info_UClass_UDAIUltraSkyFootprintApplierComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UDAIUltraSkyFootprintApplierComponent), 3509861283U) },
+		{ Z_Construct_UClass_UDAIUltraSkyFootprintApplierComponent, UDAIUltraSkyFootprintApplierComponent::StaticClass, TEXT("UDAIUltraSkyFootprintApplierComponent"), &Z_Registration_Info_UClass_UDAIUltraSkyFootprintApplierComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UDAIUltraSkyFootprintApplierComponent), 2300489074U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyFootprintApplierComponent_h_2743502929(TEXT("/Script/DAI_UltraSky"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyFootprintApplierComponent_h_3701044490(TEXT("/Script/DAI_UltraSky"),
 	Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyFootprintApplierComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyFootprintApplierComponent_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

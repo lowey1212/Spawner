@@ -17,21 +17,21 @@ class UObject;
 #define DAI_ULTRASKY_DAIUltraSkyBlueprintLibrary_generated_h
 
 #define FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyBlueprintLibrary_h_22_RPC_WRAPPERS_NO_PURE_DECLS \
-	DECLARE_FUNCTION(execForceUltraSkyBiomeByName); \
-	DECLARE_FUNCTION(execSetUltraSkySnowThresholds); \
-	DECLARE_FUNCTION(execGetUltraSkyWindDirection); \
-	DECLARE_FUNCTION(execGetUltraSkyIsStorming); \
-	DECLARE_FUNCTION(execGetUltraSkyIsPrecipitating); \
-	DECLARE_FUNCTION(execGetUltraSkyBiome); \
-	DECLARE_FUNCTION(execGetUltraSkyWetness); \
-	DECLARE_FUNCTION(execForceUltraSkyCondition); \
-	DECLARE_FUNCTION(execGetUltraSkyWindIntensity); \
-	DECLARE_FUNCTION(execGetUltraSkySnowAccum); \
-	DECLARE_FUNCTION(execGetUltraSkyCondition); \
-	DECLARE_FUNCTION(execGetUltraSkyTimeOfDay); \
-	DECLARE_FUNCTION(execGetUltraSkyActorFromService); \
-	DECLARE_FUNCTION(execSetUltraSkyDayLength); \
-	DECLARE_FUNCTION(execSetUltraSkyTime);
+	DECLARE_FUNCTION(execDAI_ForceUltraSkyBiomeByName); \
+	DECLARE_FUNCTION(execDAI_SetUltraSkySnowThresholds); \
+	DECLARE_FUNCTION(execDAI_GetUltraSkyWindDirection); \
+	DECLARE_FUNCTION(execDAI_GetUltraSkyIsStorming); \
+	DECLARE_FUNCTION(execDAI_GetUltraSkyIsPrecipitating); \
+	DECLARE_FUNCTION(execDAI_GetUltraSkyBiome); \
+	DECLARE_FUNCTION(execDAI_GetUltraSkyWetness); \
+	DECLARE_FUNCTION(execDAI_ForceUltraSkyCondition); \
+	DECLARE_FUNCTION(execDAI_GetUltraSkyWindIntensity); \
+	DECLARE_FUNCTION(execDAI_GetUltraSkySnowAccum); \
+	DECLARE_FUNCTION(execDAI_GetUltraSkyCondition); \
+	DECLARE_FUNCTION(execDAI_GetUltraSkyTimeOfDay); \
+	DECLARE_FUNCTION(execDAI_GetUltraSkyActorFromService); \
+	DECLARE_FUNCTION(execDAI_SetUltraSkyDayLength); \
+	DECLARE_FUNCTION(execDAI_SetUltraSkyTime);
 
 
 #define FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyBlueprintLibrary_h_22_INCLASS_NO_PURE_DECLS \

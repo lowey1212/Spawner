@@ -35,14 +35,14 @@ struct Z_Construct_UClass_ADAIUltraSkyRadialStorm_Statics
 		{ "ModuleRelativePath", "Public/DAIUltraSkyRadialStorm.h" },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_OuterRadius_MetaData[] = {
-		{ "Category", "UltraSky|Storm" },
+		{ "Category", "DAI_UltraSky|Storm" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyRadialStorm.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Outer radius of storm influence (world units)." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_InnerFraction_MetaData[] = {
-		{ "Category", "UltraSky|Storm" },
+		{ "Category", "DAI_UltraSky|Storm" },
 		{ "ClampMax", "1.0" },
 		{ "ClampMin", "0.0" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyRadialStorm.h" },
@@ -51,21 +51,21 @@ struct Z_Construct_UClass_ADAIUltraSkyRadialStorm_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_StormBiome_MetaData[] = {
-		{ "Category", "UltraSky|Storm" },
+		{ "Category", "DAI_UltraSky|Storm" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyRadialStorm.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Biome to apply while inside storm radius (optional)." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_StormCondition_MetaData[] = {
-		{ "Category", "UltraSky|Storm" },
+		{ "Category", "DAI_UltraSky|Storm" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyRadialStorm.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Weather condition name forced while inside storm (e.g. Storm, Rain)." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_Priority_MetaData[] = {
-		{ "Category", "UltraSky|Storm" },
+		{ "Category", "DAI_UltraSky|Storm" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyRadialStorm.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Priority when multiple storms overlap (higher wins)." },
@@ -137,10 +137,10 @@ ADAIUltraSkyRadialStorm::~ADAIUltraSkyRadialStorm() {}
 struct Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyRadialStorm_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_ADAIUltraSkyRadialStorm, ADAIUltraSkyRadialStorm::StaticClass, TEXT("ADAIUltraSkyRadialStorm"), &Z_Registration_Info_UClass_ADAIUltraSkyRadialStorm, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ADAIUltraSkyRadialStorm), 428728080U) },
+		{ Z_Construct_UClass_ADAIUltraSkyRadialStorm, ADAIUltraSkyRadialStorm::StaticClass, TEXT("ADAIUltraSkyRadialStorm"), &Z_Registration_Info_UClass_ADAIUltraSkyRadialStorm, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ADAIUltraSkyRadialStorm), 4241519098U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyRadialStorm_h_255107170(TEXT("/Script/DAI_UltraSky"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyRadialStorm_h_1515395637(TEXT("/Script/DAI_UltraSky"),
 	Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyRadialStorm_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyRadialStorm_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

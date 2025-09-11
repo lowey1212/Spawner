@@ -21,13 +21,13 @@ void EmptyLinkFunctionForGeneratedCodeDAI_UltraSky_init() {}
 				SingletonFuncArray,
 				UE_ARRAY_COUNT(SingletonFuncArray),
 				PKG_CompiledIn | 0x00000000,
-				0x53F5A805,
-				0x063B0877,
+				0x017721DD,
+				0x84C73AD6,
 				METADATA_PARAMS(0, nullptr)
 			};
 			UECodeGen_Private::ConstructUPackage(Z_Registration_Info_UPackage__Script_DAI_UltraSky.OuterSingleton, PackageParams);
 		}
 		return Z_Registration_Info_UPackage__Script_DAI_UltraSky.OuterSingleton;
 	}
-	static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_DAI_UltraSky(Z_Construct_UPackage__Script_DAI_UltraSky, TEXT("/Script/DAI_UltraSky"), Z_Registration_Info_UPackage__Script_DAI_UltraSky, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0x53F5A805, 0x063B0877));
+	static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_DAI_UltraSky(Z_Construct_UPackage__Script_DAI_UltraSky, TEXT("/Script/DAI_UltraSky"), Z_Registration_Info_UPackage__Script_DAI_UltraSky, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0x017721DD, 0x84C73AD6));
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

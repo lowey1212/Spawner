@@ -13,28 +13,28 @@ void EmptyLinkFunctionForGeneratedCodeDAIUltraSkyEnvironmentSoundComponent() {}
 DAI_ULTRASKY_API UClass* Z_Construct_UClass_ADAIUltraSkyActor_NoRegister();
 DAI_ULTRASKY_API UClass* Z_Construct_UClass_UDAIUltraSkyEnvironmentSoundComponent();
 DAI_ULTRASKY_API UClass* Z_Construct_UClass_UDAIUltraSkyEnvironmentSoundComponent_NoRegister();
-DAI_ULTRASKY_API UScriptStruct* Z_Construct_UScriptStruct_FUltraSkyEnvSoundEntry();
+DAI_ULTRASKY_API UScriptStruct* Z_Construct_UScriptStruct_FDAIUltraSkyEnvSoundEntry();
 ENGINE_API UClass* Z_Construct_UClass_UActorComponent();
 ENGINE_API UClass* Z_Construct_UClass_UAudioComponent_NoRegister();
 ENGINE_API UClass* Z_Construct_UClass_USoundBase_NoRegister();
 UPackage* Z_Construct_UPackage__Script_DAI_UltraSky();
 // End Cross Module References
 
-// Begin ScriptStruct FUltraSkyEnvSoundEntry
-static FStructRegistrationInfo Z_Registration_Info_UScriptStruct_UltraSkyEnvSoundEntry;
-class UScriptStruct* FUltraSkyEnvSoundEntry::StaticStruct()
+// Begin ScriptStruct FDAIUltraSkyEnvSoundEntry
+static FStructRegistrationInfo Z_Registration_Info_UScriptStruct_DAIUltraSkyEnvSoundEntry;
+class UScriptStruct* FDAIUltraSkyEnvSoundEntry::StaticStruct()
 {
-	if (!Z_Registration_Info_UScriptStruct_UltraSkyEnvSoundEntry.OuterSingleton)
+	if (!Z_Registration_Info_UScriptStruct_DAIUltraSkyEnvSoundEntry.OuterSingleton)
 	{
-		Z_Registration_Info_UScriptStruct_UltraSkyEnvSoundEntry.OuterSingleton = GetStaticStruct(Z_Construct_UScriptStruct_FUltraSkyEnvSoundEntry, (UObject*)Z_Construct_UPackage__Script_DAI_UltraSky(), TEXT("UltraSkyEnvSoundEntry"));
+		Z_Registration_Info_UScriptStruct_DAIUltraSkyEnvSoundEntry.OuterSingleton = GetStaticStruct(Z_Construct_UScriptStruct_FDAIUltraSkyEnvSoundEntry, (UObject*)Z_Construct_UPackage__Script_DAI_UltraSky(), TEXT("DAIUltraSkyEnvSoundEntry"));
 	}
-	return Z_Registration_Info_UScriptStruct_UltraSkyEnvSoundEntry.OuterSingleton;
+	return Z_Registration_Info_UScriptStruct_DAIUltraSkyEnvSoundEntry.OuterSingleton;
 }
-template<> DAI_ULTRASKY_API UScriptStruct* StaticStruct<FUltraSkyEnvSoundEntry>()
+template<> DAI_ULTRASKY_API UScriptStruct* StaticStruct<FDAIUltraSkyEnvSoundEntry>()
 {
-	return FUltraSkyEnvSoundEntry::StaticStruct();
+	return FDAIUltraSkyEnvSoundEntry::StaticStruct();
 }
-struct Z_Construct_UScriptStruct_FUltraSkyEnvSoundEntry_Statics
+struct Z_Construct_UScriptStruct_FDAIUltraSkyEnvSoundEntry_Statics
 {
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Struct_MetaDataParams[] = {
@@ -42,14 +42,14 @@ struct Z_Construct_UScriptStruct_FUltraSkyEnvSoundEntry_Statics
 		{ "ModuleRelativePath", "Public/DAIUltraSkyEnvironmentSoundComponent.h" },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_Condition_MetaData[] = {
-		{ "Category", "UltraSkyEnvSoundEntry" },
+		{ "Category", "DAIUltraSkyEnvSoundEntry" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyEnvironmentSoundComponent.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Weather condition name this sound applies to (e.g. Clear, Rain, Snow, Storm)." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_Sound_MetaData[] = {
-		{ "Category", "UltraSkyEnvSoundEntry" },
+		{ "Category", "DAIUltraSkyEnvSoundEntry" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyEnvironmentSoundComponent.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Sound to loop while its Condition is active. NULL means ignored." },
@@ -61,39 +61,39 @@ struct Z_Construct_UScriptStruct_FUltraSkyEnvSoundEntry_Statics
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static void* NewStructOps()
 	{
-		return (UScriptStruct::ICppStructOps*)new UScriptStruct::TCppStructOps<FUltraSkyEnvSoundEntry>();
+		return (UScriptStruct::ICppStructOps*)new UScriptStruct::TCppStructOps<FDAIUltraSkyEnvSoundEntry>();
 	}
 	static const UECodeGen_Private::FStructParams StructParams;
 };
-const UECodeGen_Private::FNamePropertyParams Z_Construct_UScriptStruct_FUltraSkyEnvSoundEntry_Statics::NewProp_Condition = { "Condition", nullptr, (EPropertyFlags)0x0010000000000015, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FUltraSkyEnvSoundEntry, Condition), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Condition_MetaData), NewProp_Condition_MetaData) };
-const UECodeGen_Private::FObjectPropertyParams Z_Construct_UScriptStruct_FUltraSkyEnvSoundEntry_Statics::NewProp_Sound = { "Sound", nullptr, (EPropertyFlags)0x0114000000000015, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FUltraSkyEnvSoundEntry, Sound), Z_Construct_UClass_USoundBase_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Sound_MetaData), NewProp_Sound_MetaData) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UScriptStruct_FUltraSkyEnvSoundEntry_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FUltraSkyEnvSoundEntry_Statics::NewProp_Condition,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FUltraSkyEnvSoundEntry_Statics::NewProp_Sound,
+const UECodeGen_Private::FNamePropertyParams Z_Construct_UScriptStruct_FDAIUltraSkyEnvSoundEntry_Statics::NewProp_Condition = { "Condition", nullptr, (EPropertyFlags)0x0010000000000015, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FDAIUltraSkyEnvSoundEntry, Condition), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Condition_MetaData), NewProp_Condition_MetaData) };
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UScriptStruct_FDAIUltraSkyEnvSoundEntry_Statics::NewProp_Sound = { "Sound", nullptr, (EPropertyFlags)0x0114000000000015, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FDAIUltraSkyEnvSoundEntry, Sound), Z_Construct_UClass_USoundBase_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Sound_MetaData), NewProp_Sound_MetaData) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UScriptStruct_FDAIUltraSkyEnvSoundEntry_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FDAIUltraSkyEnvSoundEntry_Statics::NewProp_Condition,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FDAIUltraSkyEnvSoundEntry_Statics::NewProp_Sound,
 };
-static_assert(UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FUltraSkyEnvSoundEntry_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FStructParams Z_Construct_UScriptStruct_FUltraSkyEnvSoundEntry_Statics::StructParams = {
+static_assert(UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FDAIUltraSkyEnvSoundEntry_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FStructParams Z_Construct_UScriptStruct_FDAIUltraSkyEnvSoundEntry_Statics::StructParams = {
 	(UObject* (*)())Z_Construct_UPackage__Script_DAI_UltraSky,
 	nullptr,
 	&NewStructOps,
-	"UltraSkyEnvSoundEntry",
-	Z_Construct_UScriptStruct_FUltraSkyEnvSoundEntry_Statics::PropPointers,
-	UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FUltraSkyEnvSoundEntry_Statics::PropPointers),
-	sizeof(FUltraSkyEnvSoundEntry),
-	alignof(FUltraSkyEnvSoundEntry),
+	"DAIUltraSkyEnvSoundEntry",
+	Z_Construct_UScriptStruct_FDAIUltraSkyEnvSoundEntry_Statics::PropPointers,
+	UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FDAIUltraSkyEnvSoundEntry_Statics::PropPointers),
+	sizeof(FDAIUltraSkyEnvSoundEntry),
+	alignof(FDAIUltraSkyEnvSoundEntry),
 	RF_Public|RF_Transient|RF_MarkAsNative,
 	EStructFlags(0x00000001),
-	METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FUltraSkyEnvSoundEntry_Statics::Struct_MetaDataParams), Z_Construct_UScriptStruct_FUltraSkyEnvSoundEntry_Statics::Struct_MetaDataParams)
+	METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FDAIUltraSkyEnvSoundEntry_Statics::Struct_MetaDataParams), Z_Construct_UScriptStruct_FDAIUltraSkyEnvSoundEntry_Statics::Struct_MetaDataParams)
 };
-UScriptStruct* Z_Construct_UScriptStruct_FUltraSkyEnvSoundEntry()
+UScriptStruct* Z_Construct_UScriptStruct_FDAIUltraSkyEnvSoundEntry()
 {
-	if (!Z_Registration_Info_UScriptStruct_UltraSkyEnvSoundEntry.InnerSingleton)
+	if (!Z_Registration_Info_UScriptStruct_DAIUltraSkyEnvSoundEntry.InnerSingleton)
 	{
-		UECodeGen_Private::ConstructUScriptStruct(Z_Registration_Info_UScriptStruct_UltraSkyEnvSoundEntry.InnerSingleton, Z_Construct_UScriptStruct_FUltraSkyEnvSoundEntry_Statics::StructParams);
+		UECodeGen_Private::ConstructUScriptStruct(Z_Registration_Info_UScriptStruct_DAIUltraSkyEnvSoundEntry.InnerSingleton, Z_Construct_UScriptStruct_FDAIUltraSkyEnvSoundEntry_Statics::StructParams);
 	}
-	return Z_Registration_Info_UScriptStruct_UltraSkyEnvSoundEntry.InnerSingleton;
+	return Z_Registration_Info_UScriptStruct_DAIUltraSkyEnvSoundEntry.InnerSingleton;
 }
-// End ScriptStruct FUltraSkyEnvSoundEntry
+// End ScriptStruct FDAIUltraSkyEnvSoundEntry
 
 // Begin Class UDAIUltraSkyEnvironmentSoundComponent
 void UDAIUltraSkyEnvironmentSoundComponent::StaticRegisterNativesUDAIUltraSkyEnvironmentSoundComponent()
@@ -109,26 +109,27 @@ struct Z_Construct_UClass_UDAIUltraSkyEnvironmentSoundComponent_Statics
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Class_MetaDataParams[] = {
 		{ "BlueprintSpawnableComponent", "" },
+		{ "BlueprintType", "true" },
 		{ "ClassGroupNames", "Audio" },
 		{ "IncludePath", "DAIUltraSkyEnvironmentSoundComponent.h" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyEnvironmentSoundComponent.h" },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bEnabled_MetaData[] = {
-		{ "Category", "UltraSky|EnvSound" },
+		{ "Category", "DAI_UltraSky|EnvSound" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyEnvironmentSoundComponent.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "If false the component does nothing (no updates, no playback)." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_UltraSky_MetaData[] = {
-		{ "Category", "UltraSky|EnvSound" },
+		{ "Category", "DAI_UltraSky|EnvSound" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyEnvironmentSoundComponent.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "UltraSky actor providing current weather condition. Auto-found if not set at BeginPlay." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_CrossfadeSeconds_MetaData[] = {
-		{ "Category", "UltraSky|EnvSound" },
+		{ "Category", "DAI_UltraSky|EnvSound" },
 		{ "ClampMin", "0.0" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyEnvironmentSoundComponent.h" },
 #if !UE_BUILD_SHIPPING
@@ -136,7 +137,7 @@ struct Z_Construct_UClass_UDAIUltraSkyEnvironmentSoundComponent_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_Sounds_MetaData[] = {
-		{ "Category", "UltraSky|EnvSound" },
+		{ "Category", "DAI_UltraSky|EnvSound" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyEnvironmentSoundComponent.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Per-condition looping ambience entries. First match used." },
@@ -179,8 +180,8 @@ void Z_Construct_UClass_UDAIUltraSkyEnvironmentSoundComponent_Statics::NewProp_b
 const UECodeGen_Private::FBoolPropertyParams Z_Construct_UClass_UDAIUltraSkyEnvironmentSoundComponent_Statics::NewProp_bEnabled = { "bEnabled", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, sizeof(bool), sizeof(UDAIUltraSkyEnvironmentSoundComponent), &Z_Construct_UClass_UDAIUltraSkyEnvironmentSoundComponent_Statics::NewProp_bEnabled_SetBit, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_bEnabled_MetaData), NewProp_bEnabled_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_UDAIUltraSkyEnvironmentSoundComponent_Statics::NewProp_UltraSky = { "UltraSky", nullptr, (EPropertyFlags)0x0114000000000005, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UDAIUltraSkyEnvironmentSoundComponent, UltraSky), Z_Construct_UClass_ADAIUltraSkyActor_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_UltraSky_MetaData), NewProp_UltraSky_MetaData) };
 const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UDAIUltraSkyEnvironmentSoundComponent_Statics::NewProp_CrossfadeSeconds = { "CrossfadeSeconds", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UDAIUltraSkyEnvironmentSoundComponent, CrossfadeSeconds), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CrossfadeSeconds_MetaData), NewProp_CrossfadeSeconds_MetaData) };
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UDAIUltraSkyEnvironmentSoundComponent_Statics::NewProp_Sounds_Inner = { "Sounds", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FUltraSkyEnvSoundEntry, METADATA_PARAMS(0, nullptr) }; // 4234727462
-const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_UDAIUltraSkyEnvironmentSoundComponent_Statics::NewProp_Sounds = { "Sounds", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UDAIUltraSkyEnvironmentSoundComponent, Sounds), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Sounds_MetaData), NewProp_Sounds_MetaData) }; // 4234727462
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UDAIUltraSkyEnvironmentSoundComponent_Statics::NewProp_Sounds_Inner = { "Sounds", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FDAIUltraSkyEnvSoundEntry, METADATA_PARAMS(0, nullptr) }; // 3229764483
+const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_UDAIUltraSkyEnvironmentSoundComponent_Statics::NewProp_Sounds = { "Sounds", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UDAIUltraSkyEnvironmentSoundComponent, Sounds), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Sounds_MetaData), NewProp_Sounds_MetaData) }; // 3229764483
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_UDAIUltraSkyEnvironmentSoundComponent_Statics::NewProp_ActiveAudio = { "ActiveAudio", nullptr, (EPropertyFlags)0x0144000000082008, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UDAIUltraSkyEnvironmentSoundComponent, ActiveAudio), Z_Construct_UClass_UAudioComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_ActiveAudio_MetaData), NewProp_ActiveAudio_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_UDAIUltraSkyEnvironmentSoundComponent_Statics::NewProp_FadingOutAudio = { "FadingOutAudio", nullptr, (EPropertyFlags)0x0144000000082008, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UDAIUltraSkyEnvironmentSoundComponent, FadingOutAudio), Z_Construct_UClass_UAudioComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_FadingOutAudio_MetaData), NewProp_FadingOutAudio_MetaData) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UDAIUltraSkyEnvironmentSoundComponent_Statics::PropPointers[] = {
@@ -233,13 +234,13 @@ UDAIUltraSkyEnvironmentSoundComponent::~UDAIUltraSkyEnvironmentSoundComponent() 
 struct Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyEnvironmentSoundComponent_h_Statics
 {
 	static constexpr FStructRegisterCompiledInInfo ScriptStructInfo[] = {
-		{ FUltraSkyEnvSoundEntry::StaticStruct, Z_Construct_UScriptStruct_FUltraSkyEnvSoundEntry_Statics::NewStructOps, TEXT("UltraSkyEnvSoundEntry"), &Z_Registration_Info_UScriptStruct_UltraSkyEnvSoundEntry, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FUltraSkyEnvSoundEntry), 4234727462U) },
+		{ FDAIUltraSkyEnvSoundEntry::StaticStruct, Z_Construct_UScriptStruct_FDAIUltraSkyEnvSoundEntry_Statics::NewStructOps, TEXT("DAIUltraSkyEnvSoundEntry"), &Z_Registration_Info_UScriptStruct_DAIUltraSkyEnvSoundEntry, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FDAIUltraSkyEnvSoundEntry), 3229764483U) },
 	};
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UDAIUltraSkyEnvironmentSoundComponent, UDAIUltraSkyEnvironmentSoundComponent::StaticClass, TEXT("UDAIUltraSkyEnvironmentSoundComponent"), &Z_Registration_Info_UClass_UDAIUltraSkyEnvironmentSoundComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UDAIUltraSkyEnvironmentSoundComponent), 4285894142U) },
+		{ Z_Construct_UClass_UDAIUltraSkyEnvironmentSoundComponent, UDAIUltraSkyEnvironmentSoundComponent::StaticClass, TEXT("UDAIUltraSkyEnvironmentSoundComponent"), &Z_Registration_Info_UClass_UDAIUltraSkyEnvironmentSoundComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UDAIUltraSkyEnvironmentSoundComponent), 826697135U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyEnvironmentSoundComponent_h_2224977134(TEXT("/Script/DAI_UltraSky"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyEnvironmentSoundComponent_h_2905909699(TEXT("/Script/DAI_UltraSky"),
 	Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyEnvironmentSoundComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyEnvironmentSoundComponent_h_Statics::ClassInfo),
 	Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyEnvironmentSoundComponent_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyEnvironmentSoundComponent_h_Statics::ScriptStructInfo),
 	nullptr, 0);

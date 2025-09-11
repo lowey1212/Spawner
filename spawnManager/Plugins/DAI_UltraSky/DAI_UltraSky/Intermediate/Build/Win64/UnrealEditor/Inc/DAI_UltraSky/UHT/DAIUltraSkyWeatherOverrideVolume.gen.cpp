@@ -92,35 +92,35 @@ struct Z_Construct_UClass_ADAIUltraSkyWeatherOverrideVolume_Statics
 		{ "ShowCategories", "Input|MouseInput Input|TouchInput" },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_Mode_MetaData[] = {
-		{ "Category", "UltraSky|Override" },
+		{ "Category", "DAI_UltraSky|Override" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyWeatherOverrideVolume.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Override mode; Disabled ignores volume, SinglePreset applies specified biome/condition." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_Priority_MetaData[] = {
-		{ "Category", "UltraSky|Override" },
+		{ "Category", "DAI_UltraSky|Override" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyWeatherOverrideVolume.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Priority when multiple override volumes overlap (higher wins)." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_OverrideBiome_MetaData[] = {
-		{ "Category", "UltraSky|Override" },
+		{ "Category", "DAI_UltraSky|Override" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyWeatherOverrideVolume.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Biome to force while inside (used when Mode=SinglePreset)." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_OverrideCondition_MetaData[] = {
-		{ "Category", "UltraSky|Override" },
+		{ "Category", "DAI_UltraSky|Override" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyWeatherOverrideVolume.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Weather condition name to force while inside (optional)." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_EnterBlendSeconds_MetaData[] = {
-		{ "Category", "UltraSky|Override" },
+		{ "Category", "DAI_UltraSky|Override" },
 		{ "ClampMin", "0.0" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyWeatherOverrideVolume.h" },
 #if !UE_BUILD_SHIPPING
@@ -128,7 +128,7 @@ struct Z_Construct_UClass_ADAIUltraSkyWeatherOverrideVolume_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_ExitBlendSeconds_MetaData[] = {
-		{ "Category", "UltraSky|Override" },
+		{ "Category", "DAI_UltraSky|Override" },
 		{ "ClampMin", "0.0" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyWeatherOverrideVolume.h" },
 #if !UE_BUILD_SHIPPING
@@ -210,10 +210,10 @@ struct Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_
 		{ EDAIUltraSkyOverrideMode_StaticEnum, TEXT("EDAIUltraSkyOverrideMode"), &Z_Registration_Info_UEnum_EDAIUltraSkyOverrideMode, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 1854040550U) },
 	};
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_ADAIUltraSkyWeatherOverrideVolume, ADAIUltraSkyWeatherOverrideVolume::StaticClass, TEXT("ADAIUltraSkyWeatherOverrideVolume"), &Z_Registration_Info_UClass_ADAIUltraSkyWeatherOverrideVolume, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ADAIUltraSkyWeatherOverrideVolume), 827372491U) },
+		{ Z_Construct_UClass_ADAIUltraSkyWeatherOverrideVolume, ADAIUltraSkyWeatherOverrideVolume::StaticClass, TEXT("ADAIUltraSkyWeatherOverrideVolume"), &Z_Registration_Info_UClass_ADAIUltraSkyWeatherOverrideVolume, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ADAIUltraSkyWeatherOverrideVolume), 1934413955U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyWeatherOverrideVolume_h_1020303892(TEXT("/Script/DAI_UltraSky"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyWeatherOverrideVolume_h_4234954398(TEXT("/Script/DAI_UltraSky"),
 	Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyWeatherOverrideVolume_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyWeatherOverrideVolume_h_Statics::ClassInfo),
 	nullptr, 0,
 	Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyWeatherOverrideVolume_h_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyWeatherOverrideVolume_h_Statics::EnumInfo));

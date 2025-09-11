@@ -87,7 +87,7 @@ struct Z_Construct_UFunction_ADAIUltraSkyActor_EditorApplySelectedPreset_Statics
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
 		{ "CallInEditor", "true" },
-		{ "Category", "UltraSky|Editor" },
+		{ "Category", "DAI_UltraSky|Editor" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 	};
 #endif // WITH_METADATA
@@ -119,7 +119,7 @@ struct Z_Construct_UFunction_ADAIUltraSkyActor_EditorCreateFootprintDemo_Statics
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
 		{ "CallInEditor", "true" },
-		{ "Category", "UltraSky|Editor" },
+		{ "Category", "DAI_UltraSky|Editor" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 	};
 #endif // WITH_METADATA
@@ -154,7 +154,7 @@ struct Z_Construct_UFunction_ADAIUltraSkyActor_EditorCreateUltraSkySamples_Stati
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
 		{ "CallInEditor", "true" },
-		{ "Category", "UltraSky|Editor" },
+		{ "Category", "DAI_UltraSky|Editor" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 	};
 #endif // WITH_METADATA
@@ -188,7 +188,7 @@ struct Z_Construct_UFunction_ADAIUltraSkyActor_EditorRecaptureSkylight_Statics
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
 		{ "CallInEditor", "true" },
-		{ "Category", "UltraSky|Editor" },
+		{ "Category", "DAI_UltraSky|Editor" },
 #if !UE_BUILD_SHIPPING
 		{ "Comment", "// Editor helpers\n" },
 #endif
@@ -226,7 +226,7 @@ struct Z_Construct_UFunction_ADAIUltraSkyActor_EditorRemoveFootprintAppliers_Sta
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
 		{ "CallInEditor", "true" },
-		{ "Category", "UltraSky|Editor" },
+		{ "Category", "DAI_UltraSky|Editor" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 	};
 #endif // WITH_METADATA
@@ -264,7 +264,7 @@ struct Z_Construct_UFunction_ADAIUltraSkyActor_ForceApplyBiome_Statics
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "UltraSky|Weather" },
+		{ "Category", "DAI_UltraSky|Weather" },
 		{ "CPP_Default_BlendSeconds", "0.000000" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 	};
@@ -312,7 +312,7 @@ struct Z_Construct_UFunction_ADAIUltraSkyActor_ForceCondition_Statics
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "UltraSky|Weather" },
+		{ "Category", "DAI_UltraSky|Weather" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 	};
 #endif // WITH_METADATA
@@ -355,7 +355,7 @@ struct Z_Construct_UFunction_ADAIUltraSkyActor_IsSnowDeepEnoughForFootprints_Sta
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "UltraSky|Snow" },
+		{ "Category", "DAI_UltraSky|Snow" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 	};
 #endif // WITH_METADATA
@@ -402,7 +402,7 @@ struct Z_Construct_UFunction_ADAIUltraSkyActor_SetDayLengthSeconds_Statics
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "UltraSky|Time" },
+		{ "Category", "DAI_UltraSky|Time" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 	};
 #endif // WITH_METADATA
@@ -445,7 +445,7 @@ struct Z_Construct_UFunction_ADAIUltraSkyActor_SetTimeOfDay_Statics
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "UltraSky|Time" },
+		{ "Category", "DAI_UltraSky|Time" },
 #if !UE_BUILD_SHIPPING
 		{ "Comment", "// Blueprint utilities\n" },
 #endif
@@ -495,7 +495,7 @@ struct Z_Construct_UFunction_ADAIUltraSkyActor_StampFootprintAtLocation_Statics
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "UltraSky|Snow" },
+		{ "Category", "DAI_UltraSky|Snow" },
 		{ "CPP_Default_Strength", "1.000000" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 	};
@@ -572,7 +572,7 @@ struct Z_Construct_UClass_ADAIUltraSkyActor_Statics
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_Root_MetaData[] = {
-		{ "Category", "UltraSky" },
+		{ "Category", "DAI_UltraSky" },
 		{ "EditInline", "true" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
@@ -580,7 +580,7 @@ struct Z_Construct_UClass_ADAIUltraSkyActor_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_SunLight_MetaData[] = {
-		{ "Category", "UltraSky|Components" },
+		{ "Category", "DAI_UltraSky|Components" },
 		{ "EditInline", "true" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
@@ -588,7 +588,7 @@ struct Z_Construct_UClass_ADAIUltraSkyActor_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_SkyLight_MetaData[] = {
-		{ "Category", "UltraSky|Components" },
+		{ "Category", "DAI_UltraSky|Components" },
 		{ "EditInline", "true" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
@@ -596,7 +596,7 @@ struct Z_Construct_UClass_ADAIUltraSkyActor_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_Atmosphere_MetaData[] = {
-		{ "Category", "UltraSky|Components" },
+		{ "Category", "DAI_UltraSky|Components" },
 		{ "EditInline", "true" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
@@ -604,7 +604,7 @@ struct Z_Construct_UClass_ADAIUltraSkyActor_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_VolumetricClouds_MetaData[] = {
-		{ "Category", "UltraSky|Components" },
+		{ "Category", "DAI_UltraSky|Components" },
 		{ "EditInline", "true" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
@@ -612,7 +612,7 @@ struct Z_Construct_UClass_ADAIUltraSkyActor_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_HeightFog_MetaData[] = {
-		{ "Category", "UltraSky|Components" },
+		{ "Category", "DAI_UltraSky|Components" },
 		{ "EditInline", "true" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
@@ -620,14 +620,14 @@ struct Z_Construct_UClass_ADAIUltraSkyActor_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bAutoRunDayNight_MetaData[] = {
-		{ "Category", "UltraSky|Time" },
+		{ "Category", "DAI_UltraSky|Time" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Automatically advance time-of-day each tick using DayLengthSeconds." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_DayLengthSeconds_MetaData[] = {
-		{ "Category", "UltraSky|Time" },
+		{ "Category", "DAI_UltraSky|Time" },
 		{ "ClampMin", "1.0" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
@@ -635,7 +635,7 @@ struct Z_Construct_UClass_ADAIUltraSkyActor_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_TimeOfDay_MetaData[] = {
-		{ "Category", "UltraSky|Time" },
+		{ "Category", "DAI_UltraSky|Time" },
 		{ "ClampMax", "24.0" },
 		{ "ClampMin", "0.0" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
@@ -644,7 +644,7 @@ struct Z_Construct_UClass_ADAIUltraSkyActor_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_SkyLightRecaptureInterval_MetaData[] = {
-		{ "Category", "UltraSky|Performance" },
+		{ "Category", "DAI_UltraSky|Performance" },
 		{ "ClampMin", "0.1" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
@@ -652,7 +652,7 @@ struct Z_Construct_UClass_ADAIUltraSkyActor_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_RayleighScatteringScale_MetaData[] = {
-		{ "Category", "UltraSky|Atmosphere" },
+		{ "Category", "DAI_UltraSky|Atmosphere" },
 		{ "ClampMin", "0.0" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
@@ -660,7 +660,7 @@ struct Z_Construct_UClass_ADAIUltraSkyActor_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_MieScatteringScale_MetaData[] = {
-		{ "Category", "UltraSky|Atmosphere" },
+		{ "Category", "DAI_UltraSky|Atmosphere" },
 		{ "ClampMin", "0.0" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
@@ -668,7 +668,7 @@ struct Z_Construct_UClass_ADAIUltraSkyActor_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_CloudCoverage_MetaData[] = {
-		{ "Category", "UltraSky|Clouds" },
+		{ "Category", "DAI_UltraSky|Clouds" },
 		{ "ClampMax", "1.0" },
 		{ "ClampMin", "0.0" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
@@ -677,7 +677,7 @@ struct Z_Construct_UClass_ADAIUltraSkyActor_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_CloudDensity_MetaData[] = {
-		{ "Category", "UltraSky|Clouds" },
+		{ "Category", "DAI_UltraSky|Clouds" },
 		{ "ClampMax", "1.0" },
 		{ "ClampMin", "0.0" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
@@ -686,21 +686,21 @@ struct Z_Construct_UClass_ADAIUltraSkyActor_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bUseBiomeVolumes_MetaData[] = {
-		{ "Category", "UltraSky|Weather" },
+		{ "Category", "DAI_UltraSky|Weather" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Enable biome volume system to drive weather/visual parameters." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_WeatherAnchor_MetaData[] = {
-		{ "Category", "UltraSky|Weather" },
+		{ "Category", "DAI_UltraSky|Weather" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Actor used as spatial anchor for biome & weather evaluation (e.g., player)." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_BiomeCheckInterval_MetaData[] = {
-		{ "Category", "UltraSky|Weather" },
+		{ "Category", "DAI_UltraSky|Weather" },
 		{ "ClampMin", "0.1" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
@@ -708,42 +708,42 @@ struct Z_Construct_UClass_ADAIUltraSkyActor_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_DefaultBiome_MetaData[] = {
-		{ "Category", "UltraSky|Weather" },
+		{ "Category", "DAI_UltraSky|Weather" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Fallback biome used if no volume applies." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_CurrentCondition_MetaData[] = {
-		{ "Category", "UltraSky|Weather" },
+		{ "Category", "DAI_UltraSky|Weather" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Manually forced weather condition name; leave empty for biome-driven." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_Presets_MetaData[] = {
-		{ "Category", "UltraSky|Editor" },
+		{ "Category", "DAI_UltraSky|Editor" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Biome presets list for quick editing / preview." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_EditorSelectedPresetIndex_MetaData[] = {
-		{ "Category", "UltraSky|Editor" },
+		{ "Category", "DAI_UltraSky|Editor" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Index into Presets array selected for apply operations." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bEnableWindDirectionalSource_MetaData[] = {
-		{ "Category", "UltraSky|Wind" },
+		{ "Category", "DAI_UltraSky|Wind" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Enable spawning & updating a wind directional source actor." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_WindBaseIntensity_MetaData[] = {
-		{ "Category", "UltraSky|Wind" },
+		{ "Category", "DAI_UltraSky|Wind" },
 		{ "ClampMin", "0.0" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
@@ -751,7 +751,7 @@ struct Z_Construct_UClass_ADAIUltraSkyActor_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_WindGustStrength_MetaData[] = {
-		{ "Category", "UltraSky|Wind" },
+		{ "Category", "DAI_UltraSky|Wind" },
 		{ "ClampMin", "0.0" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
@@ -759,7 +759,7 @@ struct Z_Construct_UClass_ADAIUltraSkyActor_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_WindGustSpeed_MetaData[] = {
-		{ "Category", "UltraSky|Wind" },
+		{ "Category", "DAI_UltraSky|Wind" },
 		{ "ClampMin", "0.01" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
@@ -767,7 +767,7 @@ struct Z_Construct_UClass_ADAIUltraSkyActor_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_WindDirectionDegrees_MetaData[] = {
-		{ "Category", "UltraSky|Wind" },
+		{ "Category", "DAI_UltraSky|Wind" },
 		{ "ClampMax", "360.0" },
 		{ "ClampMin", "0.0" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
@@ -776,42 +776,42 @@ struct Z_Construct_UClass_ADAIUltraSkyActor_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_GlobalWindMPC_MetaData[] = {
-		{ "Category", "UltraSky|Wind|MPC" },
+		{ "Category", "DAI_UltraSky|Wind|MPC" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Optional material parameter collection to broadcast wind params." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_MPCParam_WindIntensity_MetaData[] = {
-		{ "Category", "UltraSky|Wind|MPC" },
+		{ "Category", "DAI_UltraSky|Wind|MPC" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Scalar parameter name for wind intensity in MPC." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_MPCParam_WindDirectionDegrees_MetaData[] = {
-		{ "Category", "UltraSky|Wind|MPC" },
+		{ "Category", "DAI_UltraSky|Wind|MPC" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Scalar parameter name for wind direction (degrees) in MPC." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bAutoSnowFromTemperature_MetaData[] = {
-		{ "Category", "UltraSky|Snow" },
+		{ "Category", "DAI_UltraSky|Snow" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Auto switch to snow accumulation logic based on temperature/precipitation." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_SnowTempThresholdC_MetaData[] = {
-		{ "Category", "UltraSky|Snow" },
+		{ "Category", "DAI_UltraSky|Snow" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Temperature (Celsius) threshold at/under which precipitation becomes snow." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_SnowAccumulation_MetaData[] = {
-		{ "Category", "UltraSky|Snow" },
+		{ "Category", "DAI_UltraSky|Snow" },
 		{ "ClampMax", "1.0" },
 		{ "ClampMin", "0.0" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
@@ -820,7 +820,7 @@ struct Z_Construct_UClass_ADAIUltraSkyActor_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_SnowAccumulationRate_MetaData[] = {
-		{ "Category", "UltraSky|Snow" },
+		{ "Category", "DAI_UltraSky|Snow" },
 		{ "ClampMin", "0.0" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
@@ -828,7 +828,7 @@ struct Z_Construct_UClass_ADAIUltraSkyActor_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_SnowMeltRate_MetaData[] = {
-		{ "Category", "UltraSky|Snow" },
+		{ "Category", "DAI_UltraSky|Snow" },
 		{ "ClampMin", "0.0" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
@@ -836,7 +836,7 @@ struct Z_Construct_UClass_ADAIUltraSkyActor_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_Wetness_MetaData[] = {
-		{ "Category", "UltraSky|Snow" },
+		{ "Category", "DAI_UltraSky|Snow" },
 		{ "ClampMax", "1.0" },
 		{ "ClampMin", "0.0" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
@@ -845,7 +845,7 @@ struct Z_Construct_UClass_ADAIUltraSkyActor_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_WetnessAccumulationRateRain_MetaData[] = {
-		{ "Category", "UltraSky|Snow" },
+		{ "Category", "DAI_UltraSky|Snow" },
 		{ "ClampMin", "0.0" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
@@ -853,7 +853,7 @@ struct Z_Construct_UClass_ADAIUltraSkyActor_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_WetnessDryRate_MetaData[] = {
-		{ "Category", "UltraSky|Snow" },
+		{ "Category", "DAI_UltraSky|Snow" },
 		{ "ClampMin", "0.0" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
@@ -861,14 +861,14 @@ struct Z_Construct_UClass_ADAIUltraSkyActor_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bUseGASAttributesForSnowLogic_MetaData[] = {
-		{ "Category", "UltraSky|Snow" },
+		{ "Category", "DAI_UltraSky|Snow" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Query GAS attribute set for TemperatureC / Precipitation instead of local simulation." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_FootprintSnowThreshold_MetaData[] = {
-		{ "Category", "UltraSky|Snow" },
+		{ "Category", "DAI_UltraSky|Snow" },
 		{ "ClampMax", "1.0" },
 		{ "ClampMin", "0.0" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
@@ -877,21 +877,21 @@ struct Z_Construct_UClass_ADAIUltraSkyActor_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_OnFootprintStamped_MetaData[] = {
-		{ "Category", "UltraSky|Snow" },
+		{ "Category", "DAI_UltraSky|Snow" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Event fired when a footprint is stamped (location & strength)." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bEnableRandomWeather_MetaData[] = {
-		{ "Category", "UltraSky|RandomWeather" },
+		{ "Category", "DAI_UltraSky|RandomWeather" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Enable stochastic weather selection driven by climate preset." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_Season_MetaData[] = {
-		{ "Category", "UltraSky|RandomWeather" },
+		{ "Category", "DAI_UltraSky|RandomWeather" },
 		{ "ClampMax", "4.0" },
 		{ "ClampMin", "0.0" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
@@ -900,14 +900,14 @@ struct Z_Construct_UClass_ADAIUltraSkyActor_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_ClimatePreset_MetaData[] = {
-		{ "Category", "UltraSky|RandomWeather" },
+		{ "Category", "DAI_UltraSky|RandomWeather" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Climate preset providing weighted biome/condition choices per season." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_RandomWeatherBaseInterval_MetaData[] = {
-		{ "Category", "UltraSky|RandomWeather" },
+		{ "Category", "DAI_UltraSky|RandomWeather" },
 		{ "ClampMin", "5.0" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
@@ -915,14 +915,14 @@ struct Z_Construct_UClass_ADAIUltraSkyActor_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_RandomSeed_MetaData[] = {
-		{ "Category", "UltraSky|RandomWeather" },
+		{ "Category", "DAI_UltraSky|RandomWeather" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Seed for deterministic random weather (0 = non-deterministic)." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_SnowDepthThresholds_MetaData[] = {
-		{ "Category", "UltraSky|Snow" },
+		{ "Category", "DAI_UltraSky|Snow" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyActor.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Normalized snow depth thresholds (0..1) that fire events when crossed up or down." },
@@ -1016,22 +1016,22 @@ struct Z_Construct_UClass_ADAIUltraSkyActor_Statics
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
-		{ &Z_Construct_UFunction_ADAIUltraSkyActor_EditorApplySelectedPreset, "EditorApplySelectedPreset" }, // 3458045310
+		{ &Z_Construct_UFunction_ADAIUltraSkyActor_EditorApplySelectedPreset, "EditorApplySelectedPreset" }, // 621840733
 #if WITH_EDITOR
-		{ &Z_Construct_UFunction_ADAIUltraSkyActor_EditorCreateFootprintDemo, "EditorCreateFootprintDemo" }, // 1579886058
-		{ &Z_Construct_UFunction_ADAIUltraSkyActor_EditorCreateUltraSkySamples, "EditorCreateUltraSkySamples" }, // 2071673510
+		{ &Z_Construct_UFunction_ADAIUltraSkyActor_EditorCreateFootprintDemo, "EditorCreateFootprintDemo" }, // 2032060690
+		{ &Z_Construct_UFunction_ADAIUltraSkyActor_EditorCreateUltraSkySamples, "EditorCreateUltraSkySamples" }, // 1661621697
 #endif // WITH_EDITOR
-		{ &Z_Construct_UFunction_ADAIUltraSkyActor_EditorRecaptureSkylight, "EditorRecaptureSkylight" }, // 3245464293
+		{ &Z_Construct_UFunction_ADAIUltraSkyActor_EditorRecaptureSkylight, "EditorRecaptureSkylight" }, // 45069119
 #if WITH_EDITOR
-		{ &Z_Construct_UFunction_ADAIUltraSkyActor_EditorRemoveFootprintAppliers, "EditorRemoveFootprintAppliers" }, // 3621662041
+		{ &Z_Construct_UFunction_ADAIUltraSkyActor_EditorRemoveFootprintAppliers, "EditorRemoveFootprintAppliers" }, // 539027361
 #endif // WITH_EDITOR
-		{ &Z_Construct_UFunction_ADAIUltraSkyActor_ForceApplyBiome, "ForceApplyBiome" }, // 4025705952
-		{ &Z_Construct_UFunction_ADAIUltraSkyActor_ForceCondition, "ForceCondition" }, // 837129162
-		{ &Z_Construct_UFunction_ADAIUltraSkyActor_IsSnowDeepEnoughForFootprints, "IsSnowDeepEnoughForFootprints" }, // 2303788328
+		{ &Z_Construct_UFunction_ADAIUltraSkyActor_ForceApplyBiome, "ForceApplyBiome" }, // 3724263986
+		{ &Z_Construct_UFunction_ADAIUltraSkyActor_ForceCondition, "ForceCondition" }, // 2625316317
+		{ &Z_Construct_UFunction_ADAIUltraSkyActor_IsSnowDeepEnoughForFootprints, "IsSnowDeepEnoughForFootprints" }, // 2589328221
 		{ &Z_Construct_UDelegateFunction_ADAIUltraSkyActor_OnFootprintStamped__DelegateSignature, "OnFootprintStamped__DelegateSignature" }, // 3671617695
-		{ &Z_Construct_UFunction_ADAIUltraSkyActor_SetDayLengthSeconds, "SetDayLengthSeconds" }, // 898766928
-		{ &Z_Construct_UFunction_ADAIUltraSkyActor_SetTimeOfDay, "SetTimeOfDay" }, // 590172912
-		{ &Z_Construct_UFunction_ADAIUltraSkyActor_StampFootprintAtLocation, "StampFootprintAtLocation" }, // 585254045
+		{ &Z_Construct_UFunction_ADAIUltraSkyActor_SetDayLengthSeconds, "SetDayLengthSeconds" }, // 922754065
+		{ &Z_Construct_UFunction_ADAIUltraSkyActor_SetTimeOfDay, "SetTimeOfDay" }, // 1046126774
+		{ &Z_Construct_UFunction_ADAIUltraSkyActor_StampFootprintAtLocation, "StampFootprintAtLocation" }, // 2225601702
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
 	static const UECodeGen_Private::FImplementedInterfaceParams InterfaceParams[];
@@ -1214,10 +1214,10 @@ ADAIUltraSkyActor::~ADAIUltraSkyActor() {}
 struct Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyActor_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_ADAIUltraSkyActor, ADAIUltraSkyActor::StaticClass, TEXT("ADAIUltraSkyActor"), &Z_Registration_Info_UClass_ADAIUltraSkyActor, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ADAIUltraSkyActor), 28036945U) },
+		{ Z_Construct_UClass_ADAIUltraSkyActor, ADAIUltraSkyActor::StaticClass, TEXT("ADAIUltraSkyActor"), &Z_Registration_Info_UClass_ADAIUltraSkyActor, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ADAIUltraSkyActor), 3807997733U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyActor_h_274144490(TEXT("/Script/DAI_UltraSky"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyActor_h_1608257365(TEXT("/Script/DAI_UltraSky"),
 	Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyActor_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyActor_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

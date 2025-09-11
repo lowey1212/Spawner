@@ -28,7 +28,7 @@ struct Z_Construct_UFunction_ADAIUltraSkyTornado_SetTargetLocation_Statics
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "UltraSky|Tornado" },
+		{ "Category", "DAI_UltraSky|Tornado" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyTornado.h" },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_NewTarget_MetaData[] = {
@@ -70,7 +70,7 @@ struct Z_Construct_UFunction_ADAIUltraSkyTornado_StartTornado_Statics
 {
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "UltraSky|Tornado" },
+		{ "Category", "DAI_UltraSky|Tornado" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyTornado.h" },
 	};
 #endif // WITH_METADATA
@@ -100,7 +100,7 @@ struct Z_Construct_UFunction_ADAIUltraSkyTornado_StopTornado_Statics
 {
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "UltraSky|Tornado" },
+		{ "Category", "DAI_UltraSky|Tornado" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyTornado.h" },
 	};
 #endif // WITH_METADATA
@@ -150,14 +150,14 @@ struct Z_Construct_UClass_ADAIUltraSkyTornado_Statics
 		{ "ModuleRelativePath", "Public/DAIUltraSkyTornado.h" },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_TornadoSystem_MetaData[] = {
-		{ "Category", "UltraSky|Tornado" },
+		{ "Category", "DAI_UltraSky|Tornado" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyTornado.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Niagara system used to render tornado." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_TornadoComponent_MetaData[] = {
-		{ "Category", "UltraSky|Tornado" },
+		{ "Category", "DAI_UltraSky|Tornado" },
 		{ "EditInline", "true" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyTornado.h" },
 #if !UE_BUILD_SHIPPING
@@ -165,7 +165,7 @@ struct Z_Construct_UClass_ADAIUltraSkyTornado_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_TornadoScale_MetaData[] = {
-		{ "Category", "UltraSky|Tornado" },
+		{ "Category", "DAI_UltraSky|Tornado" },
 		{ "ClampMin", "0.1" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyTornado.h" },
 #if !UE_BUILD_SHIPPING
@@ -173,14 +173,14 @@ struct Z_Construct_UClass_ADAIUltraSkyTornado_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_TargetLocation_MetaData[] = {
-		{ "Category", "UltraSky|Tornado" },
+		{ "Category", "DAI_UltraSky|Tornado" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyTornado.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "World location the tornado moves toward each tick." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_MoveSpeed_MetaData[] = {
-		{ "Category", "UltraSky|Tornado" },
+		{ "Category", "DAI_UltraSky|Tornado" },
 		{ "ClampMin", "0.0" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyTornado.h" },
 #if !UE_BUILD_SHIPPING
@@ -188,7 +188,7 @@ struct Z_Construct_UClass_ADAIUltraSkyTornado_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bAutoStart_MetaData[] = {
-		{ "Category", "UltraSky|Tornado" },
+		{ "Category", "DAI_UltraSky|Tornado" },
 		{ "ModuleRelativePath", "Public/DAIUltraSkyTornado.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "If true starts automatically at BeginPlay." },
@@ -205,9 +205,9 @@ struct Z_Construct_UClass_ADAIUltraSkyTornado_Statics
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
-		{ &Z_Construct_UFunction_ADAIUltraSkyTornado_SetTargetLocation, "SetTargetLocation" }, // 3450130363
-		{ &Z_Construct_UFunction_ADAIUltraSkyTornado_StartTornado, "StartTornado" }, // 3793001462
-		{ &Z_Construct_UFunction_ADAIUltraSkyTornado_StopTornado, "StopTornado" }, // 95944452
+		{ &Z_Construct_UFunction_ADAIUltraSkyTornado_SetTargetLocation, "SetTargetLocation" }, // 2686121336
+		{ &Z_Construct_UFunction_ADAIUltraSkyTornado_StartTornado, "StartTornado" }, // 1700648767
+		{ &Z_Construct_UFunction_ADAIUltraSkyTornado_StopTornado, "StopTornado" }, // 3066326554
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
 	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
@@ -274,10 +274,10 @@ ADAIUltraSkyTornado::~ADAIUltraSkyTornado() {}
 struct Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyTornado_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_ADAIUltraSkyTornado, ADAIUltraSkyTornado::StaticClass, TEXT("ADAIUltraSkyTornado"), &Z_Registration_Info_UClass_ADAIUltraSkyTornado, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ADAIUltraSkyTornado), 1252247930U) },
+		{ Z_Construct_UClass_ADAIUltraSkyTornado, ADAIUltraSkyTornado::StaticClass, TEXT("ADAIUltraSkyTornado"), &Z_Registration_Info_UClass_ADAIUltraSkyTornado, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ADAIUltraSkyTornado), 1322248081U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyTornado_h_1448158167(TEXT("/Script/DAI_UltraSky"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyTornado_h_2010435904(TEXT("/Script/DAI_UltraSky"),
 	Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyTornado_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyTornado_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

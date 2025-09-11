@@ -15,11 +15,11 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #define DAI_ULTRASKY_DAIUltraSkyClimatePreset_generated_h
 
 #define FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyClimatePreset_h_12_GENERATED_BODY \
-	friend struct Z_Construct_UScriptStruct_FUltraSkyWeatherChoice_Statics; \
+	friend struct Z_Construct_UScriptStruct_FDAIUltraSkyWeatherChoice_Statics; \
 	DAI_ULTRASKY_API static class UScriptStruct* StaticStruct();
 
 
-template<> DAI_ULTRASKY_API UScriptStruct* StaticStruct<struct FUltraSkyWeatherChoice>();
+template<> DAI_ULTRASKY_API UScriptStruct* StaticStruct<struct FDAIUltraSkyWeatherChoice>();
 
 #define FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_DAIUltraSkyClimatePreset_h_28_INCLASS_NO_PURE_DECLS \
 private: \

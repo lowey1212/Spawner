@@ -30,25 +30,27 @@ struct Z_Construct_UClass_UGA_DAIUltraSky_TriggerWeather_Statics
 {
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Class_MetaDataParams[] = {
+		{ "BlueprintType", "true" },
 		{ "IncludePath", "GA_DAIUltraSky_TriggerWeather.h" },
+		{ "IsBlueprintBase", "true" },
 		{ "ModuleRelativePath", "Public/GA_DAIUltraSky_TriggerWeather.h" },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_ConditionName_MetaData[] = {
-		{ "Category", "UltraSky|Ability" },
+		{ "Category", "DAI_UltraSky|Ability" },
 		{ "ModuleRelativePath", "Public/GA_DAIUltraSky_TriggerWeather.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Weather condition to set (leave None to only change biome)." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_TargetBiome_MetaData[] = {
-		{ "Category", "UltraSky|Ability" },
+		{ "Category", "DAI_UltraSky|Ability" },
 		{ "ModuleRelativePath", "Public/GA_DAIUltraSky_TriggerWeather.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Biome to apply (optional)." },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_BiomeBlendSeconds_MetaData[] = {
-		{ "Category", "UltraSky|Ability" },
+		{ "Category", "DAI_UltraSky|Ability" },
 		{ "ClampMin", "0.0" },
 		{ "ModuleRelativePath", "Public/GA_DAIUltraSky_TriggerWeather.h" },
 #if !UE_BUILD_SHIPPING
@@ -115,10 +117,10 @@ UGA_DAIUltraSky_TriggerWeather::~UGA_DAIUltraSky_TriggerWeather() {}
 struct Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_GA_DAIUltraSky_TriggerWeather_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UGA_DAIUltraSky_TriggerWeather, UGA_DAIUltraSky_TriggerWeather::StaticClass, TEXT("UGA_DAIUltraSky_TriggerWeather"), &Z_Registration_Info_UClass_UGA_DAIUltraSky_TriggerWeather, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UGA_DAIUltraSky_TriggerWeather), 4050838441U) },
+		{ Z_Construct_UClass_UGA_DAIUltraSky_TriggerWeather, UGA_DAIUltraSky_TriggerWeather::StaticClass, TEXT("UGA_DAIUltraSky_TriggerWeather"), &Z_Registration_Info_UClass_UGA_DAIUltraSky_TriggerWeather, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UGA_DAIUltraSky_TriggerWeather), 1450111096U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_GA_DAIUltraSky_TriggerWeather_h_2334046633(TEXT("/Script/DAI_UltraSky"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_GA_DAIUltraSky_TriggerWeather_h_1204098746(TEXT("/Script/DAI_UltraSky"),
 	Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_GA_DAIUltraSky_TriggerWeather_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_githubdesktop_Spawner_spawnManager_Plugins_DAI_UltraSky_DAI_UltraSky_Source_DAI_UltraSky_Public_GA_DAIUltraSky_TriggerWeather_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);
