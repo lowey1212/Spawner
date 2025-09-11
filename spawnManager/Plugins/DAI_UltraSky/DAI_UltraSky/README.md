@@ -1,6 +1,6 @@
 # DAI Ultra Sky (Prototype)
 
-Lightweight, extensible dynamic sky/atmosphere actor for UE 5.5 using built-in components: DirectionalLight (sun), SkyAtmosphere, SkyLight, Volumetric Clouds, and Exponential Height Fog.
+Lightweight, extensible dynamic sky/atmosphere actor for UE 5.5 and 5.6 using built-in components: DirectionalLight (sun), SkyAtmosphere, SkyLight, Volumetric Clouds, and Exponential Height Fog.
 
 Features
 - Time-of-day animation with configurable day length
@@ -17,6 +17,7 @@ Features
 - Lightning Controller: timed/random strikes with Niagara bolt/glow + optional thunder delay
 - Tornado Actor: spawns/moves a Niagara tornado system with simple pathing
 - Snow system: auto switch rain↔snow based on temperature, snow accumulation and wetness published to MPC, footprint event to hook decals/material effects
+- Runtime configuration application via `ApplySkyConfiguration` and `ApplyWeatherConfiguration` functions (UE 5.5/5.6)
 
 Usage
 1. Enable the plugin `DAI Ultra Sky` in your project Plugins.

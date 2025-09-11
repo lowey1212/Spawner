@@ -53,6 +53,28 @@ struct DAI_ULTRASKY_API FWeatherState
     float FogDensity = 0.f;
 };
 
+// Simple structured configs that can be applied at runtime
+USTRUCT(BlueprintType)
+struct DAI_ULTRASKY_API FSkyConfig
+{
+    GENERATED_BODY()
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Sky")
+    float SkyLightIntensity = 1.0f;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Sky")
+    float FogDensity = 0.f;
+};
+
+USTRUCT(BlueprintType)
+struct DAI_ULTRASKY_API FWeatherConfig
+{
+    GENERATED_BODY()
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weather")
+    FWeatherState Weather;
+};
+
 /**
  * Central actor responsible for controlling dynamic weather effects.
  */
@@ -118,6 +140,13 @@ public:
     // Sky adjustments
     UFUNCTION(BlueprintCallable, Category="Sky")
     void SetSkyLightIntensity(float Intensity);
+
+    // Apply configuration structs (UE 5.5/5.6 feature)
+    UFUNCTION(BlueprintCallable, Category="Sky")
+    void ApplySkyConfiguration(const FSkyConfig& Config);
+
+    UFUNCTION(BlueprintCallable, Category="Weather")
+    void ApplyWeatherConfiguration(const FWeatherConfig& Config);
 
     // Volume management
     UFUNCTION(BlueprintCallable, Category="WeatherVolume")
